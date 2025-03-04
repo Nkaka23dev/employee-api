@@ -31,3 +31,17 @@
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/obj/Debug/net9.0/TheEmployeeAPI.pdb
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/obj/Debug/net9.0/TheEmployeeAPI.genruntimeconfig.cache
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/obj/Debug/net9.0/ref/TheEmployeeAPI.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/obj/Debug/net9.0/TheEmployeeAPI.sourcelink.json
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Namotion.Reflection.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Newtonsoft.Json.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NJsonSchema.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NJsonSchema.Annotations.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NJsonSchema.NewtonsoftJson.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NJsonSchema.Yaml.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.Annotations.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.AspNetCore.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.Core.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.Core.Yaml.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.Generation.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/NSwag.Generation.AspNetCore.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/YamlDotNet.dll

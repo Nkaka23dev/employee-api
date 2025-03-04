@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+      <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
   </ItemGroup>
 
 </Project>
