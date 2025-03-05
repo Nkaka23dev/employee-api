@@ -1,3 +1,7 @@
+using System;
+
+namespace TheEmployeeAPI;
+
 public class Employee {
     public int Id { get; set; }
     public  required string FirstName { get; set; }

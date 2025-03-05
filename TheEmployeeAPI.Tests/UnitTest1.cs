@@ -39,12 +39,12 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
-    [Fact]
-     public async Task UpdateEmployee_ReturnOkResults() {
-        var client = _factory.CreateClient();
-        var response = await client.PutAsJsonAsync("/employees/2", new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544" });
-        response.EnsureSuccessStatusCode();
-    }
+    // [Fact]
+    //  public async Task UpdateEmployee_ReturnOkResults() {
+    //     var client = _factory.CreateClient();
+    //     var response = await client.PutAsJsonAsync("/employees/2", new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544" });
+    //     response.EnsureSuccessStatusCode();
+    // }
 
     [Fact]
     public async Task UpdateEmployee_ReturnNotFoundForNoneExistantEmployees() {

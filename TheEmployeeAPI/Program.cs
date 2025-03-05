@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using TheEmployeeAPI;
+using TheEmployeeAPI.abstraction;
 using TheEmployeeAPI.employees;
 
 var builder = WebApplication.CreateBuilder(args);
-var employees = new List<Employee> {
-    new Employee {Id = 1, FirstName= "Eric", LastName="Nkaka", SocialSecurityNumber="6575-574-6544"},
-    new Employee {Id = 2, FirstName= "Joe", LastName="Doe", SocialSecurityNumber="1121-4334-1111"}
-};
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddOpenApiDocument(config =>
 {
     config.DocumentName = "Employees API documentation";
@@ -17,7 +14,7 @@ builder.Services.AddOpenApiDocument(config =>
     config.Version = "v1";
 });
 var app = builder.Build();
-
+  
 var employeeRoute = app.MapGroup("employees");
 
 if (app.Environment.IsDevelopment())
@@ -34,7 +31,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-employeeRoute.MapGet(string.Empty, () => {
+employeeRoute.MapGet(string.Empty, ([FromServices] IRepository<Employee> repository) => {
+   var employees = repository.GetAll();
    return Results.Ok(employees.Select((employee) => new GetEmployeeResponse
    {
        FirstName = employee.FirstName,
@@ -46,12 +44,13 @@ employeeRoute.MapGet(string.Empty, () => {
        ZipCode = employee.ZipCode,
        PhoneNumber = employee.PhoneNumber,     
        State = employee.State  
-   }));
+   })); 
 });
 
-employeeRoute.MapGet("{id:int}", ([FromRoute] int id) => {
-    var employee = employees.SingleOrDefault(e => e.Id == id);
-    if(employee == null){
+employeeRoute.MapGet("{id:int}", ( [FromServices] IRepository<Employee> repository, 
+[FromRoute] int id) => {
+    var employee = repository.GetById(id);
+    if(employee == null){ 
         return Results.NotFound();
     }
     return Results.Ok(new GetEmployeeResponse
@@ -68,8 +67,9 @@ employeeRoute.MapGet("{id:int}", ([FromRoute] int id) => {
    });;
 });
 
-employeeRoute.MapPut("{id}",([FromBody] UpdateEmployeeRequest employee, int id) => {
-  var existingEmployee = employees.SingleOrDefault(e => e.Id == id);
+employeeRoute.MapPut("{id}", ([FromServices] IRepository<Employee> repository, [FromBody] 
+UpdateEmployeeRequest employee, int id) => {
+  var existingEmployee = repository.GetById(id);
   if(existingEmployee == null){
     return Results.NotFound();
   }
@@ -80,13 +80,13 @@ employeeRoute.MapPut("{id}",([FromBody] UpdateEmployeeRequest employee, int id) 
     existingEmployee.ZipCode = employee.ZipCode;
     existingEmployee.PhoneNumber = employee.PhoneNumber;
     existingEmployee.Email = employee.Email;
-
-  return Results.Ok($"{existingEmployee.FirstName} updated successfully!");
+  repository.Update(existingEmployee);
+  return Results.Ok(existingEmployee.FirstName);
 });
 
-employeeRoute.MapPost(string.Empty, ([FromBody] CreateEmployeeRequest employee, HttpContext context) => {
+employeeRoute.MapPost(string.Empty, ([FromServices] IRepository<Employee> repository,
+[FromBody] CreateEmployeeRequest employee, HttpContext context) => {
     var newEmployee = new Employee {
-        Id = employees.Max(e => e.Id) + 1,
         FirstName = employee.FirstName,
         LastName = employee.LastName,
         SocialSecurityNumber = employee.SocialSecurityNumber,
@@ -98,7 +98,7 @@ employeeRoute.MapPost(string.Empty, ([FromBody] CreateEmployeeRequest employee, 
         PhoneNumber = employee.PhoneNumber,
         Email = employee.Email,
     };
-    employees.Add(newEmployee);
+    repository.Create(newEmployee);
     return Results.Created($"employees/{newEmployee.Id}", employee);
 });
 
