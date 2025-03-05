@@ -16,10 +16,6 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
         var client = _factory.CreateClient();
         var response  = await client.GetAsync("/employees");
         response.EnsureSuccessStatusCode();
-        /*
-         Assert.True(response.IsSuccessStatusCode)
-         can also work but prefered response.EnsureSuccessStatusCode()
-        */
     }
     [Fact]
     public async Task GetEmployeeById_ReturnOkResult(){
@@ -32,14 +28,34 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
     public async Task CreateEmployee_ReturnsCreatedResult(){
      var client  = _factory.CreateClient();
      var response = await client.PostAsJsonAsync("/employees",
-         new Employee { FirstName = "John", LastName =  "Doe"});
+         new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544"});
      response.EnsureSuccessStatusCode();
     }
 
-    [Fact]
+    [Fact] 
     public async Task CreateEmployee_ReturnsBadRequestResult(){
         var client = _factory.CreateClient();
         var response = await client.PostAsJsonAsync("/employees", new {});
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-}
+
+    [Fact]
+     public async Task UpdateEmployee_ReturnOkResults() {
+        var client = _factory.CreateClient();
+        var response = await client.PutAsJsonAsync("/employees/2", new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544" });
+        response.EnsureSuccessStatusCode();
+    }
+
+    [Fact]
+    public async Task UpdateEmployee_ReturnNotFoundForNoneExistantEmployees() {
+        var client = _factory.CreateClient();
+        var response = await client.PutAsJsonAsync("/employees/99999", new Employee { FirstName = "John", LastName =  "Doe",   SocialSecurityNumber="6575-574-6544" });
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+} 
+
+
+/*
+    Assert.True(response.IsSuccessStatusCode)
+    can also work but prefered response.EnsureSuccessStatusCode()
+*/
