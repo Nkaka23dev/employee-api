@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI;
 using TheEmployeeAPI.abstraction;
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IRepository<Employee>, EmployeeRepository>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddOpenApiDocument(config =>
 {
     config.DocumentName = "Employees API documentation";
@@ -85,21 +88,30 @@ UpdateEmployeeRequest employee, int id) => {
 });
 
 employeeRoute.MapPost(string.Empty, ([FromServices] IRepository<Employee> repository,
-[FromBody] CreateEmployeeRequest employee, HttpContext context) => {
+[FromBody] CreateEmployeeRequest employeeRequest, HttpContext context) => {
+    var validationProblems = new List<ValidationResult>();
+    var isValid = Validator.TryValidateObject(
+     employeeRequest,
+     new ValidationContext(employeeRequest),
+     validationProblems,
+     true);  
+     if(!isValid){
+       return Results.BadRequest(validationProblems.ToValidationProblemDetails());
+     }
     var newEmployee = new Employee {
-        FirstName = employee.FirstName,
-        LastName = employee.LastName,
-        SocialSecurityNumber = employee.SocialSecurityNumber,
-        Address1 = employee.Address1,
-        Address2 = employee.Address2,
-        City = employee.City,
-        State = employee.State,
-        ZipCode = employee.ZipCode,
-        PhoneNumber = employee.PhoneNumber,
-        Email = employee.Email,
+        FirstName = employeeRequest.FirstName!,
+        LastName = employeeRequest.LastName!,
+        SocialSecurityNumber = employeeRequest.SocialSecurityNumber,
+        Address1 = employeeRequest.Address1,
+        Address2 = employeeRequest.Address2,
+        City = employeeRequest.City,
+        State = employeeRequest.State,
+        ZipCode = employeeRequest.ZipCode,
+        PhoneNumber = employeeRequest.PhoneNumber,
+        Email = employeeRequest.Email,
     };
     repository.Create(newEmployee);
-    return Results.Created($"employees/{newEmployee.Id}", employee);
+    return Results.Created($"employees/{newEmployee.Id}", employeeRequest);
 });
 
 app.Run();
