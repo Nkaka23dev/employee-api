@@ -16,20 +16,20 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
     public async Task GetAllEmployees_ReturnOkResults(){
 
         var client = _factory.CreateClient();
-        var response  = await client.GetAsync("/employees");
+        var response  = await client.GetAsync("/employee/all");
         response.EnsureSuccessStatusCode();
     }
     [Fact]
     public async Task GetEmployeeById_ReturnOkResult(){
 
         var client = _factory.CreateClient();
-        var response  = await client.GetAsync("/employees/1");
+        var response  = await client.GetAsync("/employee/1");
         response.EnsureSuccessStatusCode();
     }
     [Fact]
     public async Task CreateEmployee_ReturnsCreatedResult(){
      var client  = _factory.CreateClient();
-     var response = await client.PostAsJsonAsync("/employees",
+     var response = await client.PostAsJsonAsync("/employee",
          new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544"});
      response.EnsureSuccessStatusCode();
     }
@@ -42,7 +42,7 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
      var invalidEmployee = new CreateEmployeeRequest(); //Empty object;
 
      //Act
-     var response = await client.PostAsJsonAsync("/employees", invalidEmployee);
+     var response = await client.PostAsJsonAsync("/employee", invalidEmployee);
 
      //Assert
      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -50,21 +50,21 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
      Assert.NotNull(problemDetails);
      Assert.Contains("FirstName", problemDetails.Errors.Keys);
      Assert.Contains("LastName", problemDetails.Errors.Keys);
-     Assert.Contains("The FirstName field is required.", problemDetails.Errors["FirstName"]);
-     Assert.Contains("The LastName field is required.", problemDetails.Errors["LastName"]);
+     Assert.Contains("'Last Name' must not be empty.", problemDetails.Errors["LastName"]);
+     Assert.Contains("Should provide 'First Name'", problemDetails.Errors["FirstName"]);
     }
 
-    // [Fact]
-    //  public async Task UpdateEmployee_ReturnOkResults() {
-    //     var client = _factory.CreateClient();
-    //     var response = await client.PutAsJsonAsync("/employees/2", new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544" });
-    //     response.EnsureSuccessStatusCode();
-    // }
-
+    [Fact]
+     public async Task UpdateEmployee_ReturnOkResults() {
+        var client = _factory.CreateClient();
+        var response = await client.PutAsJsonAsync("/employees/2", new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544" });
+        response.EnsureSuccessStatusCode();
+    }
+ 
     [Fact]
     public async Task UpdateEmployee_ReturnNotFoundForNoneExistantEmployees() {
         var client = _factory.CreateClient();
-        var response = await client.PutAsJsonAsync("/employees/99999", new Employee { FirstName = "John", LastName =  "Doe",   SocialSecurityNumber="6575-574-6544" });
+        var response = await client.PutAsJsonAsync("/employee/99999", new Employee { FirstName = "John", LastName =  "Doe",   SocialSecurityNumber="6575-574-6544" });
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 } 

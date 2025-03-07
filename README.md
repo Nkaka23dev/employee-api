@@ -7,6 +7,14 @@
  - XUnit
  - Microsoft.AspNetCore.OpenApi Version=9.0.2
  ```
+ - API endpoints are validated using FluentValidation
+ ```bash
+   -  dotnet add package FluentValidation
+ ```
+ ```ts
+    You can also use NuGet to add this package throught the VScode UI.
+ ```
+
 
 ### Used pattern
 
