@@ -18,7 +18,8 @@ public class CreateEmployeeRequest
 
 public class CreateEmployeeRequestValidator: AbstractValidator<CreateEmployeeRequest>{
     public CreateEmployeeRequestValidator(){
-        RuleFor(x => x.FirstName).NotEmpty().WithMessage("Should provide 'First Name'");
+        RuleFor(x => x.FirstName).NotEmpty();
         RuleFor(x => x.LastName).NotEmpty();
+        // RuleFor(x => x.FirstName).NotEmpty().WithMessage("Should provide 'First Name'");
     } 
 }
