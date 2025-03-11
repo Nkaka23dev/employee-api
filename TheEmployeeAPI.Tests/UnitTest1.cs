@@ -48,14 +48,14 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
     [Fact]
     public async Task CreateEmployees_ReturnsBadRequestResult()
     {
-        // Arrange
+        // Arranging
         var client = _factory.CreateClient();
-        var invalidEmployee = new CreateEmployeeRequest(); // Empty object to trigger validation errors
-
+        // Reason: Empty object to trigger validation errors
+        var invalidEmployee = new CreateEmployeeRequest(); 
         // Act
         var response = await client.PostAsJsonAsync("/employee", invalidEmployee);
 
-        // Assert
+        // Asserting
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var problemDetails = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         Assert.NotNull(problemDetails);

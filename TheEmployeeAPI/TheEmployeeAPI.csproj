@@ -4,6 +4,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningAsErrors>true</TreatWarningAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nowarn>$(Nowarn);1591</Nowarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,3 +22,4 @@
   </ItemGroup>
 
 </Project>
+ 
