@@ -17,9 +17,14 @@
  ```ts
     Use AutoMapper to similate object.assing() as in  JavaScript.
 ```
-
-
+- To including mocking while testin we can mock ILogger interface. You can use the following libray 
+```bash
+ - Moq
+ - ILogger.Moq
+ - ILogger.Log
+ ```
 ### Used pattern
 
 - Repository Pattern
 
+ 
