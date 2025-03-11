@@ -47,3 +47,4 @@
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/YamlDotNet.dll
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/FluentValidation.dll
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/FluentValidation.DependencyInjectionExtensions.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/FluentValidation.AspNetCore.dll

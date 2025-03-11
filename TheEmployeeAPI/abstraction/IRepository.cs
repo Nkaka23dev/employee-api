@@ -1,5 +1,3 @@
-using System;
-
 namespace TheEmployeeAPI.abstraction;
 
 public interface IRepository<T>

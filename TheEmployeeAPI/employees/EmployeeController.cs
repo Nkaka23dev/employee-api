@@ -12,7 +12,7 @@ public class EmployeeController: BaseController
  ILogger<EmployeeController> logger)
  {
     _repository = repository;
-    this._logger = logger;
+    _logger = logger;
  }
  [HttpGet("all")]
  public IActionResult GetAllEmployees(){
@@ -50,31 +50,7 @@ public class EmployeeController: BaseController
    };
    return Ok(employeeResponse);
  }
- [HttpPost]
- public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest employeeRequest){
-    var validationResults = await ValidateAsync(employeeRequest);
-    if (!validationResults.IsValid)
-    {
-        return ValidationProblem(validationResults.ToModelStateDictionary());
-    }
-    var newEmployee = new Employee {
-        FirstName = employeeRequest.FirstName!,
-        LastName = employeeRequest.LastName!,
-        SocialSecurityNumber = employeeRequest.SocialSecurityNumber,
-        Address1 = employeeRequest.Address1,
-        Address2 = employeeRequest.Address2,
-        City = employeeRequest.City,
-        State = employeeRequest.State,
-        ZipCode = employeeRequest.ZipCode,
-        PhoneNumber = employeeRequest.PhoneNumber,
-        Email = employeeRequest.Email,
-    };
-  _repository.Create(newEmployee);
-  return CreatedAtAction(nameof(GetEmployeeById),
-   new {id = newEmployee.Id}, newEmployee);
- }
-
- [HttpPut("{id}")]
+  [HttpPut("{id}")]
  public IActionResult UpdateEmployee(int id, [FromBody]
   UpdateEmployeeRequest employee){
    _logger.LogInformation("Updatating employee with ID: {employeeID}", id);
@@ -92,5 +68,24 @@ public class EmployeeController: BaseController
     existingEmployee.Email = employee.Email;
     _repository.Update(existingEmployee);
     return Ok(existingEmployee);
+ } 
+ [HttpPost]
+ public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest employeeRequest){
+   await Task.CompletedTask;
+    var newEmployee = new Employee {
+        FirstName = employeeRequest.FirstName!,
+        LastName = employeeRequest.LastName!,
+        SocialSecurityNumber = employeeRequest.SocialSecurityNumber,
+        Address1 = employeeRequest.Address1,
+        Address2 = employeeRequest.Address2,
+        City = employeeRequest.City,
+        State = employeeRequest.State,
+        ZipCode = employeeRequest.ZipCode,
+        PhoneNumber = employeeRequest.PhoneNumber,
+        Email = employeeRequest.Email, 
+    };
+  _repository.Create(newEmployee);
+  return CreatedAtAction(nameof(GetEmployeeById),
+   new {id = newEmployee.Id}, newEmployee);
  }
 }

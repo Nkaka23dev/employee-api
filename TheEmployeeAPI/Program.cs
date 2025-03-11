@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI;
 using TheEmployeeAPI.abstraction;
 using FluentValidation;
@@ -9,7 +8,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddProblemDetails();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddControllers();
+builder.Services.AddControllers(option => {
+    option.Filters.Add<FluentValidationFilter>();
+});
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddOpenApiDocument(config =>
 {

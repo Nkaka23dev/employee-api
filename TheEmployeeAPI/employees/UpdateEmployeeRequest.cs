@@ -1,4 +1,5 @@
-using System;
+using FluentValidation;
+using TheEmployeeAPI.abstraction;
 
 namespace TheEmployeeAPI.employees;
 
@@ -12,3 +13,28 @@ public class UpdateEmployeeRequest
     public  string? PhoneNumber {get; set;}
     public  string? Email {get; set;}
 }
+
+public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeRequest>
+{
+    private readonly HttpContext _httpContext;
+    private readonly IRepository<Employee> _repository;
+
+    public UpdateEmployeeRequestValidator(IHttpContextAccessor httpContextAccessor,
+     IRepository<Employee> repository){
+        this._httpContext = httpContextAccessor.HttpContext!;
+        this._repository = repository;
+        RuleFor(x => x.Address1).MustAsync(NotBeEmptyIfItIsSetOnEmployeeAlreadyAsync)
+        .WithMessage("Address1 must not be empty as an address was alread set on employee");
+    }
+
+    private async Task<bool> NotBeEmptyIfItIsSetOnEmployeeAlreadyAsync(string? address, CancellationToken token)
+    {
+    await Task.CompletedTask;
+    var id = Convert.ToInt32(_httpContext.Request.RouteValues["id"]);
+    var employee = _repository.GetById(id);
+    if(employee!.Address1 != null && string.IsNullOrWhiteSpace(address)){
+        return false;
+    }
+     return true;
+    }
+};

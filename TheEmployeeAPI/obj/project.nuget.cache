@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Ne1CR+Nkvpc=",
+  "dgSpecHash": "qCbprMpzzF8=",
   "success": true,
   "projectFilePath": "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
   "expectedPackageFiles": [
     "/Users/thegym/.nuget/packages/fluentvalidation/11.11.0/fluentvalidation.11.11.0.nupkg.sha512",
+    "/Users/thegym/.nuget/packages/fluentvalidation.aspnetcore/11.3.0/fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "/Users/thegym/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.11.0/fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "/Users/thegym/.nuget/packages/microsoft.aspnetcore.openapi/9.0.2/microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512",
     "/Users/thegym/.nuget/packages/microsoft.extensions.apidescription.server/6.0.3/microsoft.extensions.apidescription.server.6.0.3.nupkg.sha512",
