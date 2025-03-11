@@ -1,4 +1,3 @@
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI.abstraction;
 
@@ -7,18 +6,19 @@ namespace TheEmployeeAPI.employees;
 public class EmployeeController: BaseController
 {
  private readonly IRepository<Employee> _repository;
- private readonly IValidator<CreateEmployeeRequest> _createValidator;
+  private readonly ILogger<EmployeeController> _logger;
 
- public EmployeeController(IRepository<Employee> repository , 
- IValidator<CreateEmployeeRequest> createValidator)
+ public EmployeeController(IRepository<Employee> repository, 
+ ILogger<EmployeeController> logger)
  {
     _repository = repository;
-    _createValidator = createValidator;
+    this._logger = logger;
  }
  [HttpGet("all")]
  public IActionResult GetAllEmployees(){
-    var employeeResponse = _repository.GetAll().Select(employee => new GetEmployeeRequest   {
-       FirstName = employee.FirstName,
+    var employeeResponse = _repository.GetAll()
+    .Select(employee => new GetEmployeeRequest {
+       FirstName = employee.FirstName, 
        LastName = employee.LastName,
        Address1 = employee.Address1,
        Address2 = employee.Address2,
@@ -70,13 +70,17 @@ public class EmployeeController: BaseController
         Email = employeeRequest.Email,
     };
   _repository.Create(newEmployee);
-  return CreatedAtAction(nameof(GetEmployeeById), new {id = newEmployee.Id}, newEmployee);
+  return CreatedAtAction(nameof(GetEmployeeById),
+   new {id = newEmployee.Id}, newEmployee);
  }
 
  [HttpPut("{id}")]
- public IActionResult UpdateEmployee(int id, [FromBody] UpdateEmployeeRequest employee){
+ public IActionResult UpdateEmployee(int id, [FromBody]
+  UpdateEmployeeRequest employee){
+   _logger.LogInformation("Updatating employee with ID: {employeeID}", id);
    var existingEmployee = _repository.GetById(id);
    if(existingEmployee == null){
+      _logger.LogWarning("Employee with ID {employeeId} NOT FOUND!", id);
       return NotFound();
     }
     existingEmployee.Address1 = employee.Address1;

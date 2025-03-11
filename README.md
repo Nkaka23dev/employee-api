@@ -14,6 +14,9 @@
  ```ts
     You can also use NuGet to add this package throught the VScode UI.
  ```
+ ```ts
+    Use AutoMapper to similate object.assing() as in  JavaScript.
+```
 
 
 ### Used pattern
