@@ -7,7 +7,7 @@ public class EmployeeController: BaseController
 {
  private readonly IRepository<Employee> _repository;
  private readonly ILogger<EmployeeController> _logger;
-
+ 
  public EmployeeController(IRepository<Employee> repository, 
  ILogger<EmployeeController> logger)
  {
@@ -24,19 +24,9 @@ public class EmployeeController: BaseController
  [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
  public IActionResult GetAllEmployees(){
     var employeeResponse = _repository.GetAll()
-    .Select(employee => new GetEmployeeResponse {
-       FirstName = employee.FirstName, 
-       LastName = employee.LastName,
-       Address1 = employee.Address1,
-       Address2 = employee.Address2,
-       City = employee.City,
-       Email = employee.Email,
-       ZipCode = employee.ZipCode,
-       PhoneNumber = employee.PhoneNumber,     
-       State = employee.State  
-   });
+    .Select(EmployeeToGetEmployeeResponse);
     return Ok(employeeResponse);
- }
+ } 
  /// <summary>
  /// Gets an Employee by id.
  /// </summary>
@@ -46,22 +36,12 @@ public class EmployeeController: BaseController
  [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
  [ProducesResponseType(StatusCodes.Status404NotFound)]
  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
- public IActionResult GetEmployeeById(int id){
+ public IActionResult GetEmployeeById(int id){ 
    var employee = _repository.GetById(id);
    if(employee == null){
      return NotFound();
    }
-   var employeeResponse = new GetEmployeeResponse {
-       FirstName = employee.FirstName,
-       LastName = employee.LastName,
-       Address1 = employee.Address1,
-       Address2 = employee.Address2,
-       City = employee.City,
-       Email = employee.Email,
-       ZipCode = employee.ZipCode,
-       PhoneNumber = employee.PhoneNumber,     
-       State = employee.State  
-   };
+   var employeeResponse = EmployeeToGetEmployeeResponse(employee);
    return Ok(employeeResponse);
  }
  /// <summary>
@@ -120,4 +100,42 @@ public class EmployeeController: BaseController
     _repository.Update(existingEmployee);
     return Ok(existingEmployee);
  } 
+
+ /// <summary>
+ /// Get All benefits of an Employee
+ /// </summary>
+ /// <param name="employeeId"></param>
+ /// <returns></returns>
+ [HttpGet("{employeeId}/benefits")]
+ [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
+ [ProducesResponseType(StatusCodes.Status404NotFound)]
+ [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+ public IActionResult GetBenefitsForEmployee(int employeeId){ 
+   var employee = _repository.GetById(employeeId);
+   if(employee == null){
+     return NotFound();
+   }
+   return Ok(employee.Benefits);
+ }
+
+private GetEmployeeResponse 
+EmployeeToGetEmployeeResponse(Employee employee){
+return new GetEmployeeResponse {
+       FirstName = employee.FirstName, 
+       LastName = employee.LastName,
+       Address1 = employee.Address1,
+       Address2 = employee.Address2,
+       City = employee.City,
+       Email = employee.Email,
+       ZipCode = employee.ZipCode,
+       PhoneNumber = employee.PhoneNumber,     
+       State = employee.State, 
+       Benefits = employee.Benefits.Select(benefit => new GetEmployeeResponseEmployeeBenefits{
+          Id = benefit.Id,
+          EmployeeId = benefit.EmployeeId,
+          BenefitsType = benefit.BenefitsType,
+          Cost = benefit.Cost
+       }).ToList()
+   };
+}
 }

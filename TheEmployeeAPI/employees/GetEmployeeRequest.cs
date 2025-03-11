@@ -10,5 +10,14 @@ public class GetEmployeeResponse{
     public  string? ZipCode {get; set;}
     public  string? PhoneNumber {get; set;}
     public  string? Email {get; set;}
+    public required List<GetEmployeeResponseEmployeeBenefits> Benefits {get;set;}
+
 } 
 
+public class GetEmployeeResponseEmployeeBenefits{
+    public int Id {get; set;}
+    public int EmployeeId {get; set;}
+    public BenefitsType BenefitsType {get; set;}
+    public decimal Cost {get; set;}
+}
+ 
