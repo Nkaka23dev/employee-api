@@ -2,6 +2,12 @@ using TheEmployeeAPI;
 using TheEmployeeAPI.abstraction;
 using FluentValidation;
 
+var employees = new List<Employee>
+{
+    new Employee { Id = 1, FirstName = "John", LastName = "Doe" },
+    new Employee { Id = 2, FirstName = "Jane", LastName = "Doe" }
+};
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();

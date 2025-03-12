@@ -28,7 +28,7 @@ public class EmployeeController: BaseController
     return Ok(employeeResponse);
  } 
  /// <summary>
- /// Gets an Employee by id.
+ /// Get an Employee by id.
  /// </summary>
  /// <param name="id">ID of an employee you want to get</param>
  /// <returns>Return employee object</returns>
@@ -101,22 +101,33 @@ public class EmployeeController: BaseController
     return Ok(existingEmployee);
  } 
 
- /// <summary>
- /// Get All benefits of an Employee
+ /// <summary> 
+ /// Get benefits of an Employee
  /// </summary>
  /// <param name="employeeId"></param>
- /// <returns></returns>
+ /// <returns>The Benefits for that employee</returns>
  [HttpGet("{employeeId}/benefits")]
- [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
+ [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>),
+  StatusCodes.Status200OK)]
  [ProducesResponseType(StatusCodes.Status404NotFound)]
  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
  public IActionResult GetBenefitsForEmployee(int employeeId){ 
    var employee = _repository.GetById(employeeId);
    if(employee == null){
-     return NotFound();
+     return NotFound(); 
    }
-   return Ok(employee.Benefits);
- }
+   return Ok(employee.Benefits.Select(BenefitsToBenefitsResponse));
+ } 
+
+private static GetEmployeeResponseEmployeeBenefits 
+BenefitsToBenefitsResponse(EmployeeBenefits employeeBenefits){
+ return new GetEmployeeResponseEmployeeBenefits {
+  Id = employeeBenefits.Id,
+  EmployeeId = employeeBenefits.EmployeeId,
+  BenefitsType = employeeBenefits.BenefitsType,
+  Cost = employeeBenefits.Cost
+ };
+}
 
 private GetEmployeeResponse 
 EmployeeToGetEmployeeResponse(Employee employee){

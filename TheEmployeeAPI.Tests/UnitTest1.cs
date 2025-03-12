@@ -19,8 +19,12 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
             FirstName = "John", 
             LastName = "Doe",
             Address1 = "123 Main St",
+            Benefits = new List<EmployeeBenefits> {
+                new EmployeeBenefits { BenefitsType = BenefitsType.Health, Cost = 100},
+                new EmployeeBenefits { BenefitsType = BenefitsType.Vision, Cost = 13000}
+            }
           });
-         _employeeId = repo.GetAll().First().Id;
+         _employeeId = repo.GetAll().First().Id; 
     }
     [Fact]
     public async Task GetAllEmployees_ReturnOkResults(){
@@ -84,14 +88,27 @@ public class BasicTests: IClassFixture<WebApplicationFactory<Program>>{
         var invalidEmployee = new UpdateEmployeeRequest(); 
 
         var response = await client.PutAsJsonAsync($"/employee/{_employeeId}", invalidEmployee);
-
+        Console.Write($"{HttpStatusCode.BadRequest}, {response.StatusCode}");
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var problemDetails = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
         Assert.NotNull(problemDetails); 
         Assert.Contains("Address1", problemDetails.Errors.Keys);       
 
     }
+   
+    [Fact]
+    public async Task GetBenefitsForEmployee_ReturnsOkResult()
+    {
+        // Act
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync($"/employee/{_employeeId}/benefits");
 
+        // Assert
+        response.EnsureSuccessStatusCode();
+        
+        var benefits = await response.Content.ReadFromJsonAsync<IEnumerable<GetEmployeeResponseEmployeeBenefits>>();
+        Assert.Equal(2, benefits!.Count());
+    }
 }
 /*
     Assert.True(response.IsSuccessStatusCode)
