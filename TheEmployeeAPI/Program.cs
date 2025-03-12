@@ -1,5 +1,4 @@
 using TheEmployeeAPI;
-using TheEmployeeAPI.abstraction;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +10,8 @@ builder.Services.AddDbContext<AppBbContext>(options => {
   options.UseSqlite("Data source=database.db");
 });
 builder.Services.AddSwaggerDocument();
-builder.Services.AddSingleton<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddProblemDetails();
-builder.Services.AddValidatorsFromAssemblyContaining<Program>(); 
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();  
 builder.Services.AddControllers(options => {
     options.Filters.Add<FluentValidationFilter>();
 });
@@ -29,7 +27,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()){
     var services = scope.ServiceProvider;
-    SeedData.Seed(services);
+    SeedData.MigrateAndSeed(services);
 }
 
 if (app.Environment.IsDevelopment())
@@ -37,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseOpenApi();
     app.UseSwaggerUi(config =>
     {
-        config.DocumentTitle = "Employees API";
+        config.DocumentTitle = "Employees A PI";
         config.Path =  "/api";
         config.DocumentPath = "/swagger/{documentName}/swagger.json";
         config.DocExpansion = "list";

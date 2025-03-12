@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="archiveforlearning/" />
+    <Folder Include="entities/" />
   </ItemGroup>
 
 </Project>

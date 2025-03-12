@@ -1,10 +1,16 @@
-namespace TheEmployeeAPI;
 
-public class SeedData
+using Microsoft.EntityFrameworkCore;
+using TheEmployeeAPI;
+
+public static class SeedData
 {
- public static void Seed(IServiceProvider serviceProvide){
-    var context = serviceProvide.GetRequiredService<AppBbContext>();
-    if(!context.Employees.Any()){
+    public static void MigrateAndSeed(IServiceProvider serviceProvider)
+    {
+        var context = serviceProvider.GetRequiredService<AppBbContext>();
+        context.Database.Migrate();
+
+        if (!context.Employees.Any())
+        {
         context.Employees.AddRange(
         new Employee
         {
@@ -22,8 +28,8 @@ public class SeedData
                 new EmployeeBenefits { BenefitsType = BenefitsType.Health, Cost = 100.00m },
                 new EmployeeBenefits { BenefitsType = BenefitsType.Dental, Cost = 50.00m }
             }
-        },
-        new Employee
+        }, 
+           new Employee
         {
             FirstName = "Jane",
             LastName = "Smith",
@@ -41,9 +47,10 @@ public class SeedData
                 new EmployeeBenefits { BenefitsType = BenefitsType.Vision, Cost = 30.00m }
             }
         }
-        );
-    }
+              
+            );
 
- }
+            context.SaveChanges();
+        }
+    }
 }
- 

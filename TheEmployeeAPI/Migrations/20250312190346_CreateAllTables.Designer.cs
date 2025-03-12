@@ -10,8 +10,8 @@ using TheEmployeeAPI;
 namespace TheEmployeeAPI.Migrations
 {
     [DbContext(typeof(AppBbContext))]
-    [Migration("20250312130744_init")]
-    partial class init
+    [Migration("20250312190346_CreateAllTables")]
+    partial class CreateAllTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,11 +86,13 @@ namespace TheEmployeeAPI.Migrations
 
             modelBuilder.Entity("TheEmployeeAPI.EmployeeBenefits", b =>
                 {
-                    b.HasOne("TheEmployeeAPI.Employee", null)
+                    b.HasOne("TheEmployeeAPI.Employee", "Employee")
                         .WithMany("Benefits")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("TheEmployeeAPI.Employee", b =>
