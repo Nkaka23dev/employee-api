@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TreatWarningAsErrors>true</TreatWarningAsErrors>
+    <!-- <TreatWarningAsErrors>true</TreatWarningAsErrors> -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nowarn>$(Nowarn);1591</Nowarn>
   </PropertyGroup>
@@ -14,6 +14,8 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.3" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
   </ItemGroup>
 

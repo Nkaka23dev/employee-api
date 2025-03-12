@@ -1,7 +1,23 @@
 
   ### About the project
 
-- A `Csharp`, `.NET` and `ASP.NET Core` project.
+- An `ASP.NET Core` employee project. Under the hood(C# and .NET), the  project uses `SQLite` database which can be changed in production.
+
+#### Getting started:
+```ts
+ - Clone the project
+ - You need to have `dotnet` and `ef` installed
+ ```
+
+#### Useful commands:
+```ts
+ - dotnet build
+ - dotnet test
+ - dotnet run
+ - dotnet ef database update
+ - dotnet ef migrations add init
+ - dotnet ef migrations add --file-name
+ ```
 - Unit test included using  
 ```bash
  - XUnit
@@ -15,14 +31,15 @@
     You can also use NuGet to add this package throught the VScode UI.
  ```
  ```ts
-    Use AutoMapper to similate object.assing() as in  JavaScript.
-```
-- To including mocking while testin we can mock ILogger interface. You can use the following libray 
+    Use AutoMapper to similate object.assing()
+   ```
+- To including ILogger mocks while testing we can mock ILogger interface. You can use one of the following libries: 
 ```bash
  - Moq
  - ILogger.Moq
  - ILogger.Log
  ```
+
 ### Used pattern
 
 - Repository Pattern

@@ -1,6 +1,7 @@
 using TheEmployeeAPI;
 using TheEmployeeAPI.abstraction;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 var employees = new List<Employee>
 {
@@ -9,8 +10,12 @@ var employees = new List<Employee>
 };
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddDbContext<AppBbContext>(options => {
+  options.UseSqlite("Data source=database.db");
+});
 builder.Services.AddSwaggerDocument();
 builder.Services.AddSingleton<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddProblemDetails();

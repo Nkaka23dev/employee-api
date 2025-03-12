@@ -12,7 +12,7 @@ public class Employee {
     public  string? ZipCode {get; set;}
     public  string? PhoneNumber {get; set;}
     public  string? Email {get; set;} 
-    public List<EmployeeBenefits> Benefits = new List<EmployeeBenefits>();
+    public List<EmployeeBenefits> Benefits {get; set;} = new List<EmployeeBenefits>();
 }
 
 public class EmployeeBenefits {
@@ -20,6 +20,7 @@ public class EmployeeBenefits {
     public int EmployeeId {get; set;}
     public BenefitsType BenefitsType {get; set;}
     public decimal Cost {get; set;}
+    public Employee Employee {get; set;} = null!;
 }
 
 public enum BenefitsType 
