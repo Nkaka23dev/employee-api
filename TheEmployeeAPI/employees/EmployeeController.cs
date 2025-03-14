@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TheEmployeeAPI.dtos;
 
 namespace TheEmployeeAPI.employees;
 
@@ -20,14 +21,30 @@ public class EmployeeController: BaseController
  [HttpGet("all")]
  [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponse>), StatusCodes.Status200OK)]
  [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
-   public async Task<IActionResult> GetAllEmployees(){
-    var employees = await _dbContext.Employees
-    .Include(e => e.Benefits).ToArrayAsync();
-    return Ok(employees.Select(EmployeeToGetEmployeeResponse));
+ public async Task<IActionResult> GetAllEmployees([FromQuery] GetAllEmployeesRequest request){
+
+   var page = request?.Page ?? 1;
+   var numberOfRecord = request?.RequestPerPage ?? 100; 
+
+   IQueryable<Employee> query = _dbContext.Employees
+   .Include(e => e.Benefits)
+   .Skip((page - 1) * numberOfRecord)
+   .Take(numberOfRecord);
+
+   if(request != null){
+      if(!string.IsNullOrWhiteSpace(request.FirstNameContains)){
+         query = query.Where(e => e.FirstName.Contains(request.FirstNameContains));
+      }
+       if(!string.IsNullOrWhiteSpace(request.LastNameContains)){
+         query = query.Where(e => e.LastName.Contains(request.LastNameContains));
+      }
+   }
+   var employees = await query.ToArrayAsync();
+   return Ok(employees.Select(EmployeeToGetEmployeeResponse));
  } 
  /// <summary>
  /// Get an Employee by id.
- /// </summary>
+ /// </summary> 
  /// <param name="id">ID of an employee you want to get</param>
  /// <returns>Return employee object</returns>
  [HttpGet("{id}")]

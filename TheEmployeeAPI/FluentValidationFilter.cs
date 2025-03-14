@@ -23,7 +23,6 @@ public class FluentValidationFilter : IAsyncActionFilter
             var validatorType = typeof(IValidator<>).MakeGenericType(argumentType);
             var validator = _serviceProvider.GetService(validatorType) as IValidator;
             if(validator != null){
-              //Validate argument 
              ValidationResult validationResult = await validator.ValidateAsync(new ValidationContext<object>(argumentValue));
              if(!validationResult.IsValid){
                  validationResult.AddToModelState(context.ModelState);

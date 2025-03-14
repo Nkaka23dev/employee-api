@@ -18,6 +18,10 @@
  - dotnet ef migrations add init
  - dotnet ef migrations add --file-name
  ```
+#### Filtering and Pagination example:
+```ts
+ http://localhost:5229/employee/all?page=2&RequestPerPage=3&FirstNameContains={firstname}&LastNameContains={lastname}
+ ```
 - Unit test included using  
 ```bash
  - XUnit
