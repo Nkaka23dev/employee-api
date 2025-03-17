@@ -12,10 +12,16 @@ builder.Services.AddControllers(options => {
     options.Filters.Add<FluentValidationFilter>();
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<AppBbContext>(options => {
-  options.UseSqlite("Data source=database.db");
-});
-
+/* This is removed because we are going to use changeTracker of EF core manually*/
+// builder.Services.AddDbContext<AppBbContext>(options => {
+//   options.UseSqlite("Data source=database.db");
+// });
+builder.Services.AddDbContext<AppBbContext>(
+    option => {
+        option.UseSqlite(builder.Configuration.GetConnectionString("Default Connection"));
+        option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+    }
+);
 builder.Services.AddSwaggerDocument();
 builder.Services.AddOpenApiDocument(config =>
 {

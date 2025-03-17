@@ -1,6 +1,7 @@
 namespace TheEmployeeAPI.employees;
 
 public class GetEmployeeResponse{
+    public int Id {get; set;}
     public  required string FirstName { get; set; }
     public  required string LastName {get; set;}
     public  string? Address1 {get; set;}

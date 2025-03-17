@@ -14,14 +14,19 @@ public class CustomWebApplicationFactory: WebApplicationFactory<Program>
         builder.ConfigureServices(services => {
         var dbContextDescriptor = services.SingleOrDefault(
             d => d.ServiceType == typeof(DbContextOptions<AppBbContext>));
-        services.Remove(dbContextDescriptor);
-
+        if(dbContextDescriptor != null){
+            services.Remove(dbContextDescriptor);
+        }
+        
         var dbConnectionDescriptor = services.SingleOrDefault(
          d => d.ServiceType == typeof(DbConnection));
 
-         services.Remove(dbConnectionDescriptor);
+         if (dbConnectionDescriptor != null)
+         {
+             services.Remove(dbConnectionDescriptor);
+         }
          
-         //create open SQLite connection so EF won't automatically close it.
+         //create open SQLite connection s o EF won't automatically close it.
          services.AddSingleton<DbConnection>(container => {
              var connection = new SqliteConnection("DataSource=:memory:");
              connection.Open();
@@ -32,6 +37,7 @@ public class CustomWebApplicationFactory: WebApplicationFactory<Program>
             {
                 var connection = container.GetRequiredService<DbConnection>();
                 options.UseSqlite(connection);
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
         });
 
