@@ -22,7 +22,7 @@ public class EmployeeController: BaseController
  [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponse>), StatusCodes.Status200OK)]
  [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
  public async Task<IActionResult> GetAllEmployees([FromQuery] GetAllEmployeesRequest request){
-
+ 
    var page = request?.Page ?? 1;
    var numberOfRecord = request?.RequestPerPage ?? 100; 
 
@@ -150,38 +150,36 @@ public class EmployeeController: BaseController
   return NoContent();
  }
 
-//  /// <summary> 
-//  /// Get benefits of an Employee
-//  /// </summary>
-//  /// <param name="employeeId"></param>
-//  /// <returns>The Benefits for that employee</returns>
-//  [HttpGet("{employeeId}/benefits")]
-//  [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>),
-//   StatusCodes.Status200OK)]
-//  [ProducesResponseType(StatusCodes.Status404NotFound)]
-//  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-//  public IActionResult GetBenefitsForEmployee(int employeeId){ 
-//    var employee = _repository.GetB yId(employeeId);
-//    if(employee == null){
-//      return NotFound(); 
-//    }
-//    return Ok(employee.Benefits.Select(BenefitsToBenefitsResponse));
-//  } 
+ /// <summary> 
+ /// Get benefits of an Employee
+ /// </summary>
+ /// <param name="employeeId"></param>
+ /// <returns>The Benefits for that employee</returns>
+ [HttpGet("{employeeId}/benefits")]
+ [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>),
+  StatusCodes.Status200OK)]
+ [ProducesResponseType(StatusCodes.Status404NotFound)]
+ [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+ public async Task<IActionResult> GetBenefitsForEmployee(int employeeId){ 
+   var employee = await _dbContext.Employees
+   .Include(e => e.Benefits)
+   .ThenInclude(e => e.Benefit)
+   .SingleOrDefaultAsync(e => e.Id == employeeId);
 
-private static GetEmployeeResponseEmployeeBenefits 
-BenefitsToBenefitsResponse(EmployeeBenefits employeeBenefits){
- return new GetEmployeeResponseEmployeeBenefits {
-  Id = employeeBenefits.Id,
-  EmployeeId = employeeBenefits.EmployeeId,
-  BenefitsType = employeeBenefits.BenefitsType,
-  Cost = employeeBenefits.Cost
- };
-}
+   if(employee == null){
+     return NotFound(); 
+   }
+   var benefits = employee.Benefits.Select(b => new GetEmployeeResponseEmployeeBenefits {
+      Id = b.Id,
+      Name = b.Benefit.Name,
+      Description = b.Benefit.Description,
+      Cost = b.CostToEmployee ?? b.Benefit.BaseCost
+   });
+   return Ok(benefits);
+ } 
 
-private GetEmployeeResponse 
-EmployeeToGetEmployeeResponse(Employee employee){
+private GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee){
 return new GetEmployeeResponse {
-       Id = employee.Id,
        FirstName = employee.FirstName, 
        LastName = employee.LastName,
        Address1 = employee.Address1,
@@ -190,13 +188,8 @@ return new GetEmployeeResponse {
        Email = employee.Email,
        ZipCode = employee.ZipCode,
        PhoneNumber = employee.PhoneNumber,     
-       State = employee.State, 
-       Benefits = employee.Benefits.Select(benefit => new GetEmployeeResponseEmployeeBenefits{
-          Id = benefit.Id,
-          EmployeeId = benefit.EmployeeId,
-          BenefitsType = benefit.BenefitsType,
-          Cost = benefit.Cost
-       }).ToList()
+       State = employee.State,
    };
+} 
 }
-}
+ 

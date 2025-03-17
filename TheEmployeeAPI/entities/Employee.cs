@@ -12,20 +12,23 @@ public class Employee {
     public  string? ZipCode {get; set;}
     public  string? PhoneNumber {get; set;}
     public  string? Email {get; set;} 
-    public List<EmployeeBenefits> Benefits {get; set;} = new List<EmployeeBenefits>();
-}
+    public List<EmployeeBenefit> Benefits {get;set;} = new List<EmployeeBenefit>();
+} 
 
-public class EmployeeBenefits {
+public class Benefit {
     public int Id {get; set;}
-    public int EmployeeId {get; set;}
-    public BenefitsType BenefitsType {get; set;}
-    public decimal Cost {get; set;}
-    public Employee Employee {get; set;} = null!;
+    public required string Name {get; set;}
+    public required string Description {get; set;}
+    public decimal BaseCost {get; set;}
+
 }
 
-public enum BenefitsType 
-{
-    Health,
-    Dental,
-    Vision,
+public class EmployeeBenefit {
+     public int Id {get; set;}
+     public int EmployeeId {get; set;}
+     public Employee Employee {get; set;} = null!;
+     public int BenefitId {get; set;}
+     public Benefit Benefit {get; set;} = null!;
+     public decimal? CostToEmployee {get; set;}
 }
+

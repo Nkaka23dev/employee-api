@@ -60,7 +60,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
     public async Task CreateEmployee_ReturnsCreatedResult(){
      var client  = _factory.CreateClient();
      var response = await client.PostAsJsonAsync("/employee",
-         new Employee { FirstName = "John", LastName ="Doe",  SocialSecurityNumber="6575-574-6544"});
+         new Employee { FirstName = "John", LastName ="Yann",  SocialSecurityNumber="6575-574-6544"});
      response.EnsureSuccessStatusCode();
     }
 
@@ -136,19 +136,19 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
 
     }
    
-//     [Fact]
-//     public async Task GetBenefitsForEmployee_ReturnsOkResult()
-//     {
-//         // Act
-//         var client = _factory.CreateClient();
-//         var response = await client.GetAsync($"/employee/{_employeeId}/benefits");
+    [Fact]
+    public async Task GetBenefitsForEmployee_ReturnsOkResult()
+    {
+        // Act
+        var client = _factory.CreateClient();
+        var response = await client.GetAsync($"/employee/{_employeeId}/benefits");
 
-//         // Assert
-//         response.EnsureSuccessStatusCode();
+        // Assert
+        response.EnsureSuccessStatusCode();
         
-//         var benefits = await response.Content.ReadFromJsonAsync<IEnumerable<GetEmployeeResponseEmployeeBenefits>>();
-//         Assert.Equal(2, benefits!.Count());
-//     }
+        var benefits = await response.Content.ReadFromJsonAsync<IEnumerable<GetEmployeeResponseEmployeeBenefits>>();
+        Assert.Equal(2, benefits.Count());
+    }
 }
 /*
     Assert.True(response.IsSuccessStatusCode)

@@ -10,14 +10,36 @@ using TheEmployeeAPI;
 namespace TheEmployeeAPI.Migrations
 {
     [DbContext(typeof(AppBbContext))]
-    [Migration("20250312190346_CreateAllTables")]
-    partial class CreateAllTables
+    [Migration("20250317181816_UpdateEmployeeTableTwo")]
+    partial class UpdateEmployeeTableTwo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
+
+            modelBuilder.Entity("TheEmployeeAPI.Benefit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("BaseCost")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Benefits");
+                });
 
             modelBuilder.Entity("TheEmployeeAPI.Employee", b =>
                 {
@@ -62,16 +84,16 @@ namespace TheEmployeeAPI.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("TheEmployeeAPI.EmployeeBenefits", b =>
+            modelBuilder.Entity("TheEmployeeAPI.EmployeeBenefit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BenefitsType")
+                    b.Property<int>("BenefitId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Cost")
+                    b.Property<decimal?>("CostToEmployee")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("EmployeeId")
@@ -79,18 +101,29 @@ namespace TheEmployeeAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("BenefitId");
+
+                    b.HasIndex("EmployeeId", "BenefitId")
+                        .IsUnique();
 
                     b.ToTable("EmployeeBenefits");
                 });
 
-            modelBuilder.Entity("TheEmployeeAPI.EmployeeBenefits", b =>
+            modelBuilder.Entity("TheEmployeeAPI.EmployeeBenefit", b =>
                 {
+                    b.HasOne("TheEmployeeAPI.Benefit", "Benefit")
+                        .WithMany()
+                        .HasForeignKey("BenefitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TheEmployeeAPI.Employee", "Employee")
                         .WithMany("Benefits")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Benefit");
 
                     b.Navigation("Employee");
                 });

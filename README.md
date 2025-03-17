@@ -15,7 +15,6 @@
  - dotnet test
  - dotnet run
  - dotnet ef database update
- - dotnet ef migrations add init
  - dotnet ef migrations add --file-name
  ```
 #### Filtering and Pagination example:
