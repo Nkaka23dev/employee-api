@@ -7,6 +7,7 @@
     <!-- <TreatWarningAsErrors>true</TreatWarningAsErrors> -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nowarn>$(Nowarn);1591</Nowarn>
+    <Nowarn>$(Nowarn);0618</Nowarn>
   </PropertyGroup>
 
   <ItemGroup>

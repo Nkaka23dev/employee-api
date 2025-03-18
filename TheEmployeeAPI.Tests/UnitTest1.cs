@@ -99,6 +99,8 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         var db = scope.ServiceProvider.GetRequiredService<AppBbContext>();
         var employee = await db.Employees.FindAsync(1);
         Assert.Equal("123 Main Smoot", employee?.Address1);
+        Assert.Equal(CustomWebApplicationFactory.SystemClock.UtcNow.UtcDateTime, employee?.LastModifiedOn);
+        // Assert.Equal("test@test.com", employee?.LastModifiedBy);
     } 
  
     [Fact] 
@@ -147,7 +149,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         response.EnsureSuccessStatusCode();
         
         var benefits = await response.Content.ReadFromJsonAsync<IEnumerable<GetEmployeeResponseEmployeeBenefits>>();
-        Assert.Equal(2, benefits.Count());
+        Assert.Equal(2, benefits?.Count());
     }
 }
 /*

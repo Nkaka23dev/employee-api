@@ -12,6 +12,7 @@ public class UpdateEmployeeRequest
     public  string? ZipCode {get; set;}
     public  string? PhoneNumber {get; set;}
     public  string? Email {get; set;}
+
 }
 
 public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeRequest>

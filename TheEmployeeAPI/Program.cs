@@ -1,6 +1,8 @@
 using TheEmployeeAPI;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,12 +14,13 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers(options => {
     options.Filters.Add<FluentValidationFilter>();
 });
+builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AppBbContext>(
     option => {
         option.UseSqlite(builder.Configuration.GetConnectionString("Default Connection"));
         // option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-    }
+    } 
 );
 builder.Services.AddSwaggerDocument();
 builder.Services.AddOpenApiDocument(config =>
