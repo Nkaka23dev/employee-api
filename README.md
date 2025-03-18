@@ -43,6 +43,11 @@
  - ILogger.Log
  ```
 
+### TODO!
+
+- Use postgres instead of memory database(SQLite)
+- Authentication an authorization
+
 ### Used pattern
 
 - Repository Pattern
