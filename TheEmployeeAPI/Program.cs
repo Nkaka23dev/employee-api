@@ -16,7 +16,7 @@ builder.Services.AddControllers(options => {
 });
 builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<AppBbContext>(
+builder.Services.AddDbContext<AppDbContext>(
     option => {
         option.UseSqlite(builder.Configuration.GetConnectionString("Default Connection"));
         // option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);

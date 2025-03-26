@@ -7,8 +7,8 @@ namespace TheEmployeeAPI.employees;
 public class EmployeeController: BaseController
 {
  private readonly ILogger<EmployeeController> _logger;
- private readonly AppBbContext _dbContext ;
- public EmployeeController(ILogger<EmployeeController> logger, AppBbContext dbContext)
+ private readonly AppDbContext _dbContext ;
+ public EmployeeController(ILogger<EmployeeController> logger, AppDbContext dbContext)
  {
     _logger = logger;
     _dbContext = dbContext;

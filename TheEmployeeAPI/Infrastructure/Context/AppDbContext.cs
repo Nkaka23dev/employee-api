@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TheEmployeeAPI.Entities.Auth;
 
 namespace TheEmployeeAPI;
 
-public class AppBbContext: DbContext
+public class AppDbContext: DbContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ISystemClock _systemClock;
 
-    public AppBbContext(
-    DbContextOptions<AppBbContext> options, 
+    public AppDbContext(
+    DbContextOptions<AppDbContext> options, 
     IHttpContextAccessor httpContextAccessor,
     ISystemClock systemClock
     ): base(options)
@@ -22,6 +24,7 @@ public class AppBbContext: DbContext
     public DbSet<EmployeeBenefit> EmployeeBenefits {get;set;}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<EmployeeBenefit>()
         .HasIndex(b => new {b.EmployeeId, b.BenefitId}).IsUnique();
     }

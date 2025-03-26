@@ -96,7 +96,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
             });
         response.EnsureSuccessStatusCode();
         using var scope = _factory.Services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<AppBbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var employee = await db.Employees.FindAsync(1);
         Assert.Equal("123 Main Smoot", employee?.Address1);
         Assert.Equal(CustomWebApplicationFactory.SystemClock.UtcNow.UtcDateTime, employee?.LastModifiedOn);
@@ -122,7 +122,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         var client = _factory.CreateClient();
         var newEmployee = new Employee {FirstName = "Meow", LastName="Garitea"};
         using (var scope = _factory.Services.CreateScope()){
-          var db = scope.ServiceProvider.GetRequiredService<AppBbContext>();
+          var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
           db.Employees.Add(newEmployee);
           await db.SaveChangesAsync();
         }

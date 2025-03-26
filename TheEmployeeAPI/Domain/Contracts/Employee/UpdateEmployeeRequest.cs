@@ -18,9 +18,9 @@ public class UpdateEmployeeRequest
 public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeRequest>
 {
     private readonly HttpContext _httpContext;
-    private readonly  AppBbContext _appDbContext;
+    private readonly  AppDbContext _appDbContext;
 
-    public UpdateEmployeeRequestValidator(IHttpContextAccessor httpContextAccessor, AppBbContext appDbContext){
+    public UpdateEmployeeRequestValidator(IHttpContextAccessor httpContextAccessor, AppDbContext appDbContext){
 
         _httpContext = httpContextAccessor.HttpContext!;
         _appDbContext = appDbContext;
