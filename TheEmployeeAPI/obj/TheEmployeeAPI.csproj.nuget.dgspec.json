@@ -83,6 +83,10 @@
             "NSwag.AspNetCore": {
               "target": "Package",
               "version": "[14.2.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
