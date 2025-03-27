@@ -65,6 +65,7 @@ Ensure you have the following installed:
 - **.NET SDK** (version 9.0 or later)  
 - **Entity Framework (EF Core)**  
 - **PostgreSQL** (optional, if migrating from SQLite)
+- **NuGet Gallery** VSCode extention(Optional)
 
 ### Setup Instructions  
 ```sh
@@ -79,6 +80,9 @@ dotnet restore
 
 # Build the project
 dotnet build
+
+# Navigate to TheEmployeeAPI
+cd TheEmployeeAPI
 
 # Run the project locally
 dotnet run
@@ -118,6 +122,10 @@ dotnet run
  - ILogger.Moq
  - ILogger.Log
  ```
+
+ ## Contributing
+
+We welcome your contributions to this learning project! 
 
 ### Used pattern
 

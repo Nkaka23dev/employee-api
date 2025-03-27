@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/TheEmployeeAPI.csproj": {}
+    "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/TheEmployeeAPI.csproj": {}
   },
   "projects": {
-    "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/TheEmployeeAPI.csproj": {
+    "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/TheEmployeeAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
+        "projectUniqueName": "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
         "projectName": "TheEmployeeAPI",
-        "projectPath": "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
+        "projectPath": "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
         "packagesPath": "/Users/thegym/.nuget/packages/",
-        "outputPath": "/Users/thegym/terrassign/employees-api/TheEmployeeAPI/obj/",
+        "outputPath": "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/thegym/.nuget/NuGet/NuGet.Config"
