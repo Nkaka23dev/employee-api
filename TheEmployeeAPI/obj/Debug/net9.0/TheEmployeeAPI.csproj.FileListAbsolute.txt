@@ -186,3 +186,6 @@
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/thegym/terrassign/employees-api/TheEmployeeAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll

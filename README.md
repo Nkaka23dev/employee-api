@@ -2,7 +2,7 @@
 
 ## About the Project  
 
-This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, payroll, and more. 
+This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, and payroll.
 
 ## Already Implemented Features✅
 

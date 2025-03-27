@@ -3,12 +3,14 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TheEmployeeAPI.xml"));
+});
 builder.Services.AddProblemDetails();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();  
 builder.Services.AddControllers(options => {
@@ -23,24 +25,17 @@ builder.Services.AddDbContext<AppDbContext>(
     } 
 );
 builder.Services.AddSwaggerDocument();
-builder.Services.AddOpenApiDocument(config =>
-{
-    config.DocumentName = "Employees API documentation";
-    config.Title = "Employees API v1";
-    config.Version = "v1";
-});
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {   
-    app.UseOpenApi();
-    app.UseSwaggerUi(config =>
+    app.UseSwagger();
+       app.UseSwaggerUI(c =>
     {
-        config.DocumentTitle = "Employees A PI";
-        config.Path =  "/api";
-        config.DocumentPath = "/swagger/{documentName}/swagger.json";
-        config.DocExpansion = "list";
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee API v1");
+        c.RoutePrefix = string.Empty; 
     });
+
 }
 using (var scope = app.Services.CreateScope()){
     var services = scope.ServiceProvider;
