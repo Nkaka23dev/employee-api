@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Domain/Auth/" />
     <Folder Include="Exceptions/" />
+    <Folder Include="Services/Tokens/" />
   </ItemGroup>
 
 </Project>

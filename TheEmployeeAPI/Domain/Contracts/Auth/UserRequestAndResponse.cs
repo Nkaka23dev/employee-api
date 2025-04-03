@@ -23,7 +23,7 @@ public class UserResponse
     public string? RefreshToken {get; set;}
 }
 
-public class LoginRequest
+public class UserLoginRequest
  {
     public string? Email {get; set;}
     public string? password {get; set;}
