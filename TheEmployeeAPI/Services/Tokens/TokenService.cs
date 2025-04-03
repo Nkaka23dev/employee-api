@@ -16,7 +16,7 @@ public class TokenService : ITokenService
     private readonly string? _validAudience;
     private readonly double? _expires;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ILogger<TokenService> _logger;
+    // private readonly ILogger<TokenService> _logger;
     public TokenService(IConfiguration configuration, UserManager<ApplicationUser> userManager)
     {
         var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
@@ -49,10 +49,10 @@ public class TokenService : ITokenService
     var claims = new List<Claim>{
     new(ClaimTypes.Name, user?.UserName ?? string.Empty),
     new(ClaimTypes.NameIdentifier, user?.Id ?? string.Empty),
-    new(ClaimTypes.Email, user.Email),
-    new("FirstName", user.FirstName),
-    new("LastName", user.LastName),
-    new("Gender", user.Gender)
+    new(ClaimTypes.Email, user?.Email ?? string.Empty),
+    new("FirstName", user?.FirstName ?? string.Empty),
+    new("LastName", user?.LastName ?? string.Empty),
+    new("Gender", user?.Gender ?? string.Empty)
     };
   var roles = await _userManager.GetRolesAsync(user); 
   claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

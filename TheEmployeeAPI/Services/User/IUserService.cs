@@ -4,7 +4,7 @@ namespace TheEmployeeAPI.Services.User;
 
 public interface IUserService
 {
-  Task<UserResponse> RegisterHandler(UserRegisterRequest userRegisterRequest);
+  Task<UserResponse> RegisterHandler(UserRegisterRequest request);
   Task<UserResponse> LoginHandler(UserLoginRequest userLoginRequest);
   Task<CurrentUserResponse> GetCurrentUser();
   Task<UserResponse> GetUserById(Guid id);
