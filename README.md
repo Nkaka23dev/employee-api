@@ -88,6 +88,11 @@ cd TheEmployeeAPI
 dotnet run
 ```
 
+## Setting Up the Local Environment
+
+1. Copy the `appsettings.example.json` file to `appsettings.json`.
+   
+
 #### Useful commands:
 ```ts
  - dotnet build //Build the project
