@@ -2,7 +2,7 @@ using TheEmployeeAPI.Domain.Contracts.Auth;
 
 namespace TheEmployeeAPI.Services.User;
 
-public interface IUserService
+public interface IUserServices
 {
   Task<UserResponse> RegisterHandler(UserRegisterRequest request);
   Task<UserResponse> LoginHandler(UserLoginRequest request);
@@ -10,6 +10,6 @@ public interface IUserService
   Task<UserResponse> GetUserById(Guid id);
   Task<UserResponse> UpdateUser(Guid id, UpdatedUserRequest updatedUserRequest);
   Task DeleteUser(Guid id);
-  Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest refreshTokenRemoveRequest);
-  Task<CurrentUserResponse> RefreshUserToken(RefreshTokenRequest refreshTokenRequest);
+  Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest request);
+  Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest);
 }
