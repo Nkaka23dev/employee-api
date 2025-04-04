@@ -4,8 +4,8 @@ namespace TheEmployeeAPI.Services.User;
 
 public interface IUserService
 {
-  Task<UserResponse> RegisterHandler(UserRegisterRequest userRegisterRequest);
-  Task<UserResponse> LoginHandler(UserLoginRequest userLoginRequest);
+  Task<UserResponse> RegisterHandler(UserRegisterRequest request);
+  Task<UserResponse> LoginHandler(UserLoginRequest request);
   Task<CurrentUserResponse> GetCurrentUser();
   Task<UserResponse> GetUserById(Guid id);
   Task<UserResponse> UpdateUser(Guid id, UpdatedUserRequest updatedUserRequest);
