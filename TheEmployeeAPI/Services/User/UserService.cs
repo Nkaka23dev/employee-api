@@ -23,22 +23,41 @@ public class UserService : IUserService
        _mapper = mapper;
        _logger = logger;
     } 
-    public  Task<UserResponse> RegisterHandler(UserRegisterRequest request)
+    public async Task<UserResponse> RegisterHandler(UserRegisterRequest request)
     {
-        // _logger.LogInformation("Registering user..");
-        // var existingUser = await _userManager.FindByEmailAsync(request.Email ?? string.Empty);
-        // if(existingUser != null){
-        //     _logger.LogError("Email Already Exist");
-        //     throw new BadHttpRequestException("Email Already Exist");
-        // }
-        // var newUser = _mapper.Map<ApplicationUser>(request);
+        _logger.LogInformation("Registering user..");
 
-        // //Generate a unique username
-        
-        // return '';
-        throw new NotImplementedException();
+        var existingUser = await _userManager.FindByEmailAsync(request.Email ?? string.Empty);
+
+        if(existingUser != null){
+            _logger.LogError("Email Already Exist");
+            throw new BadHttpRequestException("Email Already Exist");
+        }
+        var newUser = _mapper.Map<ApplicationUser>(request);
+        newUser.UserName = GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
+        var result = await _userManager.CreateAsync(newUser, request?.Password!);
+
+        if(!result.Succeeded){
+          var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+          _logger.LogError("Failed to create User: {errors}", errors);
+          throw new Exception($"Failed to create User: {errors}");
+        }
+        _logger.LogInformation("User created successfully.");
+        await _tokenService.GenerateToken(newUser);
+        return _mapper.Map<UserResponse>(newUser);
     }  
-    public Task DeleteUser(Guid id)
+    private string GenerateUniqueUserName(string lastName, string firstname){
+
+     var baseUserName = $"{firstname}{lastName}".ToLower();
+     var userName = baseUserName;
+     var count = 1; 
+     while(_userManager.Users.Any(u => u.UserName == userName)){
+        userName = $"{baseUserName}{count}";
+        count++;
+     }
+     return userName;
+    } 
+    public Task DeleteUser(Guid   id)
     {
         throw new NotImplementedException();
     }

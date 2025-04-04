@@ -54,9 +54,9 @@ public class TokenService : ITokenService
     new("LastName", user?.LastName ?? string.Empty),
     new("Gender", user?.Gender ?? string.Empty)
     };
-  var roles = await _userManager.GetRolesAsync(user); 
-  claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-  return claims;
+    var roles = await _userManager.GetRolesAsync(user!); 
+    claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+    return claims;
   }
 
   private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims){
