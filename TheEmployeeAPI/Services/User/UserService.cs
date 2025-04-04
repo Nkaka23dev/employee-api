@@ -1,11 +1,9 @@
-using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Domain.Contracts.Auth;
 using TheEmployeeAPI.Entities.Auth;
-using YamlDotNet.Core.Tokens;
 
 namespace TheEmployeeAPI.Services.User;
 
@@ -82,19 +80,29 @@ public class UserService(
         userResponse.RefreshToken = refreshToken;
 
         return userResponse;
+    }
+    public async Task<UserResponse> GetUserById(Guid id)
+    {
+       _logger.LogInformation("Getting user by ID: ");
+       var user = await _userManager.FindByIdAsync(id.ToString());
+       if(user == null){
+        _logger.LogError("User with id: {id} not found", id);
+          throw new Exception($"User with Id {id} not found!");
+       }
+       return _mapper.Map<ApplicationUser, UserResponse>(user);
+    }
+    public async Task<CurrentUserResponse> GetCurrentUser()
+    {
+       var user = await _userManager.FindByIdAsync(_currentUserService.GetUserId());
+
+        if(user == null){
+        _logger.LogError("User  not found");
+          throw new Exception($"User not found!");
+       } 
+       return _mapper.Map<CurrentUserResponse>(user);
 
     }
     public Task DeleteUser(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<CurrentUserResponse> GetCurrentUser()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<UserResponse> GetUserById(Guid id)
     {
         throw new NotImplementedException();
     }
