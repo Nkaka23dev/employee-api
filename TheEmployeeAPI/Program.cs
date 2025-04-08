@@ -27,15 +27,16 @@ builder.Services.AddDbContext<AppDbContext>(
         option.UseSqlite(builder.Configuration.GetConnectionString("Default Connection"));
     } 
 );
+
 // builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
 
 // builder.Services.AddScoped<IUserServices, UserService>();
 // builder.Services.AddScoped<ITokenService, TokenService>();
 // builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-// builder.Services.ConfigureIdentity();
-// builder.Services.ConfigureJwt(builder.Configuration);
-// builder.Services.ConfigureCors();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.ConfigureCors();
  
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -96,8 +97,8 @@ using (var scope = app.Services.CreateScope()){
     var services = scope.ServiceProvider;
     SeedData.MigrateAndSeed(services);
 }
-// app.UseCors("corsPolicy");
-// app.UseExceptionHandler();
+app.UseCors("corsPolicy");
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
