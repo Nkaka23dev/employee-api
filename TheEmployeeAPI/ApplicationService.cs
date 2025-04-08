@@ -34,8 +34,8 @@ public static partial class ApplicationService
      }
      var secretKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
      services.AddAuthentication(o => {
-    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
  })
     .AddJwtBearer(o => {
         o.TokenValidationParameters = new TokenValidationParameters {
