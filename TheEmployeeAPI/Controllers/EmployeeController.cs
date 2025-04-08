@@ -180,8 +180,6 @@ public class EmployeeController: BaseController
 
         return Ok(benefits);
     }
-
- 
 private GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee){
 return new GetEmployeeResponse {
        FirstName = employee.FirstName, 
