@@ -51,7 +51,7 @@ public class UpdatedUserRequest
 
 public class RevokeRefreshTokenResponse 
 {
-    public string? Token {set; get;}
+    public string? Message {set; get;}
 }
 
 public class RefreshTokenRequest 

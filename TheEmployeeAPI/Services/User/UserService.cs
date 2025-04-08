@@ -21,7 +21,6 @@ public class UserService(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<UserService> _logger = logger;
      
-    //Register method
     public async Task<UserResponse> RegisterHandler(UserRegisterRequest request)
     {
         _logger.LogInformation("Registering user..");
@@ -101,8 +100,6 @@ public class UserService(
           throw new Exception($"User not found!");
        } 
        return _mapper.Map<CurrentUserResponse>(user);
-
-
     }
     public async  Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest request)
     {
@@ -123,25 +120,67 @@ public class UserService(
         _logger.LogInformation("New Access Token Generated successfully");
         var currentUserResponse = _mapper.Map<CurrentUserResponse>(user);
         currentUserResponse.AccessToken = newAccessToken;
-        return _mapper.Map<CurrentUserResponse>(newAccessToken);
+        return currentUserResponse;
     }
-    public Task DeleteUser(Guid id)
+    public async Task<UserResponse> UpdateUser(Guid id, UpdatedUserRequest request)
     {
-        throw new NotImplementedException();
+       var user = await _userManager.FindByIdAsync(id.ToString());
+       if(user == null){
+        _logger.LogError("User not found!");
+        throw new Exception("User not found!");
+       } 
+       user.FirstName = request.FirstName!;
+       user.LastName = request.LastName!;
+       user.Email = request.Email;
+       user.Gender = request.Gender!;
+       await _userManager.UpdateAsync(user);
+       return _mapper.Map<UserResponse>(user);
     }
-    public Task<CurrentUserResponse> RefreshUserToken(RefreshTokenRequest refreshTokenRequest)
+     public async Task DeleteUser(Guid id)
     {
-        throw new NotImplementedException();
+       var user = await _userManager.FindByIdAsync(id.ToString());
+       if(user == null){
+        _logger.LogError("User not found!");
+        throw new Exception("User not found!");
+       } 
+       await _userManager.DeleteAsync(user);
     }
-   
-    public Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest refreshTokenRemoveRequest)
+    public async Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest request)
     {
-        throw new NotImplementedException();
-    }
+       _logger.LogInformation("Revoking Refresh token....");
+       try{
+        var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
+        var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash); 
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
 
-    public Task<UserResponse> UpdateUser(Guid id, UpdatedUserRequest updatedUserRequest)
-    {
-        throw new NotImplementedException();
+        if(user == null){
+            _logger.LogInformation("Invalid Refresh Token");
+            throw new Exception("Invalid Refresh Token");
+        }
+        if(user.RefreshTokenExpiryTime < DateTime.Now){
+            _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
+            throw new Exception($"Refresh token is expired for user with user Id {user.Id}");
+        }
+        user.RefreshToken = null;
+        user.RefreshTokenExpiryTime = null;
+        var result = await _userManager.UpdateAsync(user);
+        if(!result.Succeeded){
+            _logger.LogError("Failed to update user");
+            return new RevokeRefreshTokenResponse{
+             Message = "Failed to update refresh token" 
+            };
+            
+        }
+        _logger.LogInformation("Refresh token revoked successfully");
+        return new RevokeRefreshTokenResponse
+        {
+           Message = "Refresh token revoked successufully"
+        };
+       }
+       catch(Exception exception){
+        _logger.LogInformation("Failed to revoke refresh token: {exception}", exception.Message);
+        throw new Exception("Failed to revoke refresh token");
+       }
     }
     private string GenerateUniqueUserName(string lastName, string firstname){
 
@@ -153,5 +192,5 @@ public class UserService(
         count++;
      }
      return userName;
-    } 
+    }
 }
