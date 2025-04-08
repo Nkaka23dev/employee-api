@@ -102,6 +102,7 @@ public class UserService(
        } 
        return _mapper.Map<CurrentUserResponse>(user);
 
+
     }
     public async  Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest request)
     {
@@ -125,6 +126,10 @@ public class UserService(
         return _mapper.Map<CurrentUserResponse>(newAccessToken);
     }
     public Task DeleteUser(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+    public Task<CurrentUserResponse> RefreshUserToken(RefreshTokenRequest refreshTokenRequest)
     {
         throw new NotImplementedException();
     }
