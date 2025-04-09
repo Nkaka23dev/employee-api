@@ -8,33 +8,31 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 
 <img width="1055" alt="Screenshot 2025-04-09 at 20 22 04" src="https://github.com/user-attachments/assets/a2de64ff-5b14-4b2d-be4f-f9f89d78d67b" />
 
-- **Create Employee**: Ability to add new employees to the system, with required validation and data integrity checks.
-- **Update Employee**: Modify employee details, with validation and logging of changes.
+### Good To know
 
-- **Get Employees**: Endpoint to retrieve employees with support for:
+- **Data Seeding**: when the project start two employee are added by default.
+- **Get Employees with filteing and pagination**: Endpoint to retrieve employees with support for:
   - **Pagination**: Get a specific number of employees per page.
   - **Filtering**: Filter employees based on various criteria (e.g., name, department, job title).
 
 - **Employee Validation**: Validation of employee data on creation and update to ensure data integrity.
-
 - **Logging**: Comprehensive logging of actions such as employee creation, updates, and deletions for auditing and debugging purposes.
-
-- **Delete Employee**: Remove employees from the system with proper validation and checks.
-- **Unit Testing**: for current implemented features
-- **Data Seeding**: when the project start two employee are added by default.
-- **API Documentation**: Automatically generated Swagger documentation for all employee-related endpoints, providing detailed information about available
+- **Unit Testing**: Only on employees features so far
+- **API Documentation**: Automatically generated Swagger documentation for all employee-related endpoints, providing detailed information about availables
 
 ## TODO  🚀  
 
-- You can start by improving already implemented features if you see something to improve for example using **AutoMapper** in the **EmployeeController** for object-to-object mapping.
-- Implement **authentication and authorization** (with access and refresh tokens) ==> ✅In progess...
+- You can start by improving already implemented features, for example creating services and 
+using **AutoMapper** in the **EmployeeController**
+- ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
+- Protect employee endpoints and update tests
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
 - Add **CI/CD pipelines** for automated deployment(Optional include versioning with semantic release)  
 - **Dockerize** the API for containerized deployment.    
 - Allow employees to **upload documents**, such as IDs and images.  
 - Implement **account verification** via email and **Google login**.  
-- ✅ **Write unit tests** for every newly added feature to ensure code quality.
+-  **Write unit tests** for every newly added feature to ensure code quality.
 
 ## More advance Todo Features 🎯  
 
