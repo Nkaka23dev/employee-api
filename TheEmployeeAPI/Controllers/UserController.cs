@@ -55,7 +55,7 @@ public class UserController(IUserServices userServices):BaseController
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("delet-user/{id}")]
+    [HttpDelete("delete-user/{id}")]
     [Authorize]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
