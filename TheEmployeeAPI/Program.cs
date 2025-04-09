@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using TheEmployeeAPI.Exceptions;
 using Microsoft.OpenApi.Models;
-using TheEmployeeAPI.Entities.Auth;
-using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Services.User;
 using TheEmployeeAPI.Services;
 using TheEmployeeAPI.Infrastructure.MappingProfile;
+using TheEmployeeAPI.Entities.Auth;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,13 +28,20 @@ builder.Services.AddDbContext<AppDbContext>(
     } 
 );
 
-// builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
-// builder.Services.AddScoped<IUserServices, UserService>();
-// builder.Services.AddScoped<ITokenService, TokenService>();
-// builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-builder.Services.ConfigureIdentity();
+builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+// builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureCors();
  
@@ -43,7 +50,8 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddSwaggerDocument();
 builder.Services.AddSwaggerGen(options =>
-{
+{   
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TheEmployeeAPI.xml"));
     options.SwaggerDoc("v1",
      new OpenApiInfo 
      {
