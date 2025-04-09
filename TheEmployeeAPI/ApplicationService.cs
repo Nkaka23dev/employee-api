@@ -18,15 +18,15 @@ public static partial class ApplicationService
           });
         });
     }
-    // public static void ConfigureIdentity(this IServiceCollection services){
-    //     services.AddIdentityCore<IdentityUser>(
-    //         u => {
-    //             u.Password.RequiredLength = 6;
-    //             u.User.RequireUniqueEmail = true;
-    //         }
-    //     ).AddEntityFrameworkStores<AppDbContext>()
-    //     .AddDefaultTokenProviders();
-    // }
+    public static void ConfigureIdentity(this IServiceCollection services){
+        services.AddIdentityCore<IdentityUser>(
+            u => {
+                u.Password.RequiredLength = 6;
+                u.User.RequireUniqueEmail = true;
+            }
+        ).AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
+    }
    public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration){
      var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
      if(jwtSettings == null || string.IsNullOrWhiteSpace(jwtSettings.Key)){

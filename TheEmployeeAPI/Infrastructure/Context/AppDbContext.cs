@@ -5,7 +5,7 @@ using TheEmployeeAPI.Entities.Auth;
 
 namespace TheEmployeeAPI;
 
-public class AppDbContext: IdentityDbContext<ApplicationUser>
+public class AppDbContext: DbContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ISystemClock _systemClock;
@@ -21,10 +21,9 @@ public class AppDbContext: IdentityDbContext<ApplicationUser>
     }
     public DbSet<Employee> Employees {get; set;}
     public DbSet<Benefit> Benefits {get; set;}
-    public DbSet<EmployeeBenefit> EmployeeBenefits {get;set;}  
+    public DbSet<EmployeeBenefit> EmployeeBenefits {get;set;}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
-        base.OnModelCreating(modelBuilder); 
+    {
         // base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<EmployeeBenefit>()
         .HasIndex(b => new {b.EmployeeId, b.BenefitId}).IsUnique();
