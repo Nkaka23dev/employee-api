@@ -15,7 +15,7 @@ public class EmployeeController: BaseController
  }
   
  /// <summary>
- /// Get All of The Employees In The System
+ /// Get All Employees
  /// </summary> 
  /// <returns>Returns the employees in JSON array.</returns>
  [HttpGet("all")]
@@ -43,7 +43,7 @@ public class EmployeeController: BaseController
    return Ok(employees.Select(EmployeeToGetEmployeeResponse));
  } 
  /// <summary>
- /// Get an Employee by id.
+ /// Get Employee by Id.
  /// </summary> 
  /// <param name="id">ID of an employee you want to get</param>
  /// <returns>Return employee object</returns>
@@ -60,7 +60,7 @@ public class EmployeeController: BaseController
    return Ok(employee);
  }
  /// <summary>
- ///  Create a new Employee
+ ///  Create new Employee
  /// </summary>
  /// <param name="employeeRequest">Object containing required field to create employee</param>
  /// <returns>Return 201 created</returns>
@@ -87,7 +87,7 @@ public class EmployeeController: BaseController
    return CreatedAtAction(nameof(GetEmployeeById), new {id = newEmployee.Id}, newEmployee);
  }
  /// <summary>
- /// Update an Employee
+ /// Update Employee
  /// </summary> 
  /// <param name="id">The Id of an Employee to Update.</param>
  /// <param name="employee">The Employee data to update</param>
@@ -150,7 +150,7 @@ public class EmployeeController: BaseController
   return NoContent();
  }
      /// <summary>
-    /// Gets the benefits for an employee.
+    /// Gets the benefits for employee.
     /// </summary>
     /// <param name="employeeId">The ID to get the benefits for.</param>
     /// <returns>The benefits for that employee.</returns>
