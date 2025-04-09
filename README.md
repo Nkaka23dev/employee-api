@@ -6,6 +6,8 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 
 ## Already Implemented Features✅
 
+<img width="1055" alt="Screenshot 2025-04-09 at 20 22 04" src="https://github.com/user-attachments/assets/a2de64ff-5b14-4b2d-be4f-f9f89d78d67b" />
+
 - **Create Employee**: Ability to add new employees to the system, with required validation and data integrity checks.
 - **Update Employee**: Modify employee details, with validation and logging of changes.
 
@@ -21,8 +23,6 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 - **Unit Testing**: for current implemented features
 - **Data Seeding**: when the project start two employee are added by default.
 - **API Documentation**: Automatically generated Swagger documentation for all employee-related endpoints, providing detailed information about available
-
- <img width="1680" alt="Screenshot 2025-03-27 at 13 01 26" src="https://github.com/user-attachments/assets/e9143e26-e1cd-4fc4-b10c-fec6d9cd2b75" />
 
 ## TODO  🚀  
 
