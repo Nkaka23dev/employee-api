@@ -8,22 +8,24 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 
 ### Good To know
 
-- **Data Seeding**: when the project start two employee are added by default.
-- **Get Employees with filteing and pagination**: Endpoint to retrieve employees with support for:
+- **Data Seeding**: when the project starts two employees are added by default.
+- **Get Employees with filtering and pagination**: Endpoint to retrieve employees with support for:
   - **Pagination**: Get a specific number of employees per page.
-  - **Filtering**: Filter employees based on various criteria (e.g., name, department, job title).
+  - **Filtering**: Filter employees based on various criteria (e.g., first name, last name, etc..).
 
 - **Employee Validation**: Validation of employee data on creation and update to ensure data integrity.
 - **Logging**: Comprehensive logging of actions such as employee creation, updates, and deletions for auditing and debugging purposes.
-- **Unit Testing**: Only on employees features so far
+- **Unit Testing**: Only on employees' features so far
 - **API Documentation**: Automatically generated Swagger documentation for all employee-related endpoints, providing detailed information about availables
 
-## TODO  🚀  
+## TODO  🚀
 
+- ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
 - You can start by improving already implemented features, for example creating services and 
 using **AutoMapper** in the **EmployeeController**
-- ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
 - Protect employee endpoints and update tests
+- Updating user should be fixed
+- Data seeding for at least two users to begin with
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
 - Add **CI/CD pipelines** for automated deployment(Optional include versioning with semantic release)  
