@@ -24,7 +24,7 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 - You can start by improving already implemented features, for example creating services and 
 using **AutoMapper** in the **EmployeeController**
 - Protect employee endpoints and update tests
-- Updating user should be fixed
+- Update user endpoint is not working as expected; it should be fixed.
 - Data seeding for at least two users to begin with
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
