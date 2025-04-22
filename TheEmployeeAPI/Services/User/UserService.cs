@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using TheEmployeeAPI.Domain.Contracts.Auth;
+using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Entities.Auth;
 
 namespace TheEmployeeAPI.Services.User;

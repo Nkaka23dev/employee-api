@@ -3,8 +3,9 @@ using System.Text;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using TheEmployeeAPI.Domain.Contracts.Auth;
 using TheEmployeeAPI.Entities.Auth;
+using TheEmployeeAPI.Contracts.User;
+using TheEmployeeAPI.Contracts.Auth;
 
 namespace TheEmployeeAPI.Services.Auth;
 
@@ -51,7 +52,7 @@ ITokenService tokenService):IAuthService
             throw new ArgumentNullException(nameof(request));
         }
         var user = await _userManager.FindByEmailAsync(request?.Email!);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, request?.password!))
+        if (user == null || !await _userManager.CheckPasswordAsync(user, request?.Password!))
         {
             _logger.LogInformation("Invalid email or password");
             throw new Exception("Invalid Email or password!");

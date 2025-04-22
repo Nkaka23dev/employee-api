@@ -1,4 +1,5 @@
-using TheEmployeeAPI.Domain.Contracts.Auth;
+using TheEmployeeAPI.Contracts.Auth;
+using TheEmployeeAPI.Contracts.User;
 
 namespace TheEmployeeAPI.Services.Auth;
 
