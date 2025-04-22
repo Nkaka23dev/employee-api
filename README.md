@@ -23,9 +23,9 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 - ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
 - You can start by improving already implemented features, for example creating services and 
 using **AutoMapper** in the **EmployeeController**
+- Data seeding for at least two users to begin with and document the it in README file
 - Protect employee endpoints and update tests
 - Update user endpoint is not working as expected; it should be fixed.
-- Data seeding for at least two users to begin with
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
 - Add **CI/CD pipelines** for automated deployment(Optional include versioning with semantic release)  
@@ -49,7 +49,7 @@ The API now should include:
 
 - **Employees**: The core entity; nearly all other entities are related to employees.  
 - **EmployeeBenefits**: Each employee can have multiple associated benefits.  
-- **LeaveRequests**: Employees can request leave, and each employee can have multiple leave requests.  
+- **LeaveRequests**: Employees can request leave, and each employee can hsave multiple leave requests.  
 - **PerformanceReviews**: Employees can have multiple performance reviews over time.  
 - **Payroll**: Each employee has one payroll record per payment period.  
 - **Trainings & EmployeeTrainings**: Employees can enroll in multiple training programs.  
@@ -59,7 +59,7 @@ The API now should include:
 ## Getting Started 🛠  
 
 ### Prerequisites  
-Ensure you have the following installed:  
+Ensure you have the following installed:  s
 - **.NET SDK** (version 9.0 or later)  
 - **Entity Framework (EF Core)**  
 - **PostgreSQL** (optional, if migrating from SQLite)
@@ -78,6 +78,9 @@ dotnet restore
 
 # Build the project
 dotnet build
+
+# Navigate to TheEmployeeAPI
+dotnet test
 
 # Navigate to TheEmployeeAPI
 cd TheEmployeeAPI
