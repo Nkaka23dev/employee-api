@@ -1,47 +1,34 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI.dtos;
+using TheEmployeeAPI.Contracts.Employee;
+using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Infrastructure.Context;
+using TheEmployeeAPI.Services.Employees;
 
-namespace TheEmployeeAPI.employees;
 
-public class EmployeeController: BaseController
+namespace TheEmployeeAPI.Controllers;
+
+public class EmployeeController(
+ ILogger<EmployeeController> logger,
+ AppDbContext dbContext,
+ IEmployeeService employeeService) : BaseController
 {
- private readonly ILogger<EmployeeController> _logger;
- private readonly AppDbContext _dbContext ;
- public EmployeeController(ILogger<EmployeeController> logger, AppDbContext dbContext)
- {
-    _logger = logger;
-    _dbContext = dbContext;
- }
-  
+ private readonly ILogger<EmployeeController> _logger = logger;
+ private readonly AppDbContext _dbContext = dbContext;
+ private readonly IEmployeeService _employeeService = employeeService;
+
  /// <summary>
  /// Get All Employees
- /// </summary> 
+ /// </summary>
+ /// <param name="request"></param>
  /// <returns>Returns the employees in JSON array.</returns>
  [HttpGet("all")]
  [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponse>), StatusCodes.Status200OK)]
  [ProducesResponseType(StatusCodes.Status500InternalServerError)] 
  public async Task<IActionResult> GetAllEmployees([FromQuery] GetAllEmployeesRequest request){
- 
-   var page = request?.Page ?? 1;
-   var numberOfRecord = request?.RequestPerPage ?? 100; 
-
-   IQueryable<Employee> query = _dbContext.Employees
-   .Include(e => e.Benefits)
-   .Skip((page - 1) * numberOfRecord)
-   .Take(numberOfRecord);
-
-   if(request != null){
-      if(!string.IsNullOrWhiteSpace(request.FirstNameContains)){
-         query = query.Where(e => e.FirstName.Contains(request.FirstNameContains));
-      }
-       if(!string.IsNullOrWhiteSpace(request.LastNameContains)){
-         query = query.Where(e => e.LastName.Contains(request.LastNameContains));
-      }
-   }
-   var employees = await query.ToArrayAsync();
-   return Ok(employees.Select(EmployeeToGetEmployeeResponse));
+    var response = await _employeeService.GetAllEmployeesAsync(request);
+    return Ok(response);
+    
  } 
  /// <summary>
  /// Get Employee by Id.
@@ -181,7 +168,7 @@ public class EmployeeController: BaseController
 
         return Ok(benefits);
     }
-private GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee){
+private static GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee){
 return new GetEmployeeResponse {
        FirstName = employee.FirstName, 
        LastName = employee.LastName,

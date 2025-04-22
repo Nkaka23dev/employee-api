@@ -10,6 +10,8 @@ using TheEmployeeAPI.Infrastructure.MappingProfile;
 using TheEmployeeAPI.Entities.Auth;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Services.Auth;
+using TheEmployeeAPI.Services.Employees;
+using TheEmployeeAPI.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +41,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 
 builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();

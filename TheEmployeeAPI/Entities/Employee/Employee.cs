@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI;
+namespace TheEmployeeAPI.Entities.Employee;
 
 public class Employee: AuditableEntity {
     public int Id { get; set; }

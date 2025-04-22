@@ -1,3 +1,4 @@
+namespace TheEmployeeAPI.Contracts.Employee;
 public class GetEmployeeResponse
 {
     public required string FirstName { get; set; }

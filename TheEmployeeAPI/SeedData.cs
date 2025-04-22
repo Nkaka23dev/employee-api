@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI;
+using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Infrastructure.Context;
 
 public static class SeedData
 {

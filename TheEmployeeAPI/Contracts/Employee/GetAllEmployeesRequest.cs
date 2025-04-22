@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace TheEmployeeAPI.dtos;
+namespace TheEmployeeAPI.Contracts.Employee;
 
 public class GetAllEmployeesRequest
 {

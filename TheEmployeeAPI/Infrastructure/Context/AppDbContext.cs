@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Entities.Auth;
+using TheEmployeeAPI.Entities.Employee;
 
-namespace TheEmployeeAPI;
+namespace TheEmployeeAPI.Infrastructure.Context;
 
 public class AppDbContext: IdentityDbContext<ApplicationUser>
 {

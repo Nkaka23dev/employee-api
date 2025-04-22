@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace TheEmployeeAPI.employees;
+namespace TheEmployeeAPI.Contracts.Employee;
 
 public class CreateEmployeeRequest
 {

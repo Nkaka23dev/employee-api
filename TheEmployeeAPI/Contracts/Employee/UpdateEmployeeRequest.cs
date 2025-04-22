@@ -1,7 +1,8 @@
 using FluentValidation;
+using TheEmployeeAPI.Infrastructure.Context;
 // using TheEmployeeAPI.abstraction;
 
-namespace TheEmployeeAPI.employees;
+namespace TheEmployeeAPI.Contracts.Employee;
 
 public class UpdateEmployeeRequest
 {
@@ -20,7 +21,9 @@ public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeReq
     private readonly HttpContext _httpContext;
     private readonly  AppDbContext _appDbContext;
 
-    public UpdateEmployeeRequestValidator(IHttpContextAccessor httpContextAccessor, AppDbContext appDbContext){
+    public UpdateEmployeeRequestValidator(
+        IHttpContextAccessor httpContextAccessor, 
+        AppDbContext appDbContext){
 
         _httpContext = httpContextAccessor.HttpContext!;
         _appDbContext = appDbContext;
