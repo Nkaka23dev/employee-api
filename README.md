@@ -79,7 +79,7 @@ dotnet restore
 # Build the project
 dotnet build
 
-# Navigate to TheEmployeeAPI
+# Run project tests
 dotnet test
 
 # Navigate to TheEmployeeAPI
