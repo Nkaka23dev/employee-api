@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TheEmployeeAPI.Domain.Contracts.Auth;
+using TheEmployeeAPI.Contracts.Auth;
+using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Services.Auth;
 
 namespace TheEmployeeAPI.Controllers;
