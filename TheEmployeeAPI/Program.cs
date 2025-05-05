@@ -55,6 +55,8 @@ builder.Services.ConfigureCors();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(MappingEmployee).Assembly);
+
 builder.Services.AddSwaggerDocument();
 builder.Services.AddSwaggerGen(options =>
 {

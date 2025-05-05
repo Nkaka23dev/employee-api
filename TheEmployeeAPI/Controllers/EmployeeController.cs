@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Entities.Employee;
 using TheEmployeeAPI.Infrastructure.Context;
 using TheEmployeeAPI.Services.Employees;
 
@@ -62,44 +61,25 @@ public class EmployeeController(
     /// Update Employee
     /// </summary> 
     /// <param name="id">The Id of an Employee to Update.</param>
-    /// <param name="employee">The Employee data to update</param>
+    /// <param name="request">The Employee data to update</param>
     /// <returns>Return Updated Employee</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeRequest employee)
+    public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeRequest request)
     {
-
-        var existingEmployee = await _dbContext.Employees.FindAsync(id);
-        //  var existingEmployee = await _dbContext.Employees
-        //  .AsTracking().SingleOrDefaultAsync(e => e.Id == id);
-        if (existingEmployee == null)
-        {
-            _logger.LogWarning("Employee with ID {employeeId} NOT FOUND!", id);
-            return NotFound();
-        }
-        existingEmployee.Address1 = employee.Address1;
-        existingEmployee.Address2 = employee.Address2;
-        existingEmployee.City = employee.City;
-        existingEmployee.State = employee.State;
-        existingEmployee.ZipCode = employee.ZipCode;
-        existingEmployee.PhoneNumber = employee.PhoneNumber;
-        existingEmployee.Email = employee.Email;
-
         try
         {
-            _dbContext.Entry(existingEmployee).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Employee with ID: {employeeID} successfuly updated", id);
-            return Ok(existingEmployee);
+            var updatedEmployee = await _employeeService.UpdateEmployeeAsync(id, request);
+            _logger.LogInformation("Employee with ID: {employeeID} successfully updated", id);
+            return Ok(updatedEmployee);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occured while updated employee with ID {employeeID}", id);
-            return StatusCode(500, "Erro occured while updating employee");
-
+            _logger.LogError(ex, "Error occurred while updating employee with ID {employeeID}", id);
+            return StatusCode(500, "An error occurred while updating the employee.");
         }
     }
     /// <summary>
@@ -155,24 +135,5 @@ public class EmployeeController(
         });
 
         return Ok(benefits);
-    }
-    private static GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee)
-    {
-        return new GetEmployeeResponse
-        {
-            FirstName = employee.FirstName,
-            LastName = employee.LastName,
-            Address1 = employee.Address1,
-            Address2 = employee.Address2,
-            City = employee.City,
-            Email = employee.Email,
-            ZipCode = employee.ZipCode,
-            PhoneNumber = employee.PhoneNumber,
-            State = employee.State,
-            CreatedBy = employee.CreatedBy,
-            LastModifiedBy = employee.LastModifiedBy,
-            CreatedOn = employee.CreatedOn,
-            LastModifiedOn = employee.LastModifiedOn
-        };
     }
 }

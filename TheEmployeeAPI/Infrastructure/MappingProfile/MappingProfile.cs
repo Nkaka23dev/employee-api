@@ -10,6 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<ApplicationUser, UserResponse>();
         CreateMap<ApplicationUser, CurrentUserResponse>();
-        CreateMap<UserRegisterRequest, ApplicationUser>();
+        CreateMap<UserRegisterRequest, ApplicationUser>(); 
+
     }
 }
