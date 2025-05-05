@@ -53,8 +53,6 @@ public static class SeedData
                 new Benefit { Name = "Vision", Description = "Vision coverage", BaseCost = 30.00m }
             };
 
-            Console.Write("HERE ARE ALL BENEFITS", benefits);
-
             context.Benefits.AddRange(benefits);
             context.SaveChanges();
 
@@ -73,7 +71,7 @@ public static class SeedData
             };
 
             var jane = context.Employees.Single(e => e.FirstName == "Jane");
-            
+
             jane.Benefits = new List<EmployeeBenefit>
             {
                 new EmployeeBenefit { Benefit = healthBenefit, CostToEmployee = 120m},

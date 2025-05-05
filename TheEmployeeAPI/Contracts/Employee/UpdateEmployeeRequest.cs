@@ -6,24 +6,25 @@ namespace TheEmployeeAPI.Contracts.Employee;
 
 public class UpdateEmployeeRequest
 {
-    public  string? Address1 {get; set;}
-    public  string? Address2 {get; set;}
-    public  string? City {get; set;}
-    public  string? State {get; set;}  
-    public  string? ZipCode {get; set;}
-    public  string? PhoneNumber {get; set;}
-    public  string? Email {get; set;}
+    public string? Address1 { get; set; }
+    public string? Address2 { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }
+    public string? ZipCode { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string? Email { get; set; }
 
 }
 
-public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeRequest>
+public class UpdateEmployeeRequestValidator : AbstractValidator<UpdateEmployeeRequest>
 {
     private readonly HttpContext _httpContext;
-    private readonly  AppDbContext _appDbContext;
+    private readonly AppDbContext _appDbContext;
 
     public UpdateEmployeeRequestValidator(
-        IHttpContextAccessor httpContextAccessor, 
-        AppDbContext appDbContext){
+        IHttpContextAccessor httpContextAccessor,
+        AppDbContext appDbContext)
+    {
 
         _httpContext = httpContextAccessor.HttpContext!;
         _appDbContext = appDbContext;
@@ -34,13 +35,14 @@ public class UpdateEmployeeRequestValidator: AbstractValidator<UpdateEmployeeReq
 
     private async Task<bool> NotBeEmptyIfItIsSetOnEmployeeAlreadyAsync(string? address, CancellationToken token)
     {
-    await Task.CompletedTask;
-    var id = Convert.ToInt32(_httpContext.Request.RouteValues["id"]);
-    var employee = await _appDbContext.Employees.FindAsync(id);
+        await Task.CompletedTask;
+        var id = Convert.ToInt32(_httpContext.Request.RouteValues["id"]);
+        var employee = await _appDbContext.Employees.FindAsync(id);
 
-    if(employee!.Address1 != null && string.IsNullOrWhiteSpace(address)){
-        return false;
+        if (employee!.Address1 != null && string.IsNullOrWhiteSpace(address))
+        {
+            return false;
+        }
+        return true;
     }
-     return true;
-    } 
 };

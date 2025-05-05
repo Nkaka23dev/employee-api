@@ -4,10 +4,10 @@ namespace TheEmployeeAPI.Contracts.Employee;
 
 public class GetAllEmployeesRequest
 {
- public int? Page {get; set;}
- public int? RequestPerPage {get; set;}
- public string? FirstNameContains {get; set;}
- public string? LastNameContains {get; set;}
+    public int? Page { get; set; }
+    public int? RequestPerPage { get; set; }
+    public string? FirstNameContains { get; set; }
+    public string? LastNameContains { get; set; }
 }
 
 public class GetAllEmployeesRequestValidator : AbstractValidator<GetAllEmployeesRequest>

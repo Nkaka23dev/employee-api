@@ -5,34 +5,36 @@ using TheEmployeeAPI.Services.User;
 
 namespace TheEmployeeAPI.Controllers;
 
-public class UserController(IUserServices userServices):BaseController
+public class UserController(IUserServices userServices) : BaseController
 {
-   private readonly IUserServices _userServices = userServices;
+    private readonly IUserServices _userServices = userServices;
 
     /// <summary>
     /// Get User by Id
     /// </summary>
     /// <param name="id"></param>s
     /// <returns></returns>
-    [HttpGet("user/{id}")] 
+    [HttpGet("user/{id}")]
     [Authorize]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetUserById(Guid id){
+    public async Task<IActionResult> GetUserById(Guid id)
+    {
         var response = await _userServices.GetUserById(id);
         return Ok(response);
     }
-      /// <summary>
+    /// <summary>
     /// Get Current Logged in User
     /// </summary>
     /// <returns></returns>
-    [HttpGet("current-user")] 
+    [HttpGet("current-user")]
     [Authorize]
     [ProducesResponseType(typeof(CurrentUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetCurrentUser(){
+    public async Task<IActionResult> GetCurrentUser()
+    {
         var response = await _userServices.GetCurrentUser();
         return Ok(response);
     }
@@ -40,16 +42,17 @@ public class UserController(IUserServices userServices):BaseController
     /// Update User
     /// </summary>
     /// <returns></returns>
-    [HttpPut("update-user/{id}")] 
+    [HttpPut("update-user/{id}")]
     [Authorize]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser(Guid id, UpdatedUserRequest request){
+    public async Task<IActionResult> UpdateUser(Guid id, UpdatedUserRequest request)
+    {
         var response = await _userServices.UpdateUser(id, request);
         return Ok(response);
     }
-    
+
     /// <summary>
     /// Delete a User
     /// </summary>
@@ -60,7 +63,8 @@ public class UserController(IUserServices userServices):BaseController
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-     public async Task<IActionResult> DeletUser(Guid id){
+    public async Task<IActionResult> DeletUser(Guid id)
+    {
         await _userServices.DeleteUser(id);
         return Ok();
     }

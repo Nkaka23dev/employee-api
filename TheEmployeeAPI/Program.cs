@@ -19,16 +19,18 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddProblemDetails();
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();  
-builder.Services.AddControllers(options => {
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddControllers(options =>
+{
     options.Filters.Add<FluentValidationFilter>();
 });
 builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AppDbContext>(
-    option => {
+    option =>
+    {
         option.UseSqlite(builder.Configuration.GetConnectionString("Default Connection"));
-    } 
+    }
 );
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -49,23 +51,24 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 // builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureCors();
- 
+
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddSwaggerDocument();
 builder.Services.AddSwaggerGen(options =>
-{   
+{
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TheEmployeeAPI.xml"));
     options.SwaggerDoc("v1",
-     new OpenApiInfo 
+     new OpenApiInfo
      {
-        Title = "Employee API",
-        Version = "V1", 
-        Description="Provides basic employee management features"
+         Title = "Employee API",
+         Version = "V1",
+         Description = "Provides basic employee management features"
      });
-    
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme{
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
@@ -88,25 +91,26 @@ builder.Services.AddSwaggerGen(options =>
                 Name = "Bearer",
                 In = ParameterLocation.Header
             },
-            new List<string>() 
+            new List<string>()
         }
     });
 
-    
+
 });
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
-{    
+{
     app.UseSwagger();
-       app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee API v1");
-        c.RoutePrefix = string.Empty; 
-    });
+    app.UseSwaggerUI(c =>
+ {
+     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee API v1");
+     c.RoutePrefix = string.Empty;
+ });
 
 }
-using (var scope = app.Services.CreateScope()){
+using (var scope = app.Services.CreateScope())
+{
     var services = scope.ServiceProvider;
     SeedData.MigrateAndSeed(services);
 }
@@ -115,4 +119,4 @@ app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
-public partial class Program {}
+public partial class Program { }

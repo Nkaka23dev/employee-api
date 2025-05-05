@@ -11,10 +11,10 @@ public class GetEmployeeResponse
     public string? ZipCode { get; set; }
     public string? PhoneNumber { get; set; }
     public string? Email { get; set; }
-    public string? CreatedBy {get; set;}
-    public DateTime? CreatedOn {get; set;}
-    public string? LastModifiedBy {get; set;}
-    public DateTime? LastModifiedOn {get; set;}
+    public string? CreatedBy { get; set; }
+    public DateTime? CreatedOn { get; set; }
+    public string? LastModifiedBy { get; set; }
+    public DateTime? LastModifiedOn { get; set; }
 
     // public required List<GetEmployeeResponseEmployeeBenefits> Benefits { get; set; }
 }
