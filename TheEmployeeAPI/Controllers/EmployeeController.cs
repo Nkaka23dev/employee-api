@@ -93,16 +93,7 @@ public class EmployeeController(
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteEmployee([FromRoute] int id)
     {
-        var employee = await _dbContext.Employees.FindAsync(id);
-
-        if (employee == null)
-        {
-
-            return NotFound();
-        }
-        _dbContext.Employees.Remove(employee);
-        await _dbContext.SaveChangesAsync();
-
+        await _employeeService.DeleteEmployeeAsync(id);
         return NoContent();
     }
     /// <summary>
@@ -116,24 +107,7 @@ public class EmployeeController(
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetBenefitsForEmployee(int employeeId)
     {
-        var employee = await _dbContext.Employees
-            .Include(e => e.Benefits)
-            .ThenInclude(e => e.Benefit)
-            .SingleOrDefaultAsync(e => e.Id == employeeId);
-
-        if (employee == null)
-        {
-            return NotFound();
-        }
-
-        var benefits = employee.Benefits.Select(b => new GetEmployeeResponseEmployeeBenefits
-        {
-            Id = b.Id,
-            Name = b.Benefit.Name,
-            Description = b.Benefit.Description,
-            Cost = b.CostToEmployee ?? b.Benefit.BaseCost
-        });
-
+        var benefits = await _employeeService.GetBenefitsForEmployeeAsync(employeeId);
         return Ok(benefits);
     }
 }

@@ -10,5 +10,5 @@ public interface IEmployeeService
     Task<Employee> CreateEmployeeAsync(CreateEmployeeRequest request);
     Task<GetEmployeeResponse> UpdateEmployeeAsync(int id, UpdateEmployeeRequest request);
     Task DeleteEmployeeAsync(int id);
-    Task<GetEmployeeResponseEmployeeBenefits> GetBenefitsForEmployeeAsync(int employeeId);
+    Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>> GetBenefitsForEmployeeAsync(int employeeId);
 }
