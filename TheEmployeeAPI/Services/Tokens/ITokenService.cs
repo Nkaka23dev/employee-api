@@ -4,7 +4,7 @@ namespace TheEmployeeAPI.Services;
 
 public interface ITokenService
 {
-    Task<string> GenerateToken(ApplicationUser user); 
+    Task<string> GenerateToken(ApplicationUser user);
     string GenerateRefreshToken();
 
 }

@@ -4,5 +4,5 @@ namespace TheEmployeeAPI.Contracts.Auth;
 
 public class RevokeRefreshTokenResponse
 {
-   public string? Message {set; get;}
+    public string? Message { set; get; }
 }

@@ -2,6 +2,6 @@ namespace TheEmployeeAPI.Contracts.Auth;
 
 public class RefreshTokenRequest
 {
- public string? RefreshToken {set; get;}
+    public string? RefreshToken { set; get; }
 
 }

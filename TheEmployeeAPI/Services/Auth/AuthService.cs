@@ -13,20 +13,21 @@ public class AuthService(
 UserManager<ApplicationUser> userManager,
 IMapper mapper,
 ILogger<AuthService> logger,
-ITokenService tokenService):IAuthService
+ITokenService tokenService) : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<AuthService> _logger = logger;
     private readonly ITokenService _tokenService = tokenService;
-    
+
     public async Task<UserResponse> RegisterHandler(UserRegisterRequest request)
     {
         _logger.LogInformation("Registering user..");
 
         var existingUser = await _userManager.FindByEmailAsync(request.Email ?? string.Empty);
 
-        if(existingUser != null){
+        if (existingUser != null)
+        {
             _logger.LogError("Email Already Exist");
             throw new BadHttpRequestException("Email Already Exist");
         }
@@ -34,7 +35,8 @@ ITokenService tokenService):IAuthService
         newUser.UserName = GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
         var result = await _userManager.CreateAsync(newUser, request?.Password!);
 
-        if(!result.Succeeded){
+        if (!result.Succeeded)
+        {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
             _logger.LogError("Failed to create User: {errors}", errors);
             throw new Exception($"Failed to create User: {errors}");
@@ -42,8 +44,8 @@ ITokenService tokenService):IAuthService
         _logger.LogInformation("User created successfully.");
         await _tokenService.GenerateToken(newUser);
         return _mapper.Map<UserResponse>(newUser);
-    } 
-     //Login method
+    }
+    //Login method
     public async Task<UserResponse> LoginHandler(UserLoginRequest request)
     {
         if (request == null)
@@ -69,9 +71,9 @@ ITokenService tokenService):IAuthService
 
         if (!result.Succeeded)
         {
-          var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-          _logger.LogError("Failed to update user: {errors}", errors);
-          throw new Exception($"Failed to updated the user: {errors}");
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            _logger.LogError("Failed to update user: {errors}", errors);
+            throw new Exception($"Failed to updated the user: {errors}");
         }
         var userResponse = _mapper.Map<ApplicationUser, UserResponse>(user);
         userResponse.AccessToken = accessToken;
@@ -79,18 +81,20 @@ ITokenService tokenService):IAuthService
 
         return userResponse;
     }
-        public async  Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest request)
+    public async Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest request)
     {
         _logger.LogInformation("Refreshing access token using refresh token.");
         var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
         var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash);
         var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
 
-        if(user == null){
+        if (user == null)
+        {
             _logger.LogInformation("Invalid Refresh Token");
             throw new Exception("Invalid Refresh Token");
         }
-        if(user.RefreshTokenExpiryTime < DateTime.Now){
+        if (user.RefreshTokenExpiryTime < DateTime.Now)
+        {
             _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
             throw new Exception($"Refresh token is expired for user with user Id {user.Id}");
         }
@@ -100,53 +104,61 @@ ITokenService tokenService):IAuthService
         currentUserResponse.AccessToken = newAccessToken;
         return currentUserResponse;
     }
-     public async Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest request)
+    public async Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest request)
     {
-       _logger.LogInformation("Revoking Refresh token....");
-       try{
-        var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
-        var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash); 
-        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
-
-        if(user == null){
-            _logger.LogInformation("Invalid Refresh Token");
-            throw new Exception("Invalid Refresh Token");
-        }
-        if(user.RefreshTokenExpiryTime < DateTime.Now){
-            _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
-            throw new Exception($"Refresh token is expired for user with user Id {user.Id}");
-        }
-        user.RefreshToken = null;
-        user.RefreshTokenExpiryTime = null;
-        var result = await _userManager.UpdateAsync(user);
-        if(!result.Succeeded){
-            _logger.LogError("Failed to update user");
-            return new RevokeRefreshTokenResponse{
-             Message = "Failed to update refresh token" 
-            };
-            
-        }
-        _logger.LogInformation("Refresh token revoked successfully");
-        return new RevokeRefreshTokenResponse
+        _logger.LogInformation("Revoking Refresh token....");
+        try
         {
-           Message = "Refresh token revoked successufully"
-        };
-       }
-       catch(Exception exception){
-        _logger.LogInformation("Failed to revoke refresh token: {exception}", exception.Message);
-        throw new Exception("Failed to revoke refresh token");
-       }
-    }
-     private string GenerateUniqueUserName(string lastName, string firstname){
+            var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
+            var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
 
-     var baseUserName = $"{firstname}{lastName}".ToLower();
-     var userName = baseUserName;
-     var count = 1; 
-     while(_userManager.Users.Any(u => u.UserName == userName)){
-        userName = $"{baseUserName}{count}";
-        count++;
-     }
-     return userName;
+            if (user == null)
+            {
+                _logger.LogInformation("Invalid Refresh Token");
+                throw new Exception("Invalid Refresh Token");
+            }
+            if (user.RefreshTokenExpiryTime < DateTime.Now)
+            {
+                _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
+                throw new Exception($"Refresh token is expired for user with user Id {user.Id}");
+            }
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = null;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                _logger.LogError("Failed to update user");
+                return new RevokeRefreshTokenResponse
+                {
+                    Message = "Failed to update refresh token"
+                };
+
+            }
+            _logger.LogInformation("Refresh token revoked successfully");
+            return new RevokeRefreshTokenResponse
+            {
+                Message = "Refresh token revoked successufully"
+            };
+        }
+        catch (Exception exception)
+        {
+            _logger.LogInformation("Failed to revoke refresh token: {exception}", exception.Message);
+            throw new Exception("Failed to revoke refresh token");
+        }
+    }
+    private string GenerateUniqueUserName(string lastName, string firstname)
+    {
+
+        var baseUserName = $"{firstname}{lastName}".ToLower();
+        var userName = baseUserName;
+        var count = 1;
+        while (_userManager.Users.Any(u => u.UserName == userName))
+        {
+            userName = $"{baseUserName}{count}";
+            count++;
+        }
+        return userName;
     }
 
 }
