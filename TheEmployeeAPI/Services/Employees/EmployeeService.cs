@@ -62,7 +62,7 @@ public class EmployeeService(
         {
             _logger.LogWarning("Employee with ID {employeeId} NOT FOUND!", id);
             throw new KeyNotFoundException($"Emplouyee with {id} not found!");
-            
+
         }
         _mapper.Map(request, existingEmployee);
 
@@ -73,14 +73,29 @@ public class EmployeeService(
         return employeeResponse;
     }
 
-   public Task DeleteEmployeeAsync(int id)
+    public async Task DeleteEmployeeAsync(int id)
     {
-        throw new NotImplementedException();
-    }
+        var employee = await _dbContext.Employees.FindAsync(id)
+        ?? throw new Exception($"Employee with {id} not found!");
 
-    public Task<GetEmployeeResponseEmployeeBenefits> GetBenefitsForEmployeeAsync(int employeeId)
+        _dbContext.Employees.Remove(employee);
+        await _dbContext.SaveChangesAsync();
+    }
+    public async Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>> GetBenefitsForEmployeeAsync(int employeeId)
     {
-        throw new NotImplementedException();
+          var employee = await _dbContext.Employees
+            .Include(e => e.Benefits)
+            .ThenInclude(e => e.Benefit)
+            .SingleOrDefaultAsync(e => e.Id == employeeId)
+             ?? throw new KeyNotFoundException($"Employee with {employeeId} not found!");
+        var benefits = employee.Benefits.Select(b => new GetEmployeeResponseEmployeeBenefits
+        {
+            Id = b.Id,
+            Name = b.Benefit.Name,
+            Description = b.Benefit.Description,
+            Cost = b.CostToEmployee ?? b.Benefit.BaseCost
+        });
+        return benefits;
     }
     private static GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee)
     {
