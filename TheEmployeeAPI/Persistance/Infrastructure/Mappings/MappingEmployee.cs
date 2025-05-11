@@ -2,7 +2,7 @@ using AutoMapper;
 using TheEmployeeAPI.Contracts.Employee;
 using TheEmployeeAPI.Entities.Employee;
 
-namespace TheEmployeeAPI.Infrastructure.MappingProfile;
+namespace TheEmployeeAPI.Persistance.Infrastructure.Mappings;
 
 public class MappingEmployee: Profile
 {

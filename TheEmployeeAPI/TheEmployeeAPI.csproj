@@ -25,7 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application/" />
+    <Folder Include="Configuration/" />
+    <Folder Include="Contracts/Users/" />
     <Folder Include="Domain/Auth/" />
+    <Folder Include="Fixtures/" />
+    <Folder Include="Persistance/" />
     <Folder Include="Services/Tokens/" />
   </ItemGroup>
 
