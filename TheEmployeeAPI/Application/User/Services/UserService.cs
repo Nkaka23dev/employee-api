@@ -11,7 +11,7 @@ namespace TheEmployeeAPI.Application.User.Services
       ICurrentUserService currentUserService,
       UserManager<ApplicationUser> userManager,
       IMapper mapper,
-      ILogger<UserService> logger) : IUserServices
+      ILogger<UserService> logger) : IUserService
     {
         private readonly ICurrentUserService _currentUserService = currentUserService;
         private readonly UserManager<ApplicationUser> _userManager = userManager;

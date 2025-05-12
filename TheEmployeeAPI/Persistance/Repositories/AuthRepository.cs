@@ -1,31 +1,42 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain;
 
-namespace TheEmployeeAPI.Persistance.Repositories.Authentication;
+namespace TheEmployeeAPI.Persistance.Repositories;
 
-public class AuthRepository : IAuthRepository
+public class AuthRepository(
+    UserManager<ApplicationUser> userManager
+    ) : IAuthRepository
 {
-    public Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    public async Task<bool> CheckUserPasswordAsync(ApplicationUser user, string password)
+    {
+        return await _userManager.CheckPasswordAsync(user, password!);
+    }
+    public async Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password)
+    {
+        return await _userManager.CreateAsync(user, password);
+    }
+
+    public async Task<ApplicationUser?>
+    GetUserByHashedRefreshTokenAsync(byte[] refreshToken, string hashedRefreshToken)
+    {
+        return await _userManager
+        .Users
+        .FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
+    }
+    public Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> ClearRefreshTokenAsync(ApplicationUser user)
+    public async Task<ApplicationUser?> GetUserByEmailAsync(string? email)
     {
-        throw new NotImplementedException();
+        return await _userManager.FindByEmailAsync(email ?? string.Empty);
     }
 
-    public Task<ApplicationUser> CreateAsync(ApplicationUser user, string password)
+    public async Task<IdentityResult> UpdateUserAsync(ApplicationUser user)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApplicationUser?> GetByHashedRefreshTokenAsync(string hashedRefreshToken)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IList<string>> GetRolesAsync(ApplicationUser user)
-    {
-        throw new NotImplementedException();
+        return await _userManager.UpdateAsync(user);
     }
 }

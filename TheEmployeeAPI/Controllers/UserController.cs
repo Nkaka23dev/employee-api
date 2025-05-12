@@ -5,9 +5,9 @@ using TheEmployeeAPI.Services.User;
 
 namespace TheEmployeeAPI.Controllers
 {
-    public class UserController(IUserServices userServices) : BaseController
+    public class UserController(IUserService userServices) : BaseController
     {
-        private readonly IUserServices _userServices = userServices;
+        private readonly IUserService _userServices = userServices;
 
         /// <summary>
         /// Get User by Id

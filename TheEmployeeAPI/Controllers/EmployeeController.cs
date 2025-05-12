@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Contracts.Employee;
 using TheEmployeeAPI.Infrastructure.Context;
 using TheEmployeeAPI.Services.Employees;

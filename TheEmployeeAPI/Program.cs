@@ -7,14 +7,16 @@ using Microsoft.OpenApi.Models;
 using TheEmployeeAPI.Services.User;
 using TheEmployeeAPI.Services;
 using Microsoft.AspNetCore.Identity;
-using TheEmployeeAPI.Services.Auth;
 using TheEmployeeAPI.Services.Employees;
 using TheEmployeeAPI.Infrastructure.Context;
 using TheEmployeeAPI.Mappings;
 using TheEmployeeAPI.Application.Employees;
 using TheEmployeeAPI.Domain;
-using TheEmployeeAPI.Application.User.Services;
 using TheEmployeeAPI.Application.Authentication.Services;
+using TheEmployeeAPI.Persistance.Repositories.Users;
+using TheEmployeeAPI.Persistance.Repositories;
+using TheEmployeeAPI.Persistance.Repositories.Employees;
+using TheEmployeeAPI.Application.User.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,11 +47,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 
-builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+builder.Services.AddScoped<IUserRespository, UserRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRespository>();
 
 // builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);

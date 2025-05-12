@@ -11,7 +11,7 @@ namespace TheEmployeeAPI.Mappings
         {
             CreateMap<ApplicationUser, UserResponse>();
             CreateMap<ApplicationUser, CurrentUserResponse>();
-            CreateMap<RegisterRequest, ApplicationUser>(); 
+            CreateMap<RegisterRequest, ApplicationUser>();
 
         }
     }
