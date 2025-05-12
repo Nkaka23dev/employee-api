@@ -2,7 +2,7 @@ using TheEmployeeAPI.Contracts.User;
 
 namespace TheEmployeeAPI.Services.User
 {
-    public interface IUserServices
+    public interface IUserService
     {
         Task<CurrentUserResponse> GetCurrentUser();
         Task<UserResponse> GetUserById(Guid id);

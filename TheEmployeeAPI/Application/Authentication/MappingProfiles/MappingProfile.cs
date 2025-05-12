@@ -1,6 +1,6 @@
 using AutoMapper;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
 
 
 namespace TheEmployeeAPI.Mappings
@@ -11,7 +11,7 @@ namespace TheEmployeeAPI.Mappings
         {
             CreateMap<ApplicationUser, UserResponse>();
             CreateMap<ApplicationUser, CurrentUserResponse>();
-            CreateMap<RegisterRequest, ApplicationUser>(); 
+            CreateMap<RegisterRequest, ApplicationUser>();
 
         }
     }

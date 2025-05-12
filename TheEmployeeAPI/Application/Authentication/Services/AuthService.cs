@@ -1,30 +1,36 @@
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Contracts.Auth;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Persistance.Repositories;
+using Microsoft.AspNetCore.Identity;
+using TheEmployeeAPI.Persistance.Repositories.Users;
 
-namespace TheEmployeeAPI.Services.Auth
+namespace TheEmployeeAPI.Application.Authentication.Services
 {
     public class AuthService(
-    UserManager<ApplicationUser> userManager,
     IMapper mapper,
+    UserManager<ApplicationUser> userManager,
     ILogger<AuthService> logger,
-    ITokenService tokenService) : IAuthService
+    ITokenService tokenService,
+    IAuthRepository authRepository,
+    IUserRespository userRepository) : IAuthService
     {
-        private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly IMapper _mapper = mapper;
         private readonly ILogger<AuthService> _logger = logger;
         private readonly ITokenService _tokenService = tokenService;
+        private readonly IAuthRepository _authRepository = authRepository;
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly IUserRespository _userRepository = userRepository;
 
-        public async Task<UserResponse> RegisterHandler(RegisterRequest request)
+        public async Task<UserResponse> RegisterAsync(RegisterRequest request)
         {
             _logger.LogInformation("Registering user..");
 
-            var existingUser = await _userManager.FindByEmailAsync(request.Email ?? string.Empty);
+            var existingUser = await _authRepository
+            .GetUserByEmailAsync(request.Email ?? string.Empty);
 
             if (existingUser != null)
             {
@@ -32,8 +38,9 @@ namespace TheEmployeeAPI.Services.Auth
                 throw new BadHttpRequestException("Email Already Exist");
             }
             var newUser = _mapper.Map<ApplicationUser>(request);
-            newUser.UserName = GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
-            var result = await _userManager.CreateAsync(newUser, request?.Password!);
+            newUser.UserName = await GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
+
+            var result = await _authRepository.CreateUserAsync(newUser, request!.Password);
 
             if (!result.Succeeded)
             {
@@ -46,15 +53,15 @@ namespace TheEmployeeAPI.Services.Auth
             return _mapper.Map<UserResponse>(newUser);
         }
         //Login method
-        public async Task<UserResponse> LoginHandler(LoginRequest request)
+        public async Task<UserResponse> LoginAsync(LoginRequest request)
         {
             if (request == null)
             {
                 _logger.LogError("Login Request is null!");
                 throw new ArgumentNullException(nameof(request));
             }
-            var user = await _userManager.FindByEmailAsync(request?.Email!);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, request?.Password!))
+            var user = await _authRepository.GetUserByEmailAsync(request.Email);
+            if (user == null || !await _authRepository.CheckUserPasswordAsync(user, request.Password!))
             {
                 _logger.LogInformation("Invalid email or password");
                 throw new Exception("Invalid Email or password!");
@@ -67,7 +74,7 @@ namespace TheEmployeeAPI.Services.Auth
             user.RefreshToken = Convert.ToBase64String(refreshTokenHash);
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(2);
 
-            var result = await _userManager.UpdateAsync(user);
+            var result = await _authRepository.UpdateUserAsync(user);
 
             if (!result.Succeeded)
             {
@@ -81,12 +88,13 @@ namespace TheEmployeeAPI.Services.Auth
 
             return userResponse;
         }
-        public async Task<CurrentUserResponse> RefreshAccessToken(RefreshTokenRequest request)
+        public async Task<CurrentUserResponse> RefreshAccessTokenAsync(RefreshTokenRequest request)
         {
             _logger.LogInformation("Refreshing access token using refresh token.");
             var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
             var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash);
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
+            var user = await _authRepository
+            .GetUserByHashedRefreshTokenAsync(refreshTokenHash, hashedRefreshToken);
 
             if (user == null)
             {
@@ -104,14 +112,15 @@ namespace TheEmployeeAPI.Services.Auth
             currentUserResponse.AccessToken = newAccessToken;
             return currentUserResponse;
         }
-        public async Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest request)
+        public async Task<RevokeRefreshTokenResponse> RevokeRefreshTokenAsync(RefreshTokenRequest request)
         {
             _logger.LogInformation("Revoking Refresh token....");
             try
             {
                 var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(request.RefreshToken!));
                 var hashedRefreshToken = Convert.ToBase64String(refreshTokenHash);
-                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
+                var user = await _authRepository
+                .GetUserByHashedRefreshTokenAsync(refreshTokenHash, hashedRefreshToken);
 
                 if (user == null)
                 {
@@ -125,7 +134,7 @@ namespace TheEmployeeAPI.Services.Auth
                 }
                 user.RefreshToken = null;
                 user.RefreshTokenExpiryTime = null;
-                var result = await _userManager.UpdateAsync(user);
+                var result = await _authRepository.UpdateUserAsync(user);
                 if (!result.Succeeded)
                 {
                     _logger.LogError("Failed to update user");
@@ -147,13 +156,13 @@ namespace TheEmployeeAPI.Services.Auth
                 throw new Exception("Failed to revoke refresh token");
             }
         }
-        private string GenerateUniqueUserName(string lastName, string firstname)
+        private async Task<string> GenerateUniqueUserName(string lastName, string firstname)
         {
 
             var baseUserName = $"{firstname}{lastName}".ToLower();
             var userName = baseUserName;
             var count = 1;
-            while (_userManager.Users.Any(u => u.UserName == userName))
+            while (await _userRepository.IsUserNameTakenAsync(userName))
             {
                 userName = $"{baseUserName}{count}";
                 count++;

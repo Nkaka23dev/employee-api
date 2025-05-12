@@ -1,15 +1,17 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Services;
+using TheEmployeeAPI.Services.User;
 
-namespace TheEmployeeAPI.Services.User
+namespace TheEmployeeAPI.Application.User.Services
 {
     public class UserService(
       ICurrentUserService currentUserService,
       UserManager<ApplicationUser> userManager,
       IMapper mapper,
-      ILogger<UserService> logger) : IUserServices
+      ILogger<UserService> logger) : IUserService
     {
         private readonly ICurrentUserService _currentUserService = currentUserService;
         private readonly UserManager<ApplicationUser> _userManager = userManager;

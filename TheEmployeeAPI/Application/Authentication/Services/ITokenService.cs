@@ -1,7 +1,7 @@
 
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
 
-namespace TheEmployeeAPI.Services
+namespace TheEmployeeAPI.Application.Authentication.Services
 {
     public interface ITokenService
     {

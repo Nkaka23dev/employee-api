@@ -43,7 +43,6 @@
     <Folder Include="Domain/Auth/" />
     <Folder Include="Fixtures/" />
     <Folder Include="Mappings/" />
-    <Folder Include="Persistance/Repositories/" />
     <Folder Include="Persistance/Seed/" />
     <Folder Include="Services/Tokens/" />
     <Folder Include="Shared/" />

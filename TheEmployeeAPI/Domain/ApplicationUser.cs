@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace TheEmployeeAPI.Domain.Authentication
+namespace TheEmployeeAPI.Domain
 {
     public class ApplicationUser : IdentityUser
     {

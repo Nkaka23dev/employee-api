@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TheEmployeeAPI.Application.Authentication.Services;
 using TheEmployeeAPI.Contracts.Auth;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Services.Auth;
 
 namespace TheEmployeeAPI.Controllers
 {
@@ -20,7 +20,7 @@ namespace TheEmployeeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var response = await _authService.RegisterHandler(request);
+            var response = await _authService.RegisterAsync(request);
             return Ok(response);
         }
         /// <summary>
@@ -34,7 +34,7 @@ namespace TheEmployeeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var response = await _authService.LoginHandler(request);
+            var response = await _authService.LoginAsync(request);
             return Ok(response);
         }
 
@@ -50,7 +50,7 @@ namespace TheEmployeeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
         {
-            var response = await _authService.RefreshAccessToken(request);
+            var response = await _authService.RefreshAccessTokenAsync(request);
             return Ok(response);
         }
         /// <summary>
@@ -65,7 +65,7 @@ namespace TheEmployeeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RevokeToken(RefreshTokenRequest request)
         {
-            var response = await _authService.RevokeRefreshToken(request);
+            var response = await _authService.RevokeRefreshTokenAsync(request);
             if (response != null && response.Message == "Refresh token revoked successufully")
             {
                 return Ok(response);
