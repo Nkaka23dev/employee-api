@@ -4,9 +4,9 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
 using TheEmployeeAPI.Domain.Contracts;
-namespace TheEmployeeAPI.Services
+namespace TheEmployeeAPI.Application.Authentication.Services
 {
     public class TokenService : ITokenService
     {

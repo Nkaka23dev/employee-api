@@ -1,6 +1,6 @@
 using AutoMapper;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
 
 
 namespace TheEmployeeAPI.Mappings

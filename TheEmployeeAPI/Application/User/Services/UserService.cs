@@ -1,9 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Services;
+using TheEmployeeAPI.Services.User;
 
-namespace TheEmployeeAPI.Services.User
+namespace TheEmployeeAPI.Application.User.Services
 {
     public class UserService(
       ICurrentUserService currentUserService,

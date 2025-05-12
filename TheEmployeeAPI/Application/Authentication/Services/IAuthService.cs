@@ -1,7 +1,7 @@
 using TheEmployeeAPI.Contracts.Auth;
 using TheEmployeeAPI.Contracts.User;
 
-namespace TheEmployeeAPI.Services.Auth
+namespace TheEmployeeAPI.Application.Authentication.Services
 {
     public interface IAuthService
     {

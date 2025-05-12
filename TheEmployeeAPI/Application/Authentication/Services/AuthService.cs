@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Contracts.Auth;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Application.Authentication.Services;
 
 namespace TheEmployeeAPI.Services.Auth
 {

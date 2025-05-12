@@ -12,7 +12,9 @@ using TheEmployeeAPI.Services.Employees;
 using TheEmployeeAPI.Infrastructure.Context;
 using TheEmployeeAPI.Mappings;
 using TheEmployeeAPI.Application.Employees;
-using TheEmployeeAPI.Domain.Authentication;
+using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Application.User.Services;
+using TheEmployeeAPI.Application.Authentication.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
