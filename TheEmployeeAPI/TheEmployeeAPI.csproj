@@ -25,8 +25,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application/Authentication/DTOs/" />
+    <Folder Include="Application/Authentication/MappingProfiles/" />
+    <Folder Include="Application/Authentication/Validators/" />
+    <Folder Include="Application/Common/" />
+    <Folder Include="Application/Common/Settings/" />
+    <Folder Include="Application/Employees/DTOs/" />
+    <Folder Include="Application/Employees/MappingProfiles/" />
+    <Folder Include="Application/Employees/Services/" />
+    <Folder Include="Application/Employees/Validators/" />
+    <Folder Include="Application/User/DTOs/" />
+    <Folder Include="Application/User/MappingProfiles/" />
+    <Folder Include="Application/User/Services/" />
+    <Folder Include="Application/User/Validators/" />
+    <Folder Include="Domain/" />
+    <Folder Include="Contracts/Users/" />
     <Folder Include="Domain/Auth/" />
+    <Folder Include="Fixtures/" />
+    <Folder Include="Mappings/" />
+    <Folder Include="Persistance/Repositories/" />
+    <Folder Include="Persistance/Seed/" />
     <Folder Include="Services/Tokens/" />
+    <Folder Include="Shared/" />
+    <Folder Include="Shared/Utilities/" />
   </ItemGroup>
 
 </Project>

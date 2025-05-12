@@ -6,12 +6,13 @@ using TheEmployeeAPI.Exceptions;
 using Microsoft.OpenApi.Models;
 using TheEmployeeAPI.Services.User;
 using TheEmployeeAPI.Services;
-using TheEmployeeAPI.Infrastructure.MappingProfile;
-using TheEmployeeAPI.Entities.Auth;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Services.Auth;
 using TheEmployeeAPI.Services.Employees;
 using TheEmployeeAPI.Infrastructure.Context;
+using TheEmployeeAPI.Mappings;
+using TheEmployeeAPI.Application.Employees;
+using TheEmployeeAPI.Domain.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
