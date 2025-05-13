@@ -2,28 +2,25 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Contracts.Employee;
 using TheEmployeeAPI.Entities.Employee;
-using TheEmployeeAPI.Infrastructure.Context;
+using TheEmployeeAPI.Persistance.Repositories.Employees;
 using TheEmployeeAPI.Services.Employees;
 
-namespace TheEmployeeAPI.Application.Employees
+namespace TheEmployeeAPI.Application.Employees.Services
 {
     public class EmployeeService(
-        AppDbContext dbContext,
         ILogger<EmployeeService> logger,
-        IMapper mapper) : IEmployeeService
+        IMapper mapper, 
+        IEmployeeRepository employeeRepository) : IEmployeeService
     {
-        private readonly AppDbContext _dbContext = dbContext;
         private readonly ILogger _logger = logger;
         private readonly IMapper _mapper = mapper;
+        private readonly IEmployeeRepository _employeeRepository = employeeRepository;
         public async Task<IEnumerable<GetEmployeeResponse>> GetAllEmployeesAsync(GetAllEmployeesRequest request)
         {
             var page = request?.Page ?? 1;
             var numberOfRecord = request?.RequestPerPage ?? 100;
 
-            IQueryable<Employee> query = _dbContext.Employees
-            .Include(e => e.Benefits)
-            .Skip((page - 1) * numberOfRecord)
-            .Take(numberOfRecord);
+            IQueryable<Employee> query = _employeeRepository.GetQuery(page, numberOfRecord);
 
             if (request != null)
             {
@@ -37,28 +34,29 @@ namespace TheEmployeeAPI.Application.Employees
                 }
             }
             var employees = await query.ToArrayAsync();
-            return employees.Select(EmployeeToGetEmployeeResponse);
+            return _mapper.Map<List<GetEmployeeResponse>>(employees);
+
         }
         public async Task<GetEmployeeResponse> GetEmployeeAsync(int id)
         {
-            var employee = await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id)
+            var employee = await _employeeRepository.GetByIdAsync(id)
              ?? throw new KeyNotFoundException($"Employee with {id} not found!");
 
-            var employeeResponse = EmployeeToGetEmployeeResponse(employee);
+            var employeeResponse = _mapper.Map<GetEmployeeResponse>(employee);
             return employeeResponse;
         }
 
         public async Task<Employee> CreateEmployeeAsync(CreateEmployeeRequest request)
         {
             var newEmployee = _mapper.Map<Employee>(request);
-            _dbContext.Employees.Add(newEmployee);
-            await _dbContext.SaveChangesAsync();
+            await _employeeRepository.AddAsync(newEmployee);
             return newEmployee;
         }
 
-        public async Task<GetEmployeeResponse> UpdateEmployeeAsync(int id, UpdateEmployeeRequest request)
+        public async Task<GetEmployeeResponse>
+         UpdateEmployeeAsync(int id, UpdateEmployeeRequest request)
         {
-            var existingEmployee = await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
+            var existingEmployee = await _employeeRepository.GetByIdAsync(id);
             if (existingEmployee == null)
             {
                 _logger.LogWarning("Employee with ID {employeeId} NOT FOUND!", id);
@@ -67,8 +65,7 @@ namespace TheEmployeeAPI.Application.Employees
             }
             _mapper.Map(request, existingEmployee);
 
-            _dbContext.Entry(existingEmployee).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            await _employeeRepository.UpdateAsync(existingEmployee);
 
             var employeeResponse = _mapper.Map<GetEmployeeResponse>(existingEmployee);
             return employeeResponse;
@@ -76,19 +73,13 @@ namespace TheEmployeeAPI.Application.Employees
 
         public async Task DeleteEmployeeAsync(int id)
         {
-            var employee = await _dbContext.Employees.FindAsync(id)
-            ?? throw new Exception($"Employee with {id} not found!");
-
-            _dbContext.Employees.Remove(employee);
-            await _dbContext.SaveChangesAsync();
+        await _employeeRepository.DeleteAsync(id);
+           
         }
-        public async Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>> GetBenefitsForEmployeeAsync(int employeeId)
+        public async Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>>
+         GetBenefitsForEmployeeAsync(int employeeId)
         {
-            var employee = await _dbContext.Employees
-              .Include(e => e.Benefits)
-              .ThenInclude(e => e.Benefit)
-              .SingleOrDefaultAsync(e => e.Id == employeeId)
-               ?? throw new KeyNotFoundException($"Employee with {employeeId} not found!");
+            var employee = await _employeeRepository.GetBenefits(employeeId);
             var benefits = employee.Benefits.Select(b => new GetEmployeeResponseEmployeeBenefits
             {
                 Id = b.Id,
@@ -97,25 +88,6 @@ namespace TheEmployeeAPI.Application.Employees
                 Cost = b.CostToEmployee ?? b.Benefit.BaseCost
             });
             return benefits;
-        }
-        private static GetEmployeeResponse EmployeeToGetEmployeeResponse(Employee employee)
-        {
-            return new GetEmployeeResponse
-            {
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Address1 = employee.Address1,
-                Address2 = employee.Address2,
-                City = employee.City,
-                Email = employee.Email,
-                ZipCode = employee.ZipCode,
-                PhoneNumber = employee.PhoneNumber,
-                State = employee.State,
-                CreatedBy = employee.CreatedBy,
-                LastModifiedBy = employee.LastModifiedBy,
-                CreatedOn = employee.CreatedOn,
-                LastModifiedOn = employee.LastModifiedOn
-            };
         }
     }
 }

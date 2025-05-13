@@ -10,13 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Services.Employees;
 using TheEmployeeAPI.Infrastructure.Context;
 using TheEmployeeAPI.Mappings;
-using TheEmployeeAPI.Application.Employees;
 using TheEmployeeAPI.Domain;
 using TheEmployeeAPI.Application.Authentication.Services;
-using TheEmployeeAPI.Persistance.Repositories.Users;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Persistance.Repositories.Employees;
 using TheEmployeeAPI.Application.User.Services;
+using TheEmployeeAPI.Application.Employees.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

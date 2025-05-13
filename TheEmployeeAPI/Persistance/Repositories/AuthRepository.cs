@@ -25,9 +25,9 @@ public class AuthRepository(
         .Users
         .FirstOrDefaultAsync(u => u.RefreshToken == hashedRefreshToken);
     }
-    public Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
+    public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
     {
-        throw new NotImplementedException();
+        return await _userManager.GetRolesAsync(user);
     }
 
     public async Task<ApplicationUser?> GetUserByEmailAsync(string? email)

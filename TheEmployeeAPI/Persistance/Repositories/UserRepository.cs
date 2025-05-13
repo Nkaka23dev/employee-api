@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain;
-using TheEmployeeAPI.Persistance.Repositories.Users;
 
 namespace TheEmployeeAPI.Persistance.Repositories;
 
@@ -11,19 +10,13 @@ public class UserRepository(
 {
     public UserManager<ApplicationUser> _userManager = userManager;
 
-    public Task DeleteUserAsync(Guid id)
+    public Task DeleteUserAsync(ApplicationUser user)
     {
-        throw new NotImplementedException();
+        return _userManager.DeleteAsync(user);
     }
-
-    public Task<ApplicationUser> GetCurrentUserAsync()
+    public async Task<ApplicationUser?> GetUserByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApplicationUser> GetUserByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
+        return await _userManager.FindByIdAsync(id.ToString());
     }
 
     public async Task<bool> IsUserNameTakenAsync(string userName)
@@ -31,8 +24,9 @@ public class UserRepository(
         return await _userManager.Users.AnyAsync(u => u.UserName == userName);
     }
 
-    public Task<ApplicationUser> UpdateUserAsync(ApplicationUser user)
+    public async Task<IdentityResult> UpdateUserAsync(ApplicationUser user)
     {
-        throw new NotImplementedException();
+        return await _userManager.UpdateAsync(user);
     }
+
 }
