@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Domain;
 
-namespace TheEmployeeAPI.Persistance.Repositories.Users;
+namespace TheEmployeeAPI.Persistance.Repositories;
 
 public interface IUserRespository
 {
-    Task<ApplicationUser> GetUserByIdAsync(Guid id);
-    Task<ApplicationUser> GetCurrentUserAsync();
-    Task<ApplicationUser> UpdateUserAsync(ApplicationUser user);
-    Task DeleteUserAsync(Guid id);
+    Task<ApplicationUser?> GetUserByIdAsync(Guid id);
+    Task<IdentityResult> UpdateUserAsync(ApplicationUser user);
+    Task DeleteUserAsync(ApplicationUser user);
     Task<bool> IsUserNameTakenAsync(string userName);
 }

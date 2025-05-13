@@ -4,10 +4,11 @@ namespace TheEmployeeAPI.Persistance.Repositories.Employees;
 
 public interface IEmployeeRepository
 {
-    Task<IEnumerable<Employee>> GetAllAsync();
-    Task<Employee> AddAsync(Employee employee);
-    Task<Employee> UpdateAsync(Employee employee);
+    IQueryable<Employee> GetQuery(int numberOfRecord, int page);
+    Task AddAsync(Employee employee);
+    Task UpdateAsync(Employee employee);
     Task<Employee?> GetByIdAsync(int id);
-    Task<Employee> DeleteAsync(int id);
+    Task DeleteAsync(int id);
+    Task<Employee> GetBenefits(int id);
 
 }

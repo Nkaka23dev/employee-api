@@ -11,6 +11,7 @@ namespace TheEmployeeAPI.Mappings
             CreateMap<CreateEmployeeRequest, Employee>();
             CreateMap<UpdateEmployeeRequest, Employee>();
             CreateMap<Employee, GetEmployeeResponse>();
+            
         }
     }
 }

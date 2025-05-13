@@ -5,14 +5,12 @@ using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Contracts.Auth;
 using TheEmployeeAPI.Domain;
 using TheEmployeeAPI.Persistance.Repositories;
-using Microsoft.AspNetCore.Identity;
-using TheEmployeeAPI.Persistance.Repositories.Users;
+
 
 namespace TheEmployeeAPI.Application.Authentication.Services
 {
     public class AuthService(
     IMapper mapper,
-    UserManager<ApplicationUser> userManager,
     ILogger<AuthService> logger,
     ITokenService tokenService,
     IAuthRepository authRepository,
@@ -22,7 +20,6 @@ namespace TheEmployeeAPI.Application.Authentication.Services
         private readonly ILogger<AuthService> _logger = logger;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IAuthRepository _authRepository = authRepository;
-        private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly IUserRespository _userRepository = userRepository;
 
         public async Task<UserResponse> RegisterAsync(RegisterRequest request)
@@ -158,7 +155,6 @@ namespace TheEmployeeAPI.Application.Authentication.Services
         }
         private async Task<string> GenerateUniqueUserName(string lastName, string firstname)
         {
-
             var baseUserName = $"{firstname}{lastName}".ToLower();
             var userName = baseUserName;
             var count = 1;
