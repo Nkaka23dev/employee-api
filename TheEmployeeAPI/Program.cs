@@ -56,7 +56,6 @@ builder.Services.AddScoped<IUserRespository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRespository>();
 
-// builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureCors();
 
