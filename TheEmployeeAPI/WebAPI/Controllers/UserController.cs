@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Services.User;
 
-namespace TheEmployeeAPI.Controllers
+namespace TheEmployeeAPI.WebAPI.Controllers
 {
     public class UserController(IUserService userServices) : BaseController
     {

@@ -1,7 +1,8 @@
+using TheEmployeeAPI.Application.Employees.DTOs;
 using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Domain.Entities;
 
-namespace TheEmployeeAPI.Services.Employees
+namespace TheEmployeeAPI.Application.Employees.Services
 {
     public interface IEmployeeService
     {

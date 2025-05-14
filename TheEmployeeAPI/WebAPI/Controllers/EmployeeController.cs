@@ -1,18 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
+using TheEmployeeAPI.Application.Employees.DTOs;
+using TheEmployeeAPI.Application.Employees.Services;
 using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Infrastructure.Context;
-using TheEmployeeAPI.Services.Employees;
 
-
-namespace TheEmployeeAPI.Controllers
+namespace TheEmployeeAPI.WebAPI.Controllers
 {
     public class EmployeeController(
      ILogger<EmployeeController> logger,
-     AppDbContext dbContext,
      IEmployeeService employeeService) : BaseController
     {
         private readonly ILogger<EmployeeController> _logger = logger;
-        private readonly AppDbContext _dbContext = dbContext;
         private readonly IEmployeeService _employeeService = employeeService;
 
         /// <summary>

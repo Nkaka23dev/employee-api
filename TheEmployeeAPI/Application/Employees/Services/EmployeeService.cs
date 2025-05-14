@@ -1,15 +1,15 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using TheEmployeeAPI.Application.Employees.DTOs;
 using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Entities.Employee;
-using TheEmployeeAPI.Persistance.Repositories.Employees;
-using TheEmployeeAPI.Services.Employees;
+using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Persistance.Repositories;
 
 namespace TheEmployeeAPI.Application.Employees.Services
 {
     public class EmployeeService(
         ILogger<EmployeeService> logger,
-        IMapper mapper, 
+        IMapper mapper,
         IEmployeeRepository employeeRepository) : IEmployeeService
     {
         private readonly ILogger _logger = logger;
@@ -73,8 +73,8 @@ namespace TheEmployeeAPI.Application.Employees.Services
 
         public async Task DeleteEmployeeAsync(int id)
         {
-        await _employeeRepository.DeleteAsync(id);
-           
+            await _employeeRepository.DeleteAsync(id);
+
         }
         public async Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>>
          GetBenefitsForEmployeeAsync(int employeeId)

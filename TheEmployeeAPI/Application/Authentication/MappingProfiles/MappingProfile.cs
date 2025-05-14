@@ -1,9 +1,8 @@
 using AutoMapper;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Domain.Entities;
 
-
-namespace TheEmployeeAPI.Mappings
+namespace TheEmployeeAPI.Application.Authentication.MappingProfiles
 {
     public class MappingProfile : Profile
     {

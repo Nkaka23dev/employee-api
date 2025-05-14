@@ -1,8 +1,9 @@
 using AutoMapper;
+using TheEmployeeAPI.Application.Employees.DTOs;
 using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Domain.Entities;
 
-namespace TheEmployeeAPI.Mappings
+namespace TheEmployeeAPI.Application.Employees.MappingProfiles
 {
     public class MappingEmployee : Profile
     {
@@ -11,7 +12,7 @@ namespace TheEmployeeAPI.Mappings
             CreateMap<CreateEmployeeRequest, Employee>();
             CreateMap<UpdateEmployeeRequest, Employee>();
             CreateMap<Employee, GetEmployeeResponse>();
-            
+
         }
     }
 }

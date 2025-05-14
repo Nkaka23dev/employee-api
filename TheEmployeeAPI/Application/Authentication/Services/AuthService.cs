@@ -3,8 +3,8 @@ using System.Text;
 using AutoMapper;
 using TheEmployeeAPI.Contracts.User;
 using TheEmployeeAPI.Contracts.Auth;
-using TheEmployeeAPI.Domain;
 using TheEmployeeAPI.Persistance.Repositories;
+using TheEmployeeAPI.Domain.Entities;
 
 
 namespace TheEmployeeAPI.Application.Authentication.Services

@@ -1,8 +1,8 @@
 using FluentValidation;
-using TheEmployeeAPI.Infrastructure.Context;
-// using TheEmployeeAPI.abstraction;
+using TheEmployeeAPI.Infrastructure.DbContexts;
 
-namespace TheEmployeeAPI.Contracts.Employee
+
+namespace TheEmployeeAPI.Application.Employees.DTOs
 {
     public class UpdateEmployeeRequest
     {

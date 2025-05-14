@@ -38,12 +38,10 @@
     <Folder Include="Application/User/MappingProfiles/" />
     <Folder Include="Application/User/Services/" />
     <Folder Include="Application/User/Validators/" />
-    <Folder Include="Domain/" />
     <Folder Include="Contracts/Users/" />
-    <Folder Include="Domain/Auth/" />
+    <Folder Include="Domain/Enums/" />
     <Folder Include="Fixtures/" />
     <Folder Include="Mappings/" />
-    <Folder Include="Persistance/Seed/" />
     <Folder Include="Services/Tokens/" />
     <Folder Include="Shared/" />
     <Folder Include="Shared/Utilities/" />
