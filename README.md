@@ -24,9 +24,10 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 - ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
 - You can start by improving already implemented features:
   1. ✅Repostory pattern(creating interfaces and separating database and business logic)
-  3. Code clean-up
-  2. Users can have roles and roles determine what users can do in the app
-  3. Add Validation throughout
+  2. ✅Code clean-up
+  3. ✅Seeding two users with their email and password and updating READMe wiht login credentials
+  4. Users can have roles and roles determine what users can do in the app
+  5. Add Validation throughout
 using **AutoMapper** in the **EmployeeController**
 - Data seeding for at least two users to begin with and document the it in README file
 - Protect employee endpoints and update tests
