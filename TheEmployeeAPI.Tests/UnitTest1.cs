@@ -2,9 +2,10 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using TheEmployeeAPI.Contracts.Employee;
-using TheEmployeeAPI.Infrastructure.Context;
-using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Application.Employees.MappingProfiles;
+using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Application.Employees.DTOs;
+using TheEmployeeAPI.Infrastructure.DbContexts;
  
 namespace TheEmployeeAPI.Tests;
 
