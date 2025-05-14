@@ -1,6 +1,6 @@
 using AutoMapper;
 using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Services;
 using TheEmployeeAPI.Services.User;

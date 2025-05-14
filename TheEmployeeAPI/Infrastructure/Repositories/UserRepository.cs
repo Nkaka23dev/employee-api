@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Domain.Entities;
 
 namespace TheEmployeeAPI.Persistance.Repositories;
 

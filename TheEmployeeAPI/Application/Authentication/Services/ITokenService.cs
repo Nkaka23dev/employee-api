@@ -1,5 +1,4 @@
-
-using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Domain.Entities;
 
 namespace TheEmployeeAPI.Application.Authentication.Services
 {

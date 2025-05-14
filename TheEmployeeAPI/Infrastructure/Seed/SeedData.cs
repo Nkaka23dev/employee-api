@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI.Entities.Employee;
-using TheEmployeeAPI.Infrastructure.Context;
+using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Infrastructure.DbContexts;
 
+namespace TheEmployeeAPI.Persistance.Seed;
 public static class SeedData
 {
     public static void MigrateAndSeed(IServiceProvider serviceProvider)

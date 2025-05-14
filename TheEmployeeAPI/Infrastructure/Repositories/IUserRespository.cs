@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using TheEmployeeAPI.Domain;
+using TheEmployeeAPI.Domain.Entities;
 
 namespace TheEmployeeAPI.Persistance.Repositories;
 

@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI.Domain;
-using TheEmployeeAPI.Entities.Employee;
+using TheEmployeeAPI.Domain.Entities;
 
-namespace TheEmployeeAPI.Infrastructure.Context
+namespace TheEmployeeAPI.Infrastructure.DbContexts
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -26,7 +25,6 @@ namespace TheEmployeeAPI.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<EmployeeBenefit>()
             .HasIndex(b => new { b.EmployeeId, b.BenefitId }).IsUnique();
         }

@@ -4,7 +4,7 @@ using TheEmployeeAPI.Application.Authentication.Services;
 using TheEmployeeAPI.Contracts.Auth;
 using TheEmployeeAPI.Contracts.User;
 
-namespace TheEmployeeAPI.Controllers
+namespace TheEmployeeAPI.WebAPI.Controllers
 {
     public class AuthController(IAuthService authServices) : BaseController
     {

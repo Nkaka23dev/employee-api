@@ -1,7 +1,6 @@
-using TheEmployeeAPI.Entities.Employee;
-using TheEmployeeAPI.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using TheEmployeeAPI.Persistance.Repositories.Employees;
+using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Infrastructure.DbContexts;
 
 namespace TheEmployeeAPI.Persistance.Repositories;
 
@@ -11,7 +10,7 @@ public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
     public async Task AddAsync(Employee employee)
     {
         _dbContext.Employees.Add(employee);
-         await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(int id)
@@ -21,17 +20,25 @@ public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
         _dbContext.Employees.Remove(employee);
         await _dbContext.SaveChangesAsync();
     }
-
-    public IQueryable<Employee> GetQuery(int numberOfRecord, int page)
+    public IQueryable<Employee> GetQuery(int? page = null, int? numberOfRecord = null)
     {
-        return _dbContext.Employees
+        var query = _dbContext.Employees
             .Include(e => e.Benefits)
-            .Skip((page - 1) * numberOfRecord)
-            .Take(numberOfRecord);
+            .AsQueryable();
+
+        if (page.HasValue && numberOfRecord.HasValue)
+        {
+            query = query
+                .Skip((page.Value - 1) * numberOfRecord.Value)
+                .Take(numberOfRecord.Value);
+        }
+
+        return query;
     }
+
     public async Task<Employee?> GetByIdAsync(int id)
     {
-         return await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
+        return await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task UpdateAsync(Employee employee)
@@ -45,6 +52,7 @@ public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
         return await _dbContext.Employees
               .Include(e => e.Benefits)
               .ThenInclude(e => e.Benefit)
-              .SingleOrDefaultAsync(e => e.Id == id)   ?? throw new KeyNotFoundException($"Employee with {id} not found!");
+              .SingleOrDefaultAsync(e => e.Id == id) ?? 
+              throw new KeyNotFoundException($"Employee with {id} not found!");
     }
 }

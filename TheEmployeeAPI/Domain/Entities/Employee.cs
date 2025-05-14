@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI.Entities.Employee
+namespace TheEmployeeAPI.Domain.Entities
 {
     public class Employee : AuditableEntity
     {
