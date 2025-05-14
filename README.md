@@ -23,14 +23,14 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 
 
 - ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
-- You can start by improving already implemented features:
+- Improving the app:
   1. ✅Repostory pattern(creating interfaces and separating database and business logic)
   2. ✅Code clean-up
   4. ✅Data seeding for at least two users to begin with and document the README file
   5. ✅Protect employee endpoints and update tests
-  6. Users can have roles and roles determine what users can do in the app
-  7. Add Validation throughout
-using **AutoMapper** in the **EmployeeController**
+  6.  ✅Remove business logics using **AutoMapper** in **EmployeeController**
+  7. Users can have roles and roles determine what users can do in the app
+  8. Add Validation throughout
 - Update user endpoint is not working as expected; it should be fixed.
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
