@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI.Application.Employees.DTOs;
 using TheEmployeeAPI.Application.Employees.Services;
-using TheEmployeeAPI.Contracts.Employee;
 
 namespace TheEmployeeAPI.WebAPI.Controllers
 {
@@ -18,6 +18,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request"></param>s
         /// <returns>Returns the employees in JSON array.</returns>
         [HttpGet("all")]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllEmployees([FromQuery] GetAllEmployeesRequest request)
@@ -31,6 +32,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="id">ID of an employee you want to get</param>
         /// <returns>Return employee object</returns>
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -45,6 +47,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request">Object containing required field to create employee</param>
         /// <returns>Return 201 created</returns>
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -60,6 +63,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request">The Employee data to update</param>
         /// <returns>Return Updated Employee</returns>
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,6 +88,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="id">Id of an employee to be deleted</param>
         /// <returns>No content for deleted employee</returns>
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -98,6 +103,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="employeeId">The ID to get the benefits for.</param>
         /// <returns>The benefits for that employee.</returns>
         [HttpGet("{employeeId}/benefits")]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

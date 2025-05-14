@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Application.Employees.DTOs;
-using TheEmployeeAPI.Contracts.Employee;
 using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Persistance.Repositories;
 

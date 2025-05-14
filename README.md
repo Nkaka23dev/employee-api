@@ -2,6 +2,7 @@
 
 This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, and payroll.
 
+
 ## Already Implemented Features✅
 
 <img width="1055" alt="Screenshot 2025-04-09 at 20 22 04" src="https://github.com/user-attachments/assets/a2de64ff-5b14-4b2d-be4f-f9f89d78d67b" />
@@ -98,8 +99,22 @@ dotnet run
 
 1. Copy the `appsettings.example.json` file to `appsettings.json`.
    
+## Login Credentials 
+<b>Email</b>
+ ```bash
+ eric.nkaka@example.com 
+ ```
+<b>Password</b>
+ ```bash
+ Password123! 
+ ```
 
-#### Useful commands:
+## Filtering and Pagination 
+```ts
+ http://localhost:5229/employee/all?page=2&RequestPerPage=3&FirstNameContains={firstname}&LastNameContains={lastname}
+ ```
+
+## Useful commands:
 ```ts
  - dotnet build //Build the project
  - dotnet test //Running tests
@@ -108,10 +123,7 @@ dotnet run
  - dotnet ef database update //Modified database with new migration
 
  ```
-#### Filtering and Pagination example:
-```ts
- http://localhost:5229/employee/all?page=2&RequestPerPage=3&FirstNameContains={firstname}&LastNameContains={lastname}
- ```
+
 - Unit test included using  
 ```bash
  - XUnit
