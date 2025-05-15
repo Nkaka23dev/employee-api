@@ -1,5 +1,5 @@
-using TheEmployeeAPI.Contracts.Auth;
-using TheEmployeeAPI.Contracts.User;
+using TheEmployeeAPI.Domain.DTOs.Users;
+using TheEmployeeAPI.Domain.DTOs.Authentication;
 
 namespace TheEmployeeAPI.Application.Authentication.Services
 {

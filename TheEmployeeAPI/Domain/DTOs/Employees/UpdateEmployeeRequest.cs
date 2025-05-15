@@ -2,7 +2,7 @@ using FluentValidation;
 using TheEmployeeAPI.Infrastructure.DbContexts;
 
 
-namespace TheEmployeeAPI.Application.Employees.DTOs
+namespace TheEmployeeAPI.Domain.DTOs.Employees
 {
     public class UpdateEmployeeRequest
     {

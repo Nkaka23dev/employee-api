@@ -1,6 +1,6 @@
-using TheEmployeeAPI.Contracts.User;
+using TheEmployeeAPI.Domain.DTOs.Users;
 
-namespace TheEmployeeAPI.Services.User
+namespace TheEmployeeAPI.Application.User.Services
 {
     public interface IUserService
     {

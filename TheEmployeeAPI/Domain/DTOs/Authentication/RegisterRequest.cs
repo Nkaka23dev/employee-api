@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI.Contracts.User
+namespace TheEmployeeAPI.Domain.DTOs.Authentication
 {
     public class RegisterRequest
     {

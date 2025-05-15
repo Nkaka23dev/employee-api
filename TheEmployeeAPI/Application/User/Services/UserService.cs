@@ -1,9 +1,8 @@
 using AutoMapper;
-using TheEmployeeAPI.Contracts.User;
+using TheEmployeeAPI.Domain.DTOs.Users;
 using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Services;
-using TheEmployeeAPI.Services.User;
 
 namespace TheEmployeeAPI.Application.User.Services
 {

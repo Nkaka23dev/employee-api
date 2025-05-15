@@ -1,5 +1,6 @@
 using AutoMapper;
-using TheEmployeeAPI.Contracts.User;
+using Microsoft.AspNetCore.Identity.Data;
+using TheEmployeeAPI.Domain.DTOs.Users;
 using TheEmployeeAPI.Domain.Entities;
 
 namespace TheEmployeeAPI.Application.Authentication.MappingProfiles
