@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Services.User;
-
+using TheEmployeeAPI.Domain.DTOs.Users;
+using TheEmployeeAPI.Application.User.Services;
 namespace TheEmployeeAPI.WebAPI.Controllers
 {
     public class UserController(IUserService userServices) : BaseController

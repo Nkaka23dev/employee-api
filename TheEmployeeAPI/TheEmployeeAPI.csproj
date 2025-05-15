@@ -39,6 +39,7 @@
     <Folder Include="Application/User/Services/" />
     <Folder Include="Application/User/Validators/" />
     <Folder Include="Contracts/Users/" />
+    <Folder Include="Domain/DTOs/" />
     <Folder Include="Domain/Enums/" />
     <Folder Include="Fixtures/" />
     <Folder Include="Mappings/" />

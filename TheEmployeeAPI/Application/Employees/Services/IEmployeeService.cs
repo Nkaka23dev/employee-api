@@ -1,4 +1,4 @@
-using TheEmployeeAPI.Application.Employees.DTOs;
+using TheEmployeeAPI.Domain.DTOs.Employees;
 using TheEmployeeAPI.Domain.Entities;
 
 namespace TheEmployeeAPI.Application.Employees.Services

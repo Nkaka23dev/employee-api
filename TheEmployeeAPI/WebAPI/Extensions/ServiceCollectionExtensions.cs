@@ -10,7 +10,6 @@ using TheEmployeeAPI.Application.User.Services;
 using TheEmployeeAPI.Domain.Contracts;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Services;
-using TheEmployeeAPI.Services.User;
 
 namespace TheEmployeeAPI.WebAPI.Extensions
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TheEmployeeAPI.Application.Employees.DTOs;
 using TheEmployeeAPI.Application.Employees.Services;
+using TheEmployeeAPI.Domain.DTOs.Employees;
 
 namespace TheEmployeeAPI.WebAPI.Controllers
 {

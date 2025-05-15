@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI.Contracts.User
+namespace TheEmployeeAPI.Domain.DTOs.Users
 {
     public class CurrentUserResponse
     {

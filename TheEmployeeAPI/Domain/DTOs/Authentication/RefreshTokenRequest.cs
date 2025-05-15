@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI.Contracts.Auth
+namespace TheEmployeeAPI.Domain.DTOs.Authentication
 {
     public class RefreshTokenRequest
     {

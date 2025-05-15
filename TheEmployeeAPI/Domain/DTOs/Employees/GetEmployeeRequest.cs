@@ -1,4 +1,4 @@
-namespace TheEmployeeAPI.Application.Employees.DTOs
+namespace TheEmployeeAPI.Domain.DTOs.Employees
 {
     public class GetEmployeeResponse
     {

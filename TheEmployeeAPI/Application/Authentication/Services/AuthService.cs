@@ -1,10 +1,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
-using TheEmployeeAPI.Contracts.User;
-using TheEmployeeAPI.Contracts.Auth;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Domain.DTOs.Users;
+using TheEmployeeAPI.Domain.DTOs.Authentication;
 
 
 namespace TheEmployeeAPI.Application.Authentication.Services
@@ -165,6 +165,5 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             }
             return userName;
         }
-
     }
 }
