@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using TheEmployeeAPI.Application.Employees.MappingProfiles;
 using TheEmployeeAPI.Domain.Entities;
-using TheEmployeeAPI.Application.Employees.DTOs;
+using TheEmployeeAPI.Domain.DTOs.Employees;
 using TheEmployeeAPI.Infrastructure.DbContexts;
  
 namespace TheEmployeeAPI.Tests;

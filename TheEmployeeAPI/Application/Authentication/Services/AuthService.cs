@@ -5,6 +5,9 @@ using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Domain.DTOs.Users;
 using TheEmployeeAPI.Domain.DTOs.Authentication;
+using Microsoft.AspNetCore.Identity;
+using TheEmployeeAPI.Infrastructure.DbContexts;
+using TheEmployeeAPI.Domain.Enums;
 
 
 namespace TheEmployeeAPI.Application.Authentication.Services
@@ -14,16 +17,25 @@ namespace TheEmployeeAPI.Application.Authentication.Services
     ILogger<AuthService> logger,
     ITokenService tokenService,
     IAuthRepository authRepository,
-    IUserRespository userRepository) : IAuthService
+    IUserRespository userRepository,
+    UserManager<ApplicationUser> userManager,
+    AppDbContext dbContext,
+    RoleManager<IdentityRole> roleManager) : IAuthService
+
     {
         private readonly IMapper _mapper = mapper;
         private readonly ILogger<AuthService> _logger = logger;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IAuthRepository _authRepository = authRepository;
         private readonly IUserRespository _userRepository = userRepository;
-
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        private readonly AppDbContext _dbContext = dbContext;
+        
         public async Task<UserResponse> RegisterAsync(RegisterRequest request)
         {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
             _logger.LogInformation("Registering user..");
 
             var existingUser = await _authRepository
@@ -36,18 +48,39 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             }
             var newUser = _mapper.Map<ApplicationUser>(request);
             newUser.UserName = await GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
-
+          
             var result = await _authRepository.CreateUserAsync(newUser, request!.Password);
 
             if (!result.Succeeded)
             {
+                await transaction.RollbackAsync();
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 _logger.LogError("Failed to create User: {errors}", errors);
                 throw new Exception($"Failed to create User: {errors}");
             }
+            if (!await _roleManager.RoleExistsAsync(request.Role.ToString()))
+            {
+                _logger.LogInformation("Creating missing role: {Role}", request.Role);
+                await _roleManager.CreateAsync(new IdentityRole(request.Role.ToString()));
+            }
+            var assignResult = await _userManager.AddToRoleAsync(newUser, request.Role.ToString());
+            if (!assignResult.Succeeded)
+            {
+                var roleErrors = string.Join(", ", assignResult.Errors.Select(e => e.Description));
+                _logger.LogError("Failed to assign role: {errors}", roleErrors);
+                throw new Exception($"Failed to assign role: {roleErrors}");
+            }
+
             _logger.LogInformation("User created successfully.");
             await _tokenService.GenerateToken(newUser);
-            return _mapper.Map<UserResponse>(newUser);
+            
+            var roles = await _userManager.GetRolesAsync(newUser);
+            var userResponse = _mapper.Map<UserResponse>(newUser);
+
+            userResponse.Role = roles.FirstOrDefault() ?? UserRoleEnum.Employee.ToString();
+
+            await transaction.CommitAsync();
+            return userResponse;
         }
         //Login method
         public async Task<UserResponse> LoginAsync(LoginRequest request)
@@ -79,10 +112,12 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                 _logger.LogError("Failed to update user: {errors}", errors);
                 throw new Exception($"Failed to updated the user: {errors}");
             }
+            var roles = await _userManager.GetRolesAsync(user);
             var userResponse = _mapper.Map<ApplicationUser, UserResponse>(user);
+
             userResponse.AccessToken = accessToken;
             userResponse.RefreshToken = refreshToken;
-
+            userResponse.Role = roles.FirstOrDefault() ?? UserRoleEnum.Employee.ToString();
             return userResponse;
         }
         public async Task<CurrentUserResponse> RefreshAccessTokenAsync(RefreshTokenRequest request)
@@ -106,7 +141,8 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             var newAccessToken = await _tokenService.GenerateToken(user);
             _logger.LogInformation("New Access Token Generated successfully");
             var currentUserResponse = _mapper.Map<CurrentUserResponse>(user);
-            currentUserResponse.AccessToken = newAccessToken;
+            currentUserResponse.AccessToken = newAccessToken; 
+
             return currentUserResponse;
         }
         public async Task<RevokeRefreshTokenResponse> RevokeRefreshTokenAsync(RefreshTokenRequest request)

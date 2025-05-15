@@ -1,5 +1,5 @@
 
-namespace TheEmployeeAPI.Application
+namespace TheEmployeeAPI.Common
 {
     public class ErrorResponse
     {
