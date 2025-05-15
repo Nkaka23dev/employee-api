@@ -47,7 +47,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request">Object containing required field to create employee</param>
         /// <returns>Return 201 created</returns>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -63,7 +63,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request">The Employee data to update</param>
         /// <returns>Return Updated Employee</returns>
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(GetEmployeeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -88,7 +88,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="id">Id of an employee to be deleted</param>
         /// <returns>No content for deleted employee</returns>
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -103,7 +103,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="employeeId">The ID to get the benefits for.</param>
         /// <returns>The benefits for that employee.</returns>
         [HttpGet("{employeeId}/benefits")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -1,6 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
-using TheEmployeeAPI.Application;
+using TheEmployeeAPI.Common;
 
 namespace TheEmployeeAPI.Exceptions
 {
