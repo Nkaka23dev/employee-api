@@ -7,6 +7,7 @@ using TheEmployeeAPI.Application.Authentication.Services;
 using TheEmployeeAPI.Application.Employees.MappingProfiles;
 using TheEmployeeAPI.Application.Employees.Services;
 using TheEmployeeAPI.Application.User.Services;
+using TheEmployeeAPI.Common;
 using TheEmployeeAPI.Domain.Contracts;
 using TheEmployeeAPI.Persistance.Repositories;
 using TheEmployeeAPI.Services;
@@ -68,14 +69,28 @@ namespace TheEmployeeAPI.WebAPI.Extensions
                    OnChallenge = context =>
                    {
                        context.HandleResponse();
-                       var result = JsonSerializer.Serialize(new
-                       {
-                           message = "You are not authorized to access this resource, Please authenticate"
+                       var result = JsonSerializer.Serialize(new ErrorResponse
+                       { 
+                           Title = "Unauthorized",
+                           StatusCode = 401,
+                           Message = "You are not authorized to access this resource, Please authenticate"
                        });
 
                        context.Response.StatusCode = 401;
                        context.Response.ContentType = "application/json";
                        return context.Response.WriteAsync(result);
+                   },
+                   OnForbidden = context =>
+                   {
+                        var result = JsonSerializer.Serialize(new
+                        { 
+                            Title = "Forbidden",
+                            StatusCode = 403,
+                            message = "You do not have permission to access this resource, only Admins"
+                        });
+                        context.Response.StatusCode = 403;
+                        context.Response.ContentType = "application/json";
+                        return context.Response.WriteAsync(result);
                    }
                };
            });

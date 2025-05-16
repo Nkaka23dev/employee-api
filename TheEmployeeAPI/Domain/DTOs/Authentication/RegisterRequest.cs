@@ -7,5 +7,6 @@ namespace TheEmployeeAPI.Domain.DTOs.Authentication
         public string? Email { get; set; }
         public required string Password { get; set; }
         public string? Gender { get; set; }
+        public required string Role {get; set;}
     }
 }

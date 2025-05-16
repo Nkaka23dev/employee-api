@@ -28,7 +28,7 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
   2. ✅Code clean-up
   4. ✅Data seeding for at least two users to begin with and document the README file
   5. ✅Protect employee endpoints and update tests
-  6.  ✅Remove business logics using **AutoMapper** in **EmployeeController**
+  6. ✅Remove business logics using **AutoMapper** in **EmployeeController**
   7. Users can have roles and roles determine what users can do in the app
   8. Add Validation throughout
 

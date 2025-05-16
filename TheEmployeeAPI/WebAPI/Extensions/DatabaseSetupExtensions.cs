@@ -25,8 +25,9 @@ public static class DatabaseSetupExtensions
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         
-        await UsersSeeder.SeedUsersAsync(userManager);
+        await UsersSeeder.SeedUsersAsync(userManager, roleManager);
         EmployeeSeeder.EmployeesSeeder(dbContext);
         BenefitsSeeder.SeedBenefits(dbContext);
         EmployeeSeeder.AssignEmployeeBenefits(dbContext);
