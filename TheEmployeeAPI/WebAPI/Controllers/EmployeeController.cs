@@ -18,7 +18,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="request"></param>s
         /// <returns>Returns the employees in JSON array.</returns>
         [HttpGet("all")]
-        [Authorize]
+        // [Authorize]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllEmployees([FromQuery] GetAllEmployeesRequest request)

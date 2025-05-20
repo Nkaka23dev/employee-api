@@ -2,6 +2,8 @@
 
 This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, and payroll.
 
+You can find the frontend code here: https://github.com/Nkaka23dev/employee-panel
+
 
 ## Already Implemented Features✅
 
@@ -28,9 +30,17 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
   2. ✅Code clean-up
   4. ✅Data seeding for at least two users to begin with and document the README file
   5. ✅Protect employee endpoints and update tests
-  6.  ✅Remove business logics using **AutoMapper** in **EmployeeController**
+  6. ✅Remove business logics using **AutoMapper** in **EmployeeController**
   7. Users can have roles and roles determine what users can do in the app
   8. Add Validation throughout
+
+- More suggestion: 
+ 1. Consider using Kafka for communication between the department service and the employee API, to ensure asynchronous, decoupled microservice interaction.
+ 2. Think about concurrency control: What should happen if two users attempt to delete the same resource at the same time? Implement appropriate safeguards (e.g., optimistic locking, idempotency, or conflict detection)
+ 3. Consider using SOAP protocol (likely for integration with legacy systems or enterprise services). Ensure your service is SOAP-compliant where required.
+ 4. If using SOAP, you might need to integrate with a different service (not the current one). Clarify which service needs SOAP and design accordingly.
+
+
 - Update user endpoint is not working as expected; it should be fixed.
 - Migrate from **SQLite** to **Postgres** for production.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  
