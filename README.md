@@ -2,8 +2,7 @@
 
 This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, and payroll.
 
-You can find the frontend code here: https://github.com/Nkaka23dev/employee-panel
-
+[Click here for the frontend built with Angular.](https://github.com/Nkaka23dev/employee-panel)
 
 ## Already Implemented Features✅
 
