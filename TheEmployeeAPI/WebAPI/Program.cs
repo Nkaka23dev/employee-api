@@ -9,7 +9,8 @@ using TheEmployeeAPI.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 var conneString = builder.Configuration.GetConnectionString("Default Connection");
 
-builder.Services.AddSqlite<AppDbContext>(conneString);
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseNpgsql(conneString));
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -26,7 +27,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 
 builder.Services
     .AddApplicationServices()
@@ -39,11 +40,10 @@ builder.Services.SwaggerDocumentationExtensions();
 var app = builder.Build();
 
 //Application middlewares
-app.UseSwaggerDocumentation();
 app.UseCors("corsPolicy");
+app.UseSwaggerDocumentation();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
-
 app.MapControllers();
 
 await app.InitializeDatabaseAsync();

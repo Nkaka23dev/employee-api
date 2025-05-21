@@ -67,7 +67,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
               issuer: _validIssuer,
               audience: _validAudience,
               claims: claims,
-              expires: DateTime.Now.AddMinutes(_expires ?? 120),
+              expires: DateTime.UtcNow.AddMinutes(_expires ?? 120),
               signingCredentials: signingCredentials
             );
         }

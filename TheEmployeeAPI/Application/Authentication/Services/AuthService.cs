@@ -47,7 +47,6 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                 throw new BadHttpRequestException("Email Already Exist");
             }
 
-            // Normalize the role here:
             var normalizedRole = UserRoles.All
                 .FirstOrDefault(r => r.Equals(request.Role, StringComparison.OrdinalIgnoreCase));
 
@@ -56,8 +55,6 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                 _logger.LogError("Invalid role: {Role}", request.Role);
                 throw new BadHttpRequestException($"Invalid role. Allowed roles: {string.Join(", ", UserRoles.All)}");
             }
-
-            // Replace the role on request with the normalized one
             request.Role = normalizedRole;
 
             var newUser = _mapper.Map<ApplicationUser>(request);
@@ -119,7 +116,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             var refreshTokenHash = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
 
             user.RefreshToken = Convert.ToBase64String(refreshTokenHash);
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(2);
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(2);
 
             var result = await _authRepository.UpdateUserAsync(user);
 
@@ -150,7 +147,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                 _logger.LogInformation("Invalid Refresh Token");
                 throw new Exception("Invalid Refresh Token");
             }
-            if (user.RefreshTokenExpiryTime < DateTime.Now)
+            if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
             {
                 _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
                 throw new Exception($"Refresh token is expired for user with user Id {user.Id}");
@@ -177,7 +174,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                     _logger.LogInformation("Invalid Refresh Token");
                     throw new Exception("Invalid Refresh Token");
                 }
-                if (user.RefreshTokenExpiryTime < DateTime.Now)
+                if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
                 {
                     _logger.LogWarning("Refresh token is expired for user with user Id {userId}", user.Id);
                     throw new Exception($"Refresh token is expired for user with user Id {user.Id}");

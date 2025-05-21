@@ -17,16 +17,21 @@ namespace TheEmployeeAPI.WebAPI.Extensions
     public static partial class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Cors conf registration
+        /// CORS configuration registration
         /// </summary>
         /// <param name="services"></param>
-        public static void ConfigureCors(this IServiceCollection services)
+        /// <param name="configuration"></param>
+        public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
         {
+            var allowedOrigins = configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? [];
+
             services.AddCors(options =>
             {
                 options.AddPolicy("corsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader();
                 });

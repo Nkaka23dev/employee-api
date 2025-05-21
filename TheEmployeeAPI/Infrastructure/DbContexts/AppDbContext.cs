@@ -27,6 +27,28 @@ namespace TheEmployeeAPI.Infrastructure.DbContexts
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<EmployeeBenefit>()
             .HasIndex(b => new { b.EmployeeId, b.BenefitId }).IsUnique();
+            // Force table names to lowercase
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                entity.SetTableName(entity.GetTableName()!.ToLower());
+                foreach (var property in entity.GetProperties())
+                {
+                    property.SetColumnName(property.Name.ToLower());
+                }
+                foreach (var key in entity.GetKeys())
+                {
+                    key.SetName(key.GetName()!.ToLower());
+                }
+
+                foreach (var key in entity.GetForeignKeys())
+                {
+                    key.SetConstraintName(key.GetConstraintName()!.ToLower());
+                }
+                foreach (var index in entity.GetIndexes())
+                {
+                    index.SetDatabaseName(index.GetDatabaseName()!.ToLower());
+                }
+            }
         }
         public override int SaveChanges()
         {
