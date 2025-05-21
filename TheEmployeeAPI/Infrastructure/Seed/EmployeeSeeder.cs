@@ -3,6 +3,7 @@ using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Infrastructure.DbContexts;
 
 namespace TheEmployeeAPI.Infrastructure.Seed;
+
 public static class EmployeeSeeder
 {
     public static void EmployeesSeeder(AppDbContext context)

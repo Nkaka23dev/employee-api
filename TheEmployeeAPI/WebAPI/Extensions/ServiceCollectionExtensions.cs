@@ -70,7 +70,7 @@ namespace TheEmployeeAPI.WebAPI.Extensions
                    {
                        context.HandleResponse();
                        var result = JsonSerializer.Serialize(new ErrorResponse
-                       { 
+                       {
                            Title = "Unauthorized",
                            StatusCode = 401,
                            Message = "You are not authorized to access this resource, Please authenticate"
@@ -82,15 +82,15 @@ namespace TheEmployeeAPI.WebAPI.Extensions
                    },
                    OnForbidden = context =>
                    {
-                        var result = JsonSerializer.Serialize(new
-                        { 
-                            Title = "Forbidden",
-                            StatusCode = 403,
-                            message = "You do not have permission to access this resource, only Admins"
-                        });
-                        context.Response.StatusCode = 403;
-                        context.Response.ContentType = "application/json";
-                        return context.Response.WriteAsync(result);
+                       var result = JsonSerializer.Serialize(new
+                       {
+                           Title = "Forbidden",
+                           StatusCode = 403,
+                           message = "You do not have permission to access this resource, only Admins"
+                       });
+                       context.Response.StatusCode = 403;
+                       context.Response.ContentType = "application/json";
+                       return context.Response.WriteAsync(result);
                    }
                };
            });

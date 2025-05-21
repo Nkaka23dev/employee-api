@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheEmployeeAPI.Application.Employees.Services;
+using TheEmployeeAPI.Domain.DTOs.Authentication;
 using TheEmployeeAPI.Domain.DTOs.Employees;
 
 namespace TheEmployeeAPI.WebAPI.Controllers
@@ -103,7 +104,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="employeeId">The ID to get the benefits for.</param>
         /// <returns>The benefits for that employee.</returns>
         [HttpGet("{employeeId}/benefits")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = UserRoles.Admin)]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

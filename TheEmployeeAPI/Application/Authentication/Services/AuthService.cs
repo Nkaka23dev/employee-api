@@ -31,7 +31,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly RoleManager<IdentityRole> _roleManager = roleManager;
         private readonly AppDbContext _dbContext = dbContext;
-        
+
         public async Task<UserResponse> RegisterAsync(RegisterRequest request)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
@@ -39,16 +39,30 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             _logger.LogInformation("Registering user..");
 
             var existingUser = await _authRepository
-            .GetUserByEmailAsync(request.Email ?? string.Empty);
+                .GetUserByEmailAsync(request.Email ?? string.Empty);
 
             if (existingUser != null)
             {
                 _logger.LogError("Email Already Exist");
                 throw new BadHttpRequestException("Email Already Exist");
             }
+
+            // Normalize the role here:
+            var normalizedRole = UserRoles.All
+                .FirstOrDefault(r => r.Equals(request.Role, StringComparison.OrdinalIgnoreCase));
+
+            if (normalizedRole == null)
+            {
+                _logger.LogError("Invalid role: {Role}", request.Role);
+                throw new BadHttpRequestException($"Invalid role. Allowed roles: {string.Join(", ", UserRoles.All)}");
+            }
+
+            // Replace the role on request with the normalized one
+            request.Role = normalizedRole;
+
             var newUser = _mapper.Map<ApplicationUser>(request);
             newUser.UserName = await GenerateUniqueUserName(request?.FirstName!, request?.LastName!);
-          
+
             var result = await _authRepository.CreateUserAsync(newUser, request!.Password);
 
             if (!result.Succeeded)
@@ -58,12 +72,14 @@ namespace TheEmployeeAPI.Application.Authentication.Services
                 _logger.LogError("Failed to create User: {errors}", errors);
                 throw new Exception($"Failed to create User: {errors}");
             }
-            if (!await _roleManager.RoleExistsAsync(request.Role.ToString()))
+
+            if (!await _roleManager.RoleExistsAsync(request.Role))
             {
                 _logger.LogInformation("Creating missing role: {Role}", request.Role);
-                await _roleManager.CreateAsync(new IdentityRole(request.Role.ToString()));
+                await _roleManager.CreateAsync(new IdentityRole(request.Role));
             }
-            var assignResult = await _userManager.AddToRoleAsync(newUser, request.Role.ToString());
+
+            var assignResult = await _userManager.AddToRoleAsync(newUser, request.Role);
             if (!assignResult.Succeeded)
             {
                 var roleErrors = string.Join(", ", assignResult.Errors.Select(e => e.Description));
@@ -73,7 +89,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
 
             _logger.LogInformation("User created successfully.");
             await _tokenService.GenerateToken(newUser);
-            
+
             var roles = await _userManager.GetRolesAsync(newUser);
             var userResponse = _mapper.Map<UserResponse>(newUser);
 
@@ -82,6 +98,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             await transaction.CommitAsync();
             return userResponse;
         }
+
         //Login method
         public async Task<UserResponse> LoginAsync(LoginRequest request)
         {
@@ -141,7 +158,7 @@ namespace TheEmployeeAPI.Application.Authentication.Services
             var newAccessToken = await _tokenService.GenerateToken(user);
             _logger.LogInformation("New Access Token Generated successfully");
             var currentUserResponse = _mapper.Map<CurrentUserResponse>(user);
-            currentUserResponse.AccessToken = newAccessToken; 
+            currentUserResponse.AccessToken = newAccessToken;
 
             return currentUserResponse;
         }

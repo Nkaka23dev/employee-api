@@ -4,7 +4,7 @@ namespace TheEmployeeAPI.Persistance.Repositories;
 
 public interface IEmployeeRepository
 {
-    IQueryable<Employee> GetQuery(int? numberOfRecord = null, int? page =  null);
+    IQueryable<Employee> GetQuery(int? numberOfRecord = null, int? page = null);
     Task AddAsync(Employee employee);
     Task UpdateAsync(Employee employee);
     Task<Employee?> GetByIdAsync(int id);

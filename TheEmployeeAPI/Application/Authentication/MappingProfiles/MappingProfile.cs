@@ -9,7 +9,7 @@ namespace TheEmployeeAPI.Application.Authentication.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<ApplicationUser, UserResponse>() 
+            CreateMap<ApplicationUser, UserResponse>()
               .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
             CreateMap<ApplicationUser, CurrentUserResponse>();
             CreateMap<RegisterRequest, ApplicationUser>();
