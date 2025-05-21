@@ -13,7 +13,7 @@ namespace TheEmployeeAPI.Extensions
                 {
                     Title = "Employee API",
                     Version = "V1",
-                    Description = "Provides basic employee management features"
+                    Description = "Employees Management systme"
                 });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

@@ -17,16 +17,21 @@ namespace TheEmployeeAPI.WebAPI.Extensions
     public static partial class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Cors conf registration
+        /// CORS configuration registration
         /// </summary>
         /// <param name="services"></param>
-        public static void ConfigureCors(this IServiceCollection services)
+        /// <param name="configuration"></param>
+        public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
         {
+            var allowedOrigins = configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? [];
+
             services.AddCors(options =>
             {
                 options.AddPolicy("corsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader();
                 });
@@ -70,7 +75,7 @@ namespace TheEmployeeAPI.WebAPI.Extensions
                    {
                        context.HandleResponse();
                        var result = JsonSerializer.Serialize(new ErrorResponse
-                       { 
+                       {
                            Title = "Unauthorized",
                            StatusCode = 401,
                            Message = "You are not authorized to access this resource, Please authenticate"
@@ -82,15 +87,15 @@ namespace TheEmployeeAPI.WebAPI.Extensions
                    },
                    OnForbidden = context =>
                    {
-                        var result = JsonSerializer.Serialize(new
-                        { 
-                            Title = "Forbidden",
-                            StatusCode = 403,
-                            message = "You do not have permission to access this resource, only Admins"
-                        });
-                        context.Response.StatusCode = 403;
-                        context.Response.ContentType = "application/json";
-                        return context.Response.WriteAsync(result);
+                       var result = JsonSerializer.Serialize(new
+                       {
+                           Title = "Forbidden",
+                           StatusCode = 403,
+                           message = "You do not have permission to access this resource, only Admins"
+                       });
+                       context.Response.StatusCode = 403;
+                       context.Response.ContentType = "application/json";
+                       return context.Response.WriteAsync(result);
                    }
                };
            });

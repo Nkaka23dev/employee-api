@@ -52,7 +52,7 @@ public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
         return await _dbContext.Employees
               .Include(e => e.Benefits)
               .ThenInclude(e => e.Benefit)
-              .SingleOrDefaultAsync(e => e.Id == id) ?? 
+              .SingleOrDefaultAsync(e => e.Id == id) ??
               throw new KeyNotFoundException($"Employee with {id} not found!");
     }
 }

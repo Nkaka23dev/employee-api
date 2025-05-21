@@ -4,7 +4,6 @@ namespace TheEmployeeAPI.Domain.DTOs.Employees
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
         public string? City { get; set; }
@@ -16,8 +15,6 @@ namespace TheEmployeeAPI.Domain.DTOs.Employees
         public DateTime? CreatedOn { get; set; }
         public string? LastModifiedBy { get; set; }
         public DateTime? LastModifiedOn { get; set; }
-
-        // public required List<GetEmployeeResponseEmployeeBenefits> Benefits { get; set; }
     }
 
     public class GetEmployeeResponseEmployeeBenefits
