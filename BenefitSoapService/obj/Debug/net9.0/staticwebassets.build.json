@@ -1,0 +1,24 @@
+{
+  "Version": 1,
+  "Hash": "pxMslARb1LvvZvCR72aBaq9L79jUAqBxLrT0RTBlPbc=",
+  "Source": "BenefitSoapService",
+  "BasePath": "_content/BenefitSoapService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "/Users/thegym/terrassign/employee-api/TheEmployeeAPI/TheEmployeeAPI.csproj",
+      "Version": 2,
+      "Source": "TheEmployeeAPI",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
