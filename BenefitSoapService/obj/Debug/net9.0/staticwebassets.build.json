@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "iEQXvXL43Luo5ntVWjO6GdzRoUXnxlxsZZ12m/73UuE=",
+  "Source": "BenefitSoapService",
+  "BasePath": "_content/BenefitSoapService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
