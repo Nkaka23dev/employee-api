@@ -21,9 +21,9 @@ app.UseServiceModel(serviceBuilder =>
         new BasicHttpBinding(),
         "/BenefitService.svc"
     );
-
     var serviceMetadataBehavior = app.Services.GetRequiredService<ServiceMetadataBehavior>();
     serviceMetadataBehavior.HttpGetEnabled = true;
 });
 
 app.Run();
+// dotnet-svcutil http://localhost:5079/BenefitService.svc\?singleWsdl -n "*,BenefitSoapService.Client"

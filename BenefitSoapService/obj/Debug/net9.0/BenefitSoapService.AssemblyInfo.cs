@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BenefitSoapService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c09dac20f5c93c58cab94e42691dfce8851eabfe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f71d39f1ecd9c25c473172f0da02c95eb10e07d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("BenefitSoapService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BenefitSoapService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,10 +1,25 @@
 using CoreWCF;
+using BenefitSoapService.Contacts;
+
 
 namespace BenefitSoapService.Services;
 
-[ServiceContract]
+[ServiceContract(Namespace = "http://benefitsoapservice.com/")]
 public interface IBenefitService
 {
+   [OperationContract]
+    Benefit GetBenefitDetails(int benefitId);
+
     [OperationContract]
-    string GetBenefitDetails(int id);
+    List<Benefit> GetAllBenefits();
+
+    [OperationContract]
+    bool CreateBenefit(Benefit benefit);
+
+    [OperationContract]
+    bool UpdateBenefit(Benefit benefit);
+
+    [OperationContract]
+    bool DeleteBenefit(int benefitId); 
+ 
 }
