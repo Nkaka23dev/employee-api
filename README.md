@@ -1,8 +1,65 @@
 ## Employee API  
 
-This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses an **SQLite** database for development, but it can be switched to **Postgres** for production environments. It  will provides basic employee management features such as handling employee benefits, leave requests, performance reviews, and payroll.
+This is an **ASP.NET Core** employee management system built with **C#** and **.NET**. The project currently uses **Postgres** database.  It includes different services, such as a standard RESTful API (JSON) and a SOAP service.
 
 [Click here for the frontend built with Angular.](https://github.com/Nkaka23dev/employee-panel)
+
+## Getting Started 🛠
+
+#### Prerequisites  
+
+Ensure you have the following installed:  
+- **.NET SDK**: (version 9.0 or later)  
+- **Entity Framework (EF Core)**  
+- **PostgreSQL**: database
+- **NuGet Gallery**: VSCode extention(Optional)
+- **dotnet-svcutil**: A tool to generate WCF SOAP client proxies for consuming SOAP services. [Link](https://learn.microsoft.com/en-us/dotnet/core/additional-tools/dotnet-svcutil-guide?tabs=dotnetsvcutil2x).
+- **SoapUI**: GUI tool for testing SOAP and REST APIs
+
+#### Setup Instructions 
+
+```sh
+# Clone the repository
+git clone https://github.com/Nkaka23dev/employee-api.git
+
+# Navigate to the project directory
+cd employee-api
+
+# Restore the required packages
+dotnet restore
+
+# Build the project
+dotnet build
+
+# (Optional) Run project tests
+dotnet test
+```
+
+#### SOAP Service - Setup:
+s
+```sh
+# Navigate to BenefitSoapService
+cd BenefitSoapService
+
+# Run the project locally
+dotnet run
+
+# Hot Rerun
+dotnet watch run
+
+# Visit for WSDL files
+http://localhost:5079/BenefitService.svc
+
+# Run the following to generate C# proxy classes from the WSDL:
+dotnet-svcutil http://localhost:5079/BenefitService.svc?singleWsdl -n "*,BenefitSoapService.Client"
+```
+### Test BenefitSoapService with SoapUI
+
+After successfully running the project, copy the WSDL URL from the browser and paste it into the [SoapUI tool](https://www.soapui.org/) 
+to explore all available services and make test requests.
+
+You can also copy the request environment from SoapUI and use it in **Postman** or any frontend UI to make calls to the service.
+
 
 ## Already Implemented Features✅
 
@@ -19,20 +76,6 @@ This is an **ASP.NET Core** employee management system built with **C#** and **.
 - **Logging**: Comprehensive logging of actions such as employee creation, updates, and deletions for auditing and debugging purposes.
 - **Unit Testing**: Only on employees' features so far
 - **API Documentation**: Automatically generated Swagger documentation for all employee-related endpoints, providing detailed information about availables
-
-## TODO  🚀
-
-
-- ✅ Implement(with Access and Refresh tokens) **authentication and authorization**[Done on User endpoints!]
-- Improving the app:
-  1. ✅Repostory pattern(creating interfaces and separating database and business logic)
-  2. ✅Code clean-up
-  4. ✅Data seeding for at least two users to begin with and document the README file
-  5. ✅Protect employee endpoints and update tests
-  6. ✅Remove business logics using **AutoMapper** in **EmployeeController**
-  7. ✅Users can have roles and roles determine what users can do in the app
-  8. ✅Add Validation throughout
-  9. ✅Migrate from **SQLite** to **Postgres** for production.
 
 ## TODO NEXT
 
