@@ -2,27 +2,25 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using TheEmployeeAPI.Application.Employees.MappingProfiles;
 using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Domain.DTOs.Employees;
 using TheEmployeeAPI.Infrastructure.DbContexts;
- 
+
 namespace TheEmployeeAPI.Tests;
 
-public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
+public class BasicTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory>
+{
     private readonly int _employeeId = 1;
 
-    private readonly CustomWebApplicationFactory _factory; 
-    public BasicTests(CustomWebApplicationFactory factory)
-    {
-        _factory = factory;
-    }
+    private readonly CustomWebApplicationFactory _factory = factory;
+
     [Fact]
-    public async Task GetAllEmployees_ReturnOkResults(){
+    public async Task GetAllEmployees_ReturnOkResults()
+    {
 
         var client = _factory.CreateClient();
-        var response  = await client.GetAsync("/employee/all");
-        
+        var response = await client.GetAsync("/employee/all");
+
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
@@ -50,21 +48,23 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         Assert.NotNull(employees);
         // Assert.Single(employees);
     }
-    
+
     [Fact]
-    public async Task GetEmployeeById_ReturnOkResult(){
+    public async Task GetEmployeeById_ReturnOkResult()
+    {
 
         var client = _factory.CreateClient();
-        var response  = await client.GetAsync("/employee/1");
+        var response = await client.GetAsync("/employee/1");
         response.EnsureSuccessStatusCode();
     }
 
     [Fact]
-    public async Task CreateEmployee_ReturnsCreatedResult(){
-     var client  = _factory.CreateClient();
-     var response = await client.PostAsJsonAsync("/employee",
-         new Employee { FirstName = "John", LastName ="Yann",  SocialSecurityNumber="6575-574-6544"});
-     response.EnsureSuccessStatusCode();
+    public async Task CreateEmployee_ReturnsCreatedResult()
+    {
+        var client = _factory.CreateClient();
+        var response = await client.PostAsJsonAsync("/employee",
+            new Employee { FirstName = "John", LastName = "Yann", SocialSecurityNumber = "6575-574-6544" });
+        response.EnsureSuccessStatusCode();
     }
 
 
@@ -74,7 +74,17 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         // Arranging
         var client = _factory.CreateClient();
         // Reason: Empty object to trigger validation errors
-        var invalidEmployee = new CreateEmployeeRequest(); 
+        var invalidEmployee = new CreateEmployeeRequest
+        {
+            FirstName = string.Empty,
+            LastName = string.Empty,
+            SocialSecurityNumber = string.Empty,
+            Address1 = string.Empty,
+            State = string.Empty,
+            ZipCode = string.Empty,
+            PhoneNumber = string.Empty,
+            Email = string.Empty
+        };
         // Act
         var response = await client.PostAsJsonAsync("/employee", invalidEmployee);
 
@@ -87,16 +97,17 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         Assert.Contains("'First Name' must not be empty.", problemDetails.Errors["FirstName"]);
         Assert.Contains("'Last Name' must not be empty.", problemDetails.Errors["LastName"]);
     }
- 
+
     [Fact]
     public async Task UpdateEmployee_ReturnsOkResult()
     {
         var client = _factory.CreateClient();
-        var response = await client.PutAsJsonAsync("/employee/1", new Employee { 
+        var response = await client.PutAsJsonAsync("/employee/1", new Employee
+        {
             FirstName = "John",
-            LastName = "Doe", 
+            LastName = "Doe",
             Address1 = "123 Main Smoot",
-            });
+        });
         response.EnsureSuccessStatusCode();
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -104,30 +115,32 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
         Assert.Equal("123 Main Smoot", employee?.Address1);
         Assert.Equal(CustomWebApplicationFactory.SystemClock.UtcNow.UtcDateTime, employee?.LastModifiedOn);
         // Assert.Equal("test@test.com", employee?.LastModifiedBy);
-    } 
- 
-    [Fact] 
+    }
+
+    [Fact]
     public async Task UpdateEmployee_ReturnBadRequestWhenAddress1UpdatedToEmpty()
-    {   
-        var client  = _factory.CreateClient();
-        var invalidEmployee = new UpdateEmployeeRequest(); 
+    {
+        var client = _factory.CreateClient();
+        var invalidEmployee = new UpdateEmployeeRequest();
 
         var response = await client.PutAsJsonAsync($"/employee/{_employeeId}", invalidEmployee);
         Console.Write($"{HttpStatusCode.BadRequest}, {response.StatusCode}");
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var problemDetails = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
-        Assert.NotNull(problemDetails); 
-        Assert.Contains("Address1", problemDetails.Errors.Keys);       
+        Assert.NotNull(problemDetails);
+        Assert.Contains("Address1", problemDetails.Errors.Keys);
 
     }
     [Fact]
-    public async Task DeleteEmployee_ReturnNoContentResults(){
+    public async Task DeleteEmployee_ReturnNoContentResults()
+    {
         var client = _factory.CreateClient();
-        var newEmployee = new Employee {FirstName = "Meow", LastName="Garitea"};
-        using (var scope = _factory.Services.CreateScope()){
-          var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-          db.Employees.Add(newEmployee);
-          await db.SaveChangesAsync();
+        var newEmployee = new Employee { FirstName = "Meow", LastName = "Garitea" };
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Employees.Add(newEmployee);
+            await db.SaveChangesAsync();
         }
         var response = await client.DeleteAsync($"/employee/{newEmployee.Id}");
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -140,7 +153,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
     //     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
     // }
-   
+
     [Fact]
     public async Task GetBenefitsForEmployee_ReturnsOkResult()
     {
@@ -150,7 +163,7 @@ public class BasicTests: IClassFixture<CustomWebApplicationFactory>{
 
         // Assert
         response.EnsureSuccessStatusCode();
-        
+
         var benefits = await response.Content.ReadFromJsonAsync<IEnumerable<GetEmployeeResponseEmployeeBenefits>>();
         Assert.Equal(2, benefits?.Count());
     }

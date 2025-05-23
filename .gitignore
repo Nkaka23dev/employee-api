@@ -1,0 +1,58 @@
+# .NET Build Folders
+bin/
+obj/
+out/
+
+# IDE/Editor folders
+.vs/
+.vscode/
+.idea/
+
+# User-Specific Files
+*.user
+*.suo
+*.userosscache
+*.sln.docstate
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+# App Settings (environment-specific)
+appsettings.json
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+!appsettings.example.json
+
+# Environment files
+*.env
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Installers & Debugging
+*.cab
+*.msi
+*.msm
+*.msp
+*.dmp
+
+# Databases
+*.db
+
+# Backups and Temp
+*.bak
+*.tmp
+
+# ReSharper
+_ReSharper*/
+
+# JetBrains Rider
+.idea/
