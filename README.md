@@ -16,7 +16,7 @@ Ensure you have the following installed:
 - **dotnet-svcutil**: A tool to generate WCF SOAP client proxies for consuming SOAP services. [Link](https://learn.microsoft.com/en-us/dotnet/core/additional-tools/dotnet-svcutil-guide?tabs=dotnetsvcutil2x).
 - **SoapUI**: GUI tool for testing SOAP and REST APIs
 
-#### Setup Instructions 
+### Setup Instructions 
 
 ```sh
 # Clone the repository
@@ -35,7 +35,7 @@ dotnet build
 dotnet test
 ```
 
-#### SOAP Service - Setup:
+### SOAP Service - Setup:
 ```sh
 # Navigate to BenefitSoapService
 cd BenefitSoapService
@@ -58,7 +58,12 @@ After successfully running the project, copy the WSDL URL from the browser and p
 to explore all available services and make test requests.
 
 You can also copy the request environment from SoapUI and use it in **Postman** or any frontend UI to make calls to the service.
+
+What you might expect after successfully running BenefitSoapService
+
 <img width="1672" alt="Screenshot 2025-05-23 at 15 35 14" src="https://github.com/user-attachments/assets/7db0eeaa-284d-4a4c-a5ee-d175381da413" />
+
+Request to get Benefits from Postmans
 
 <img width="1268" alt="Screenshot 2025-05-23 at 15 36 00" src="https://github.com/user-attachments/assets/712c8c6c-7c0b-4407-b711-2f54dc324dbe" />
 
