@@ -52,7 +52,7 @@ http://localhost:5079/BenefitService.svc
 # Run the following to generate C# proxy classes from the WSDL:
 dotnet-svcutil http://localhost:5079/BenefitService.svc?singleWsdl -n "*,BenefitSoapService.Client"
 ```
-### Test BenefitSoapService with SoapUI
+### Test BenefitSoapService with SoapUI and Postman
 
 After successfully running the project, copy the WSDL URL from the browser and paste it into the [SoapUI tool](https://www.soapui.org/) 
 to explore all available services and make test requests.
@@ -62,13 +62,31 @@ You can also copy the request environment from SoapUI and use it in **Postman** 
 What you might expect after successfully running BenefitSoapService
 
 <img width="1672" alt="Screenshot 2025-05-23 at 15 35 14" src="https://github.com/user-attachments/assets/7db0eeaa-284d-4a4c-a5ee-d175381da413" />
+
+When one of the WSDL URLs is opened
+
 <img width="1626" alt="Screenshot 2025-05-23 at 17 18 06" src="https://github.com/user-attachments/assets/15980369-63cc-4fe6-9ace-51887b724021" />
 
 Request to get Benefits from Postman
 
 <img width="1268" alt="Screenshot 2025-05-23 at 15 36 00" src="https://github.com/user-attachments/assets/712c8c6c-7c0b-4407-b711-2f54dc324dbe" />
 
-## Already Implemented Features✅
+### RESTful API - Get Started:
+```sh
+# Navigate to TheEmployeeAPI
+cd TheEmployeeAPI
+
+# Run the project locally
+dotnet run
+
+# Hot Rerun
+dotnet watch run
+
+# Visit
+http://localhost:5229
+```
+
+Rest implemented features
 
 <img width="1055" alt="Screenshot 2025-04-09 at 20 22 04" src="https://github.com/user-attachments/assets/a2de64ff-5b14-4b2d-be4f-f9f89d78d67b" />
 
@@ -123,59 +141,10 @@ The API now should include:
 - **TimeTracking**: Tracks employee clock-in and clock-out times.  
 - **UserRoles & EmployeeRoles**: Defines roles such as admin, manager, and employee to manage access and permissions.
 
-## Getting Started 🛠  
 
-### Prerequisites  
-Ensure you have the following installed:  s
-- **.NET SDK** (version 9.0 or later)  
-- **Entity Framework (EF Core)**  
-- **PostgreSQL** (optional, if migrating from SQLite)
-- **NuGet Gallery** VSCode extention(Optional)
+## Useful info:
 
-### Setup Instructions  
-```sh
-# Clone the repository
-git clone https://github.com/Nkaka23dev/employee-api.git
-
-# Navigate to the project directory
-cd employee-api
-
-# Restore the required packages
-dotnet restore
-
-# Build the project
-dotnet build
-
-# Run project tests
-dotnet test
-
-# Navigate to TheEmployeeAPI
-cd TheEmployeeAPI
-
-# Run the project locally
-dotnet run
-```
-
-## Setting Up the Local Environment
-
-1. Copy the `appsettings.example.json` file to `appsettings.json`.
-   
-## Login Credentials 
-<b>Email</b>
- ```bash
- eric.nkaka@example.com 
- ```
-<b>Password</b>
- ```bash
- Password123! 
- ```
-
-## Filtering and Pagination 
-```ts
- http://localhost:5229/employee/all?page=2&RequestPerPage=3&FirstNameContains={firstname}&LastNameContains={lastname}
- ```
-
-## Useful commands:
+#### Some commands
 ```ts
  - dotnet build //Build the project
  - dotnet test //Running tests
@@ -183,6 +152,11 @@ dotnet run
  - dotnet ef migrations add --file-name //Creating new migration
  - dotnet ef database update //Modified database with new migration
 
+ ```
+
+ #### Filtering and Pagination 
+```ts
+ http://localhost:5229/employee/all?page=2&RequestPerPage=3&FirstNameContains={firstname}&LastNameContains={lastname}
  ```
 
 - Unit test included using  
@@ -207,10 +181,10 @@ dotnet run
  - ILogger.Log
  ```
 
- ## Contributing
+ #### Contributing
 
 We welcome your contributions to this learning project! 
 
-### Used pattern
+#### Used pattern
 
 - Repository Pattern
