@@ -62,11 +62,11 @@ You can also copy the request environment from SoapUI and use it in **Postman** 
 What you might expect after successfully running BenefitSoapService
 
 <img width="1672" alt="Screenshot 2025-05-23 at 15 35 14" src="https://github.com/user-attachments/assets/7db0eeaa-284d-4a4c-a5ee-d175381da413" />
+<img width="1626" alt="Screenshot 2025-05-23 at 17 18 06" src="https://github.com/user-attachments/assets/15980369-63cc-4fe6-9ace-51887b724021" />
 
-Request to get Benefits from Postmans
+Request to get Benefits from Postman
 
 <img width="1268" alt="Screenshot 2025-05-23 at 15 36 00" src="https://github.com/user-attachments/assets/712c8c6c-7c0b-4407-b711-2f54dc324dbe" />
-
 
 ## Already Implemented Features✅
 
