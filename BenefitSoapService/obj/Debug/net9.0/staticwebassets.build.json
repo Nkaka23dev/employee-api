@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pxMslARb1LvvZvCR72aBaq9L79jUAqBxLrT0RTBlPbc=",
+  "Hash": "Ws4p7Bbf4hM777gjsCB+IFtmPVS8oaU94hRfdxLg6HU=",
   "Source": "BenefitSoapService",
   "BasePath": "_content/BenefitSoapService",
   "Mode": "Default",
@@ -11,10 +11,10 @@
       "Version": 2,
       "Source": "TheEmployeeAPI",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
       "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
       "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
     }
   ],
