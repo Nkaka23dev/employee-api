@@ -36,7 +36,6 @@ dotnet test
 ```
 
 #### SOAP Service - Setup:
-s
 ```sh
 # Navigate to BenefitSoapService
 cd BenefitSoapService
@@ -59,6 +58,9 @@ After successfully running the project, copy the WSDL URL from the browser and p
 to explore all available services and make test requests.
 
 You can also copy the request environment from SoapUI and use it in **Postman** or any frontend UI to make calls to the service.
+<img width="1672" alt="Screenshot 2025-05-23 at 15 35 14" src="https://github.com/user-attachments/assets/7db0eeaa-284d-4a4c-a5ee-d175381da413" />
+
+<img width="1268" alt="Screenshot 2025-05-23 at 15 36 00" src="https://github.com/user-attachments/assets/712c8c6c-7c0b-4407-b711-2f54dc324dbe" />
 
 
 ## Already Implemented Features✅
