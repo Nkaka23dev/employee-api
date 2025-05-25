@@ -104,7 +104,7 @@ namespace TheEmployeeAPI.WebAPI.Controllers
         /// <param name="employeeId">The ID to get the benefits for.</param>
         /// <returns>The benefits for that employee.</returns>
         [HttpGet("{employeeId}/benefits")]
-        [Authorize(Roles = UserRoles.Admin)]
+        // [Authorize(Roles = UserRoles.Admin)]
         [ProducesResponseType(typeof(IEnumerable<GetEmployeeResponseEmployeeBenefits>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
