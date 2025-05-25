@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheEmployeeAPI.Tests", "The
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenefitSoapService", "BenefitSoapService\BenefitSoapService.csproj", "{ED1437A9-C87C-490E-BECA-0EA9C1D98FAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{D31A3213-328B-4D6B-900D-2DFC32BD313F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{ED1437A9-C87C-490E-BECA-0EA9C1D98FAF}.Release|x64.Build.0 = Release|Any CPU
 		{ED1437A9-C87C-490E-BECA-0EA9C1D98FAF}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED1437A9-C87C-490E-BECA-0EA9C1D98FAF}.Release|x86.Build.0 = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|x64.Build.0 = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|x64.ActiveCfg = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|x64.Build.0 = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D31A3213-328B-4D6B-900D-2DFC32BD313F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

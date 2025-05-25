@@ -151,6 +151,9 @@ The API now should include:
  - dotnet run  //Starting the project
  - dotnet ef migrations add --file-name //Creating new migration
  - dotnet ef database update //Modified database with new migration
+ - dotnet ef migrations add InitialCreate \
+  --project Core/Core.csproj \
+  --startup-project TheEmployeeAPI/TheEmployeeAPI.csproj
 
  ```
 

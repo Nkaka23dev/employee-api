@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using TheEmployeeAPI.Exceptions;
 using TheEmployeeAPI.WebAPI.Extensions;
-using TheEmployeeAPI.Infrastructure.DbContexts;
 using TheEmployeeAPI.Extensions;
+using TheEmployeeAPI.Infrastructure.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 var conneString = builder.Configuration.GetConnectionString("Default Connection");
