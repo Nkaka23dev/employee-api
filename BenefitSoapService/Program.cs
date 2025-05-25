@@ -1,16 +1,33 @@
-using BenefitSoapService.Services;
+using BenefitSoapService.Application.MappingProfiles;
+using BenefitSoapService.Application.Services;
+using Core.Infrastructure.Repositories;
 using CoreWCF;
 using CoreWCF.Configuration;
 using CoreWCF.Description;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using TheEmployeeAPI.Domain.Entities;
+using TheEmployeeAPI.Infrastructure.DbContexts;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add CoreWCF services
 builder.Services.AddServiceModelServices();
-builder.Services.AddServiceModelMetadata(); 
+builder.Services.AddServiceModelMetadata();
 
-builder.Services.AddSingleton<IBenefitService, BenefitService>();
+var conneString = builder.Configuration.GetConnectionString("Default Connection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseNpgsql(conneString));
+builder.Services.AddSingleton<ISystemClock, SystemClock>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IBenefitService, BenefitService>();
+builder.Services.AddScoped<IRepository<Benefit>, BenefitRepository>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles)); 
+
 
 var app = builder.Build();
 

@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 namespace BenefitSoapService.Contacts;
 
 [DataContract(Namespace = "http://benefitsoapservice.com/")]
-public class Benefit
+public class BenefitContract
 {
     [DataMember]
     public int Id { get; set; }
@@ -11,7 +11,7 @@ public class Benefit
     public string? Name { get; set; }
 
     [DataMember]
-    public string? Description {get; set;}
+    public string? Description { get; set; }
 
     [DataMember]
     public decimal Cost { get; set; }
