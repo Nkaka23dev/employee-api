@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain.DTOs.Employees;
 using TheEmployeeAPI.Domain.Entities;

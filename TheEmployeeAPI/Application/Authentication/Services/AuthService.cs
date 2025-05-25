@@ -8,6 +8,7 @@ using TheEmployeeAPI.Domain.DTOs.Authentication;
 using Microsoft.AspNetCore.Identity;
 using TheEmployeeAPI.Infrastructure.DbContexts;
 using TheEmployeeAPI.Domain.Enums;
+using Core.Infrastructure.Repositories;
 
 
 namespace TheEmployeeAPI.Application.Authentication.Services

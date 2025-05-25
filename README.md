@@ -154,7 +154,7 @@ The API now should include:
  - dotnet ef migrations add InitialCreate \
   --project Core/Core.csproj \
   --startup-project TheEmployeeAPI/TheEmployeeAPI.csproj
-
+ - dotnet ef migrations script -o [name].sql  // generate database schema
  ```
 
  #### Filtering and Pagination 

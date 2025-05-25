@@ -2,57 +2,60 @@ using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain.Entities;
 using TheEmployeeAPI.Infrastructure.DbContexts;
 
-namespace TheEmployeeAPI.Persistance.Repositories;
-
-public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
+namespace Core.Infrastructure.Repositories
 {
-    private readonly AppDbContext _dbContext = dbContext;
-    public async Task AddAsync(Employee employee)
+    public class EmployeeRespository(AppDbContext dbContext) : IEmployeeRepository
     {
-        _dbContext.Employees.Add(employee);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        var employee = await _dbContext.Employees.FindAsync(id)
-        ?? throw new Exception($"Employee with {id} not found!");
-        _dbContext.Employees.Remove(employee);
-        await _dbContext.SaveChangesAsync();
-    }
-    public IQueryable<Employee> GetQuery(int? page = null, int? numberOfRecord = null)
-    {
-        var query = _dbContext.Employees
-            .Include(e => e.Benefits)
-            .AsQueryable();
-
-        if (page.HasValue && numberOfRecord.HasValue)
+        private readonly AppDbContext _dbContext = dbContext;
+        public async Task AddAsync(Employee employee)
         {
-            query = query
-                .Skip((page.Value - 1) * numberOfRecord.Value)
-                .Take(numberOfRecord.Value);
+            _dbContext.Employees.Add(employee);
+            await _dbContext.SaveChangesAsync();
         }
 
-        return query;
-    }
+        public async Task DeleteAsync(int id)
+        {
+            var employee = await _dbContext.Employees.FindAsync(id)
+            ?? throw new Exception($"Employee with {id} not found!");
+            _dbContext.Employees.Remove(employee);
+            await _dbContext.SaveChangesAsync();
+        }
+        public IQueryable<Employee> GetQuery(int? page = null, int? numberOfRecord = null)
+        {
+            var query = _dbContext.Employees
+                .Include(e => e.Benefits)
+                .AsQueryable();
 
-    public async Task<Employee?> GetByIdAsync(int id)
-    {
-        return await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
-    }
+            if (page.HasValue && numberOfRecord.HasValue)
+            {
+                query = query
+                    .Skip((page.Value - 1) * numberOfRecord.Value)
+                    .Take(numberOfRecord.Value);
+            }
 
-    public async Task UpdateAsync(Employee employee)
-    {
-        _dbContext.Entry(employee).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
-    }
+            return query;
+        }
 
-    public async Task<Employee> GetBenefits(int id)
-    {
-        return await _dbContext.Employees
-              .Include(e => e.Benefits)
-              .ThenInclude(e => e.Benefit)
-              .SingleOrDefaultAsync(e => e.Id == id) ??
-              throw new KeyNotFoundException($"Employee with {id} not found!");
+        public async Task<Employee?> GetByIdAsync(int id)
+        {
+            return await _dbContext.Employees.SingleOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task UpdateAsync(Employee employee)
+        {
+            var existing = await _dbContext.Employees.FindAsync(employee.Id) ?? throw new Exception($"Employee with id {employee.Id} not found.");
+            _dbContext.Entry(existing).CurrentValues.SetValues(employee);
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+        public async Task<Employee> GetBenefits(int id)
+        {
+            return await _dbContext.Employees
+                  .Include(e => e.Benefits)
+                  .ThenInclude(e => e.Benefit)
+                  .SingleOrDefaultAsync(e => e.Id == id) ??
+                  throw new KeyNotFoundException($"Employee with {id} not found!");
+        }
     }
 }
