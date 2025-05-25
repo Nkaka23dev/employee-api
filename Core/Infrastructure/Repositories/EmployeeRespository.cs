@@ -43,9 +43,11 @@ namespace Core.Infrastructure.Repositories
 
         public async Task UpdateAsync(Employee employee)
         {
-            _dbContext.Entry(employee).State = EntityState.Modified;
+            var existing = await _dbContext.Employees.FindAsync(employee.Id) ?? throw new Exception($"Employee with id {employee.Id} not found.");
+            _dbContext.Entry(existing).CurrentValues.SetValues(employee);
             await _dbContext.SaveChangesAsync();
         }
+
 
         public async Task<Employee> GetBenefits(int id)
         {

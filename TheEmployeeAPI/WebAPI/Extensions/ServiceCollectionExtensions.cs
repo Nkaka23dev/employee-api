@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using Core.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TheEmployeeAPI.Application.Authentication.MappingProfiles;
