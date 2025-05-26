@@ -6,12 +6,12 @@ using CoreWCF;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain.Entities;
 
-namespace BenefitSoapService.Application.Services;
+namespace BenefitSoapService.Services;
 
 [ServiceBehavior(Namespace = "http://benefitsoapservice.com/")]
 public class BenefitService(
     IRepository<Benefit> benefitRepository,
-    IMapper mapper, 
+    IMapper mapper,
     ILogger<BenefitService> logger) : IBenefitService
 {
     private readonly IRepository<Benefit> _benefitRepository = benefitRepository;
@@ -20,10 +20,19 @@ public class BenefitService(
 
     public async Task<IEnumerable<GetBenefitResponse>> GetAllBenefits()
     {
-        IQueryable<Benefit> query = _benefitRepository.GetQuery();
-        var benefits = await query.ToArrayAsync();
-        return _mapper.Map<List<GetBenefitResponse>>(benefits);
+        try
+        {
+            IQueryable<Benefit> query = _benefitRepository.GetQuery();
+            var benefits = await query.ToArrayAsync();
+            return _mapper.Map<List<GetBenefitResponse>>(benefits);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error in GetAllBenefits");
+            throw;
+        }
     }
+
 
     public async Task<BenefitContract> CreateBenefit(BenefitContract request)
     {

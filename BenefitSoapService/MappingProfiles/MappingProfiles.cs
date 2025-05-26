@@ -3,7 +3,7 @@ using BenefitSoapService.Contacts;
 using Core.Domain.DTOs.Benefits;
 using TheEmployeeAPI.Domain.Entities;
 
-namespace BenefitSoapService.Application.MappingProfiles
+namespace BenefitSoapService.MappingProfiles
 {
     public class MappingProfiles : Profile
     {
