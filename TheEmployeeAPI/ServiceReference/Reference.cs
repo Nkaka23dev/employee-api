@@ -7,15 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BenefitSoapService.Client
+namespace ServiceReference
 {
     using System.Runtime.Serialization;
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Benefit", Namespace="http://benefitsoapservice.com/")]
-    public partial class Benefit : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="BenefitContract", Namespace="http://benefitsoapservice.com/")]
+    public partial class BenefitContract : object
     {
         
         private decimal CostField;
@@ -80,34 +80,31 @@ namespace BenefitSoapService.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://benefitsoapservice.com/", ConfigurationName="BenefitSoapService.Client.IBenefitService")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://benefitsoapservice.com/", ConfigurationName="ServiceReference.IBenefitService")]
     public interface IBenefitService
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://benefitsoapservice.com/IBenefitService/GetBenefitDetails", ReplyAction="http://benefitsoapservice.com/IBenefitService/GetBenefitDetailsResponse")]
-        System.Threading.Tasks.Task<BenefitSoapService.Client.Benefit> GetBenefitDetailsAsync(int benefitId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://benefitsoapservice.com/IBenefitService/GetAllBenefits", ReplyAction="http://benefitsoapservice.com/IBenefitService/GetAllBenefitsResponse")]
-        System.Threading.Tasks.Task<BenefitSoapService.Client.Benefit[]> GetAllBenefitsAsync();
+        System.Threading.Tasks.Task<Core.Domain.DTOs.Benefits.GetBenefitResponse[]> GetAllBenefitsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://benefitsoapservice.com/IBenefitService/CreateBenefit", ReplyAction="http://benefitsoapservice.com/IBenefitService/CreateBenefitResponse")]
-        System.Threading.Tasks.Task<bool> CreateBenefitAsync(BenefitSoapService.Client.Benefit benefit);
+        System.Threading.Tasks.Task<ServiceReference.BenefitContract> CreateBenefitAsync(ServiceReference.BenefitContract benefit);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://benefitsoapservice.com/IBenefitService/UpdateBenefit", ReplyAction="http://benefitsoapservice.com/IBenefitService/UpdateBenefitResponse")]
-        System.Threading.Tasks.Task<bool> UpdateBenefitAsync(BenefitSoapService.Client.Benefit benefit);
+        System.Threading.Tasks.Task<Core.Domain.DTOs.Benefits.GetBenefitResponse> UpdateBenefitAsync(int id, Core.Domain.DTOs.Benefits.UpdateBenefit benefit);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://benefitsoapservice.com/IBenefitService/DeleteBenefit", ReplyAction="http://benefitsoapservice.com/IBenefitService/DeleteBenefitResponse")]
-        System.Threading.Tasks.Task<bool> DeleteBenefitAsync(int benefitId);
+        System.Threading.Tasks.Task DeleteBenefitAsync(int benefitId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface IBenefitServiceChannel : BenefitSoapService.Client.IBenefitService, System.ServiceModel.IClientChannel
+    public interface IBenefitServiceChannel : ServiceReference.IBenefitService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class BenefitServiceClient : System.ServiceModel.ClientBase<BenefitSoapService.Client.IBenefitService>, BenefitSoapService.Client.IBenefitService
+    public partial class BenefitServiceClient : System.ServiceModel.ClientBase<ServiceReference.IBenefitService>, ServiceReference.IBenefitService
     {
         
         /// <summary>
@@ -150,27 +147,22 @@ namespace BenefitSoapService.Client
         {
         }
         
-        public System.Threading.Tasks.Task<BenefitSoapService.Client.Benefit> GetBenefitDetailsAsync(int benefitId)
-        {
-            return base.Channel.GetBenefitDetailsAsync(benefitId);
-        }
-        
-        public System.Threading.Tasks.Task<BenefitSoapService.Client.Benefit[]> GetAllBenefitsAsync()
+        public System.Threading.Tasks.Task<Core.Domain.DTOs.Benefits.GetBenefitResponse[]> GetAllBenefitsAsync()
         {
             return base.Channel.GetAllBenefitsAsync();
         }
         
-        public System.Threading.Tasks.Task<bool> CreateBenefitAsync(BenefitSoapService.Client.Benefit benefit)
+        public System.Threading.Tasks.Task<ServiceReference.BenefitContract> CreateBenefitAsync(ServiceReference.BenefitContract benefit)
         {
             return base.Channel.CreateBenefitAsync(benefit);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateBenefitAsync(BenefitSoapService.Client.Benefit benefit)
+        public System.Threading.Tasks.Task<Core.Domain.DTOs.Benefits.GetBenefitResponse> UpdateBenefitAsync(int id, Core.Domain.DTOs.Benefits.UpdateBenefit benefit)
         {
-            return base.Channel.UpdateBenefitAsync(benefit);
+            return base.Channel.UpdateBenefitAsync(id, benefit);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteBenefitAsync(int benefitId)
+        public System.Threading.Tasks.Task DeleteBenefitAsync(int benefitId)
         {
             return base.Channel.DeleteBenefitAsync(benefitId);
         }

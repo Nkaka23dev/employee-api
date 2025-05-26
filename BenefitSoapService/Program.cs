@@ -1,5 +1,5 @@
-using BenefitSoapService.Application.MappingProfiles;
-using BenefitSoapService.Application.Services;
+using BenefitSoapService.MappingProfiles;
+using BenefitSoapService.Services;
 using Core.Infrastructure.Repositories;
 using CoreWCF;
 using CoreWCF.Configuration;
@@ -23,7 +23,7 @@ options.UseNpgsql(conneString));
 builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<IBenefitService, BenefitService>();
+builder.Services.AddScoped<BenefitService>();
 builder.Services.AddScoped<IRepository<Benefit>, BenefitRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles)); 
@@ -33,7 +33,12 @@ var app = builder.Build();
 
 app.UseServiceModel(serviceBuilder =>
 {
-    serviceBuilder.AddService<BenefitService>();
+    serviceBuilder.AddService<BenefitService>(
+        serviceOptions =>
+    {
+        serviceOptions.DebugBehavior.IncludeExceptionDetailInFaults = true;
+    }
+    );
     serviceBuilder.AddServiceEndpoint<BenefitService, IBenefitService>(
         new BasicHttpBinding(),
         "/BenefitService.svc"

@@ -8,15 +8,12 @@
   <ItemGroup>
     <PackageReference Include="CoreWCF.Http" Version="1.7.0" />
     <PackageReference Include="CoreWCF.Primitives" Version="1.7.0" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="*" ExcludeAssets="runtime" />
-
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="../TheEmployeeAPI/TheEmployeeAPI.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="System.ServiceModel.Http" Version="8.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="8.*" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="8.*" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TheEmployeeAPI/TheEmployeeAPI.csproj" />
+  </ItemGroup>
+
 </Project>

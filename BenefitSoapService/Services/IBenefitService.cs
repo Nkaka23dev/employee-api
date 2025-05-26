@@ -3,7 +3,7 @@ using Core.Domain.DTOs.Benefits;
 using BenefitSoapService.Contacts;
 
 
-namespace BenefitSoapService.Application.Services;
+namespace BenefitSoapService.Services;
 
 [ServiceContract(Namespace = "http://benefitsoapservice.com/")]
 public interface IBenefitService
