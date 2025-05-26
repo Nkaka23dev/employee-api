@@ -51,6 +51,12 @@ http://localhost:5079/BenefitService.svc
 
 # Run the following to generate C# proxy classes from the WSDL:
 dotnet-svcutil http://localhost:5079/BenefitService.svc?singleWsdl -n "*,BenefitSoapService.Client"
+
+# In case you  face telemetry and MSBuild.* conflict during the bootstrap process. you can try to disable them
+export DisableMSBuildAssemblyCopyCheck=true
+export DOTNET_SVCUTIL_TELEMETRY_OPTOUT=1
+dotnet-svcutil "http://localhost:5079/BenefitService.svc?singleWsdl"
+
 ```
 ### Test BenefitSoapService with SoapUI and Postman
 
