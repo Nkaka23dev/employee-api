@@ -4,7 +4,7 @@ using TheEmployeeAPI.Infrastructure.DbContexts;
 
 namespace Core.Infrastructure.Repositories;
 
-public class BenefitRepository(AppDbContext dbContext) : IRepository<Benefit>
+public class BenefitRepository(AppDbContext dbContext) : IBenefitRepository
 {
     private readonly AppDbContext _dbContext = dbContext;
     public  async Task AddAsync(Benefit entity)
@@ -19,6 +19,13 @@ public class BenefitRepository(AppDbContext dbContext) : IRepository<Benefit>
         throw new Exception($"Benefit with {id} Not found!");
         _dbContext.Benefits.Remove(employeBenefit);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<List<Benefit>> GetByBenefitIdsAsync(IEnumerable<int> ids)
+    {
+        return await _dbContext.Benefits
+        .Where(b => ids.Contains(b.Id))
+        .ToListAsync();
     }
 
     public async Task<Benefit?> GetByIdAsync(int id)
