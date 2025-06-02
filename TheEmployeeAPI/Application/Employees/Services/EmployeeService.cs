@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.Domain.DTOs;
 using Core.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TheEmployeeAPI.Domain.DTOs.Employees;
@@ -50,6 +51,7 @@ namespace TheEmployeeAPI.Application.Employees.Services
         public async Task<Employee> CreateEmployeeAsync(CreateEmployeeRequest request)
         {
             var newEmployee = _mapper.Map<Employee>(request);
+            await AssignBenefitToEmployee(newEmployee, request);
             await _employeeRepository.AddAsync(newEmployee);
             return newEmployee;
         }
@@ -64,30 +66,10 @@ namespace TheEmployeeAPI.Application.Employees.Services
                 throw new KeyNotFoundException($"Emplouyee with {id} not found!");
 
             }
-            if (request.BenefitsIds != null && request.BenefitsIds.Count != 0)
-            {
-                var benefits = await _benefitRepository.GetByBenefitIdsAsync(request.BenefitsIds);
-                var foundIds = benefits.Select(b => b.Id).ToHashSet();
-                var notFoundIds = request.BenefitsIds.Where(id => !foundIds.Contains(id)).ToList();
-
-                if (notFoundIds.Count != 0)
-                {
-                    throw new Exception($"Benefit not found: {string.Join(", ", notFoundIds)}");
-
-                }
-                foreach(var benefit in benefits) {
-                    existingEmployee.Benefits.Add(new EmployeeBenefit
-                    {
-                        BenefitId = benefit.Id,
-                        Benefit = benefit,
-                        CostToEmployee = benefit.BaseCost
-                    });
-                }
-
-            }
-
+            await AssignBenefitToEmployee(existingEmployee, request);
+         
             _mapper.Map(request, existingEmployee);
-           
+
             await _employeeRepository.UpdateAsync(existingEmployee);
 
             var employeeResponse = _mapper.Map<GetEmployeeResponse>(existingEmployee);
@@ -99,7 +81,7 @@ namespace TheEmployeeAPI.Application.Employees.Services
             await _employeeRepository.DeleteAsync(id);
 
         }
-        
+
         public async Task<IEnumerable<GetEmployeeResponseEmployeeBenefits>>
          GetBenefitsForEmployeeAsync(int employeeId)
         {
@@ -112,6 +94,33 @@ namespace TheEmployeeAPI.Application.Employees.Services
                 Cost = b.CostToEmployee ?? b.Benefit.BaseCost
             });
             return benefits;
+        }
+
+        public async Task AssignBenefitToEmployee(Employee employee, IEmployeeBenefitRequest ids)
+        {
+            if (ids.BenefitsIds != null && ids.BenefitsIds.Count != 0)
+            {
+                var benefits = await _benefitRepository.GetByBenefitIdsAsync(ids.BenefitsIds);
+                var foundIds = benefits.Select(b => b.Id).ToHashSet();
+                var notFoundIds = ids.BenefitsIds.Where(id => !foundIds.Contains(id)).ToList();
+
+                if (notFoundIds.Count != 0)
+                {
+                    throw new Exception($"Benefit not found: {string.Join(", ", notFoundIds)}");
+
+                }
+                foreach (var benefit in benefits)
+                {
+                    employee.Benefits.Add(new EmployeeBenefit
+                    {
+                        BenefitId = benefit.Id,
+                        Benefit = benefit,
+                        CostToEmployee = benefit.BaseCost
+                    });
+                }
+
+            }
+
         }
     }
 }
