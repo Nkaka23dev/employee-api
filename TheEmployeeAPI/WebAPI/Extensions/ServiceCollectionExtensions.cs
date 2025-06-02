@@ -113,6 +113,7 @@ namespace TheEmployeeAPI.WebAPI.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IBenefitRepository, BenefitRepository>();
             return services;
         }
         /// <summary>
