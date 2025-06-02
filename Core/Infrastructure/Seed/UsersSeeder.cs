@@ -11,7 +11,7 @@ public static class UsersSeeder
         {
             ("Eric", "Nkaka", "eric.nkaka@example.com", "Password123!", "Male", "Admin"),
             ("Jane", "Smith", "jane.smith@example.com", "SecurePass456!", "Female", "Employee"),
-            ("Admin", "Admin", "admin.admin@example.com", "Password123!", "Male", "Admin")
+            ("Admin", "Admin", "admin.admin@example.com", "Password123!", "Male", "Manager")
         };
 
         foreach (var (firstName, lastName, email, password, gender, role) in users)

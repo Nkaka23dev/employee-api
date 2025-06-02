@@ -82,8 +82,12 @@ Request to get Benefits from Postman
 # Navigate to TheEmployeeAPI
 cd TheEmployeeAPI
 
-# Run the project locally
+# Run the project locally, you can set the following option on SeedMode in appsettings.json
+# "reset" → Delete DB, recreate, and seed.
+# "migrate" → Run migrations and seed.
+# "none" or unset → Do nothing
 dotnet run
+
 
 # Hot Rerun
 dotnet watch run
