@@ -48,12 +48,13 @@ namespace TheEmployeeAPI.Application.Employees.Services
             return employeeResponse;
         }
 
-        public async Task<Employee> CreateEmployeeAsync(CreateEmployeeRequest request)
+        public async Task<GetEmployeeResponse> CreateEmployeeAsync(CreateEmployeeRequest request)
         {
             var newEmployee = _mapper.Map<Employee>(request);
             await AssignBenefitToEmployee(newEmployee, request);
             await _employeeRepository.AddAsync(newEmployee);
-            return newEmployee;
+            var employeeResponse = _mapper.Map<GetEmployeeResponse>(newEmployee);
+            return employeeResponse;
         }
 
         public async Task<GetEmployeeResponse>
