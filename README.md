@@ -82,8 +82,12 @@ Request to get Benefits from Postman
 # Navigate to TheEmployeeAPI
 cd TheEmployeeAPI
 
-# Run the project locally
+# Run the project locally, you can set the following option on SeedMode in appsettings.json
+# "reset" → Delete DB, recreate, and seed.
+# "migrate" → Run migrations and seed.
+# "none" or unset → Do nothing
 dotnet run
+
 
 # Hot Rerun
 dotnet watch run
@@ -116,6 +120,7 @@ Rest implemented features
 - More suggestion: 
  1. Consider using Kafka for communication between the department service and the employee API, to ensure asynchronous, decoupled microservice interaction.
  2. Think about concurrency control: What should happen if two users attempt to delete the same resource at the same time? Implement appropriate safeguards (e.g., optimistic locking, idempotency, or conflict detection)
+ 3. Configure project to use ApiGateway using `Ocelot`
 
 - Update user endpoint is not working as expected; it should be fixed.  
 - Implement **CRUD operations** for employee benefits (**[Table reference](https://github.com/Nkaka23dev/employee-api/blob/2070366409f04be52f8d7528011508a6831ea5f7/TheEmployeeAPI/Domain/Entities/Employee/Employee.cs#L25)**).  

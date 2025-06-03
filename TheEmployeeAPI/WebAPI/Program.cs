@@ -20,7 +20,10 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<FluentValidationFilter>();
-});
+}).AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.MaxDepth = 64;
+    }); ;
 builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddHttpContextAccessor();
 

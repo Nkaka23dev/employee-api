@@ -2,6 +2,7 @@ namespace TheEmployeeAPI.Domain.DTOs.Employees
 {
     public class GetEmployeeResponse
     {
+        public required int Id { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public string? Address1 { get; set; }

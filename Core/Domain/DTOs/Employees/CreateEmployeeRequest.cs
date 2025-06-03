@@ -1,8 +1,9 @@
+using Core.Domain.DTOs;
 using FluentValidation;
 
 namespace TheEmployeeAPI.Domain.DTOs.Employees
 {
-    public class CreateEmployeeRequest
+    public class CreateEmployeeRequest: IEmployeeBenefitRequest
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
@@ -14,6 +15,7 @@ namespace TheEmployeeAPI.Domain.DTOs.Employees
         public required string ZipCode { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Email { get; set; }
+        public List<int> BenefitsIds { get; set; } = [];
     }
 
     public class CreateEmployeeRequestValidator : AbstractValidator<CreateEmployeeRequest>

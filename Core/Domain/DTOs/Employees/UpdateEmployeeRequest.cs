@@ -1,3 +1,4 @@
+using Core.Domain.DTOs;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using TheEmployeeAPI.Infrastructure.DbContexts;
@@ -5,7 +6,7 @@ using TheEmployeeAPI.Infrastructure.DbContexts;
 
 namespace TheEmployeeAPI.Domain.DTOs.Employees
 {
-    public class UpdateEmployeeRequest
+    public class UpdateEmployeeRequest: IEmployeeBenefitRequest
     {
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
@@ -14,6 +15,7 @@ namespace TheEmployeeAPI.Domain.DTOs.Employees
         public string? ZipCode { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        public List<int>? BenefitsIds { get; set; }
 
     }
 

@@ -19,5 +19,4 @@ public interface IBenefitService
 
     [OperationContract]
     Task DeleteBenefit(int benefitId);
-
 }
