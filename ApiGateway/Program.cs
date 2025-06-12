@@ -1,3 +1,4 @@
+using ApiGateway.Middlewares;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -8,17 +9,23 @@ builder.Services.AddOcelot();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
+    options.AddDefaultPolicy(policy =>
     {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
 var app = builder.Build();
 
+app.UseCors();
+
 app.UseHttpsRedirection();
 
+app.MapGet("/", () => Results.Ok("API Gateway is running..."));
+
+app.UseMiddleware<InterceptorMiddleware>();
 await app.UseOcelot();
+
 app.Run();

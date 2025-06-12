@@ -5,6 +5,7 @@ using TheEmployeeAPI.Exceptions;
 using TheEmployeeAPI.WebAPI.Extensions;
 using TheEmployeeAPI.Extensions;
 using TheEmployeeAPI.Infrastructure.DbContexts;
+using SharedLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
 var conneString = builder.Configuration.GetConnectionString("Default Connection");
@@ -47,6 +48,7 @@ app.UseCors("corsPolicy");
 app.UseSwaggerDocumentation();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
+app.UseMiddleware<RestrictAccessMiddleware>();
 app.MapControllers();
 
 await app.InitializeDatabaseAsync();
