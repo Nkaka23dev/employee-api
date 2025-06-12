@@ -26,7 +26,16 @@
     ],
     "UpstreamPathTemplate": "/api/department",
     "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-  }
+  },
+  {
+  "DownstreamPathTemplate": "/",
+  "DownstreamScheme": "http",
+  "DownstreamHostAndPorts": [
+    { "Host": "localhost", "Port": 7001 }
+  ],
+  "UpstreamPathTemplate": "/",
+  "UpstreamHttpMethod": [ "GET" ]
+ }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7000"
