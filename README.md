@@ -202,3 +202,21 @@ We welcome your contributions to this learning project!
 #### Used pattern
 
 - Repository Pattern
+
+3. Payroll Management
+
+- Salary calculation (based on attendance, overtime, - deductions)
+
+- Payslip generation
+
+- Tax deductions and compliance (e.g., PAYE)
+
+- Bonuses and incentives
+
+4. Time Tracking
+
+- Clock-in/clock-out system
+
+- Timesheets
+
+- Monitor productivity and working patterns
