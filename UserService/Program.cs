@@ -15,7 +15,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// app.UseMiddleware<RestrictAccessMiddleware>();
+app.UseMiddleware<RestrictAccessMiddleware>();
 
 var summaries = new[]
 {
