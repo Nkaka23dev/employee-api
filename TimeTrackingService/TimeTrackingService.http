@@ -1,0 +1,6 @@
+@TimeTrackingService_HostAddress = http://localhost:5212
+
+GET {{TimeTrackingService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

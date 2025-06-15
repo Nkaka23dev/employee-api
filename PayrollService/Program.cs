@@ -1,5 +1,3 @@
-using SharedLibrary;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,7 +13,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// app.UseMiddleware<RestrictAccessMiddleware>();
 
 var summaries = new[]
 {
@@ -35,7 +32,6 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
-app.MapGet("/api/user", () => Results.Ok("Hello from User Service"));
 
 app.Run();
 
